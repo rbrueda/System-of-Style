@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "squareapirequests.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <iostream>
@@ -47,8 +46,8 @@ void MainWindow::addTeamMember(QJsonObject json){
     QNetworkRequest request(url);
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setHeader("Authorization", "Bearer EAAAEDllvmPs57fW_V-T10ifv_xJ2uyXQrLYxXYZiz7S23suCNiMCLwWKH8JV-TR");
-    request.setHeader("Square-Version", "2023-04-19");
+    request.setRawHeader("Authorization", "Bearer {API CODE}");
+    request.setRawHeader("Square-Version", "2023-04-19");
 
     QNetworkAccessManager nam;
     QNetworkReply *reply = nam.post(request, QJsonDocument(json).toJson());
@@ -62,7 +61,11 @@ void MainWindow::addTeamMember(QJsonObject json){
 
     QByteArray response_data = reply->readAll();
 
-    QJsonDocument json = QJsonDocument::fromJson(response_data);
+    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+
+    QByteArray ba = json2.toJson();
+    QString q = QString(ba);
+    std::cout << q.toStdString() << std::endl;
 
     reply->deleteLater();
 

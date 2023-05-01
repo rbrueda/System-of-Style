@@ -11,12 +11,10 @@ QT += network
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    squareapirequests.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    squareapirequests.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui
