@@ -6,6 +6,9 @@
 #include <string>
 #include <QJsonValue>
 #include <QtNetwork>
+#include <fstream>
+
+using namespace std;
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -46,7 +49,13 @@ void MainWindow::addTeamMember(QJsonObject json){
     QNetworkRequest request(url);
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("Authorization", "Bearer {API CODE}");
+    string api;
+    std :: ifstream fin;
+    fin.open("filename.txt");
+    getline (fin, api);
+    QString qstr = QString::fromStdString("Bearer" + api);
+
+    request.setRawHeader("Authorization", qstr.toUtf8());
     request.setRawHeader("Square-Version", "2023-04-19");
 
     QNetworkAccessManager nam;
