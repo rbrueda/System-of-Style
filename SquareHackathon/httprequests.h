@@ -11,6 +11,7 @@ public:
     HttpRequests();
     QByteArray apiCode;
     void addTeamMember(QJsonObject json);
+    QJsonObject getTeamMembers();
 
 
 private:

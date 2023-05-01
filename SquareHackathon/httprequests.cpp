@@ -46,6 +46,33 @@ void HttpRequests::addTeamMember(QJsonObject json){
     reply->deleteLater();
 }
 
+QJsonObject HttpRequests::getTeamMembers(){
+
+    // Creates url object:
+    QUrl url("https://connect.squareupsandbox.com/v2/team-members/search");
+    QNetworkRequest request(url);
+
+    // Set Request Header:
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", apiCode);
+    request.setRawHeader("Square-Version", "2023-04-19");
+
+    // Make POST Request:
+    QNetworkAccessManager nam;
+    QNetworkReply *reply = nam.post(request, QByteArray());
+
+    // Wait for Response from Server:
+    while (!reply->isFinished()) qApp->processEvents();
+
+    // Print out results in terminal:
+    QByteArray response_data = reply->readAll();
+    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+
+    reply->deleteLater();
+    return json2.object();
+}
+
+
 
 QByteArray HttpRequests::getAPICode(){
     string api;
