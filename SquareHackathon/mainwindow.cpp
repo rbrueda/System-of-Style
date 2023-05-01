@@ -59,6 +59,10 @@ void MainWindow::on_submit_clicked()
 }
 
 void MainWindow::showStaffList(){
+    QListWidgetItem* item = new QListWidgetItem();
+
+    QJsonObject::const_iterator QJsonObject::constFind(item);
+    item->setText(QString("Python"));
 
     QJsonObject jq = rq.getTeamMembers();
     QJsonDocument Doc(jq);
