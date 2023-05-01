@@ -20,5 +20,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    void addTeamMember(QJsonObject json);
+
 };
 #endif // MAINWINDOW_H

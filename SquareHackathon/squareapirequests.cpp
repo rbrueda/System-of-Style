@@ -14,7 +14,7 @@ void SquareAPIRequests::addTeamMember(QJsonObject json){
     QNetworkRequest request(url);
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setHeader("Authorization", "Bearer {API CODE HERE}");
+    request.setHeader("Authorization", "Bearer EAAAEDllvmPs57fW_V-T10ifv_xJ2uyXQrLYxXYZiz7S23suCNiMCLwWKH8JV-TR");
     request.setHeader("Square-Version", "2023-04-19");
 
     QNetworkAccessManager nam;

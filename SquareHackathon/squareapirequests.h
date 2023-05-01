@@ -9,6 +9,7 @@ class SquareAPIRequests : public QObject
 public:
     explicit SquareAPIRequests(QObject *parent = nullptr);
 
+
 signals:
 
 };
