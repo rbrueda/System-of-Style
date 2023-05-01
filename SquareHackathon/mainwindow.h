@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "httprequests.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -20,7 +21,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void addTeamMember(QJsonObject json);
+    HttpRequests rq;
+    void showStaffList();
 
 };
 #endif // MAINWINDOW_H
