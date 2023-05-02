@@ -61,14 +61,12 @@ void MainWindow::on_submit_clicked()
 void MainWindow::showStaffList(){
     QListWidgetItem* item = new QListWidgetItem();
 
-    QJsonObject::const_iterator QJsonObject::constFind(item);
-    item->setText(QString("Python"));
+    QJsonObject teamMembersJson = rq.getTeamMembers();
 
-    QJsonObject jq = rq.getTeamMembers();
-    QJsonDocument Doc(jq);
-    QByteArray ba = Doc.toJson();
-    QString q = QString(ba);
-    std::cout << q.toStdString() << std::endl;
+    QList x = teamMembersJson["team_members"];
+
+//    item->setText(QString(teamMembersJson["team_members"]));
+
 
 
 //    QListWidgetItem* item = new QListWidgetItem();
