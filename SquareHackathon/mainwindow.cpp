@@ -69,10 +69,15 @@ void MainWindow::showStaffList(){
     //make loop
     for (int i = 0; i < listOfMembers.size(); i++){
         //converts first item of array to object
-        QJsonObject member1 = listOfMembers[i].toObject();
+        QJsonObject member1 = listOfMembers[i].toObject(); //gets the ith index of the array (ie gets each sector)
 
         //converts first member to string
         QString name = member1["given_name"].toString();
+        QString status = member1["status"].toString();
+
+//        if(status[0] == 'I'){
+//            continue;
+//        }
 
         //does the ui part to print to screen
         QListWidgetItem* item = new QListWidgetItem();
