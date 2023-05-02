@@ -12,6 +12,7 @@ public:
     QByteArray apiCode;
     void addTeamMember(QJsonObject json);
     QJsonObject getTeamMembers();
+    void inactivateTeamMember(QString teamMemberID);
 
 
 private:

@@ -97,3 +97,38 @@ QByteArray HttpRequests::getAPICode(){
     QString qstr = QString::fromStdString("Bearer " + api);
     return qstr.toUtf8();
 }
+
+void HttpRequests::inactivateTeamMember(QString teamMemberID){
+    // Creates url object:
+    QUrl url("https://connect.squareupsandbox.com/v2/team-members/" + teamMemberID);
+    QNetworkRequest request(url);
+
+    // Set Request Header:
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", apiCode);
+    request.setRawHeader("Square-Version", "2023-04-19");
+
+    QJsonObject parent;
+    QJsonObject status;
+
+    status["status"] = "INACTIVE";
+
+    parent["family_name"] = status;
+
+
+    // Make POST Request:
+    QNetworkAccessManager nam;
+    QNetworkReply *reply = nam.put(request, QJsonDocument(parent).toJson());
+
+    // Wait for Response from Server:
+    while (!reply->isFinished()) qApp->processEvents();
+
+    // Print out results in terminal:
+//    QByteArray response_data = reply->readAll();
+//    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+//    QByteArray ba = json2.toJson();
+//    QString q = QString(ba);
+//    std::cout << q.toStdString() << std::endl;
+
+    reply->deleteLater();
+}
