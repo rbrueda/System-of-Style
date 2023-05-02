@@ -59,21 +59,26 @@ void MainWindow::on_submit_clicked()
 }
 
 void MainWindow::showStaffList(){
-    QListWidgetItem* item = new QListWidgetItem();
 
+    //complete http request
     QJsonObject teamMembersJson = rq.getTeamMembers();
 
+    //gets the teamMember's array
     QJsonArray listOfMembers = teamMembersJson["team_members"].toArray();
 
-    QJsonObject member1 = listOfMembers[0].toObject();
+    //make loop
+    for (int i = 0; i < listOfMembers.size(); i++){
+        //converts first item of array to object
+        QJsonObject member1 = listOfMembers[i].toObject();
 
-    QString name = member1["given_name"].toString();
+        //converts first member to string
+        QString name = member1["given_name"].toString();
 
-    item->setText(name);
-
-    ui->staffList->addItem(item);
-
-    std::cout << "Item Added" << std::endl;
+        //does the ui part to print to screen
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(name);
+        ui->staffList->addItem(item);
+    }
 
     //    cout << "Type of team_members : " << typeid(teamMembersJson["team_members"]).name() << endl;
 
