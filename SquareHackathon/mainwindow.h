@@ -19,6 +19,8 @@ public:
 private slots:
     void on_submit_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;

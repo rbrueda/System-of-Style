@@ -113,7 +113,7 @@ void HttpRequests::inactivateTeamMember(QString teamMemberID){
 
     status["status"] = "INACTIVE";
 
-    parent["family_name"] = status;
+    parent["team_member"] = status;
 
 
     // Make POST Request:
@@ -124,11 +124,11 @@ void HttpRequests::inactivateTeamMember(QString teamMemberID){
     while (!reply->isFinished()) qApp->processEvents();
 
     // Print out results in terminal:
-//    QByteArray response_data = reply->readAll();
-//    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
-//    QByteArray ba = json2.toJson();
-//    QString q = QString(ba);
-//    std::cout << q.toStdString() << std::endl;
+    QByteArray response_data = reply->readAll();
+    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+    QByteArray ba = json2.toJson();
+    QString q = QString(ba);
+    std::cout << q.toStdString() << std::endl;
 
     reply->deleteLater();
 }

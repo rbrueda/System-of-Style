@@ -66,6 +66,8 @@ void MainWindow::showStaffList(){
     //gets the teamMember's array
     QJsonArray listOfMembers = teamMembersJson["team_members"].toArray();
 
+    ui->staffList->clear();
+
     //make loop
     for (int i = 0; i < listOfMembers.size(); i++){
         //converts first item of array to object
@@ -75,9 +77,9 @@ void MainWindow::showStaffList(){
         QString name = member1["given_name"].toString();
         QString status = member1["status"].toString();
 
-//        if(status[0] == 'I'){
-//            continue;
-//        }
+        if(status[0] == 'I'){
+            continue;
+        }
 
         //does the ui part to print to screen
         QListWidgetItem* item = new QListWidgetItem();
@@ -97,5 +99,11 @@ void MainWindow::showStaffList(){
 //    ui->staffList->addItem(item);
 
 //    std::cout << "Item Added" << std::endl;
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    rq.inactivateTeamMember(QString("TMsTxtV7JpLEbYoY"));
 }
 
