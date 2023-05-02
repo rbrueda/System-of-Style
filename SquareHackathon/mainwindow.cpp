@@ -63,7 +63,19 @@ void MainWindow::showStaffList(){
 
     QJsonObject teamMembersJson = rq.getTeamMembers();
 
-    QList x = teamMembersJson["team_members"];
+    QJsonArray listOfMembers = teamMembersJson["team_members"].toArray();
+
+    QJsonObject member1 = listOfMembers[0].toObject();
+
+    QString name = member1["given_name"].toString();
+
+    item->setText(name);
+
+    ui->staffList->addItem(item);
+
+    std::cout << "Item Added" << std::endl;
+
+    //    cout << "Type of team_members : " << typeid(teamMembersJson["team_members"]).name() << endl;
 
 //    item->setText(QString(teamMembersJson["team_members"]));
 
