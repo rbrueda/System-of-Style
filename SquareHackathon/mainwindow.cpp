@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    // Start Contact List Hidden
+    ui->staffProfile->hide();
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +53,8 @@ void MainWindow::on_submit_clicked()
     rq.addTeamMember(parent);
 
     showStaffList();
+     ui->staffProfile->show();
+
 //     Print JSON Contents (also converts to string)
 //        QJsonDocument Doc(parent);
 //        QByteArray ba = Doc.toJson();
