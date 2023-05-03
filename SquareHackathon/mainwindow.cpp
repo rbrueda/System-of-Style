@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     // Start Contact List Hidden
     ui->staffProfile->hide();
+//    connect(ui, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(largars(QListWidgetItem *)));
 }
 
 MainWindow::~MainWindow()
@@ -53,7 +54,7 @@ void MainWindow::on_submit_clicked()
     rq.addTeamMember(parent);
 
     showStaffList();
-     ui->staffProfile->show();
+//     ui->staffProfile->show();
 
 //     Print JSON Contents (also converts to string)
 //        QJsonDocument Doc(parent);
@@ -78,8 +79,10 @@ void MainWindow::showStaffList(){
         QJsonObject member1 = listOfMembers[i].toObject(); //gets the ith index of the array (ie gets each sector)
 
         //converts first member to string
-        QString name = member1["given_name"].toString();
+        QString name = member1["given_name"].toString() + " " + member1["family_name"].toString();
         QString status = member1["status"].toString();
+        QString email = member1["email_address"].toString();
+        QString phoneNum = member1["phone_number"].toString();
 
         if(status[0] == 'I'){
             continue;
@@ -88,6 +91,11 @@ void MainWindow::showStaffList(){
         //does the ui part to print to screen
         QListWidgetItem* item = new QListWidgetItem();
         item->setText(name);
+        item->setData(1, email);
+        item->setData(3, phoneNum);
+
+
+
         ui->staffList->addItem(item);
     }
 
@@ -110,4 +118,10 @@ void MainWindow::on_pushButton_clicked()
 {
     rq.inactivateTeamMember(QString("TMsTxtV7JpLEbYoY"));
 }
+
+void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
+    ui->staffProfile->show();
+}
+
+
 

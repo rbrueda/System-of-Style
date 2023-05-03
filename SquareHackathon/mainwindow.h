@@ -3,6 +3,7 @@
 
 #include "httprequests.h"
 #include <QMainWindow>
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +21,10 @@ private slots:
     void on_submit_clicked();
 
     void on_pushButton_clicked();
+
+    void on_staffList_itemDoubleClicked(QListWidgetItem *item);
+
+
 
 private:
     Ui::MainWindow *ui;
