@@ -142,5 +142,6 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
 void MainWindow::on_deactivateButton_clicked()
 {
     rq.inactivateTeamMember(selectedProfileID);
+    showStaffList();
 }
 
