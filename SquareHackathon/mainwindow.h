@@ -24,6 +24,8 @@ private slots:
 
     void on_deactivateButton_clicked();
 
+    void on_addEmployeeButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;

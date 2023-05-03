@@ -20,7 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     // Start Contact List Hidden
     ui->staffProfile->hide();
-//    connect(ui, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this, SLOT(largars(QListWidgetItem *)));
+    ui->addEmployeeWidget->hide();
+    showStaffList();
+
 }
 
 MainWindow::~MainWindow()
@@ -52,7 +54,6 @@ void MainWindow::on_submit_clicked()
     parent["team_member"] = teamMember;
 
     rq.addTeamMember(parent);
-
     showStaffList();
 //     ui->staffProfile->show();
 
@@ -117,7 +118,6 @@ void MainWindow::showStaffList(){
 }
 
 
-
 /*
     Data indexes:
     1: email address
@@ -128,6 +128,7 @@ void MainWindow::showStaffList(){
 
 void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
     ui->staffProfile->show();
+    ui->addEmployeeWidget->hide();
 
     ui->emailProfile->setText(item->data(1).toString());
     ui->nameProfile->setText(item->data(2).toString());
@@ -143,5 +144,12 @@ void MainWindow::on_deactivateButton_clicked()
 {
     rq.inactivateTeamMember(selectedProfileID);
     showStaffList();
+}
+
+
+void MainWindow::on_addEmployeeButton_clicked()
+{
+    ui->staffProfile->hide();
+    ui->addEmployeeWidget->show();
 }
 
