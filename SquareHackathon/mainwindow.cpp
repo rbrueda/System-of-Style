@@ -83,6 +83,7 @@ void MainWindow::showStaffList(){
         QString status = member1["status"].toString();
         QString email = member1["email_address"].toString();
         QString phoneNum = member1["phone_number"].toString();
+        QString id = member1["id"].toString();
 
         if(status[0] == 'I'){
             continue;
@@ -90,9 +91,11 @@ void MainWindow::showStaffList(){
 
         //does the ui part to print to screen
         QListWidgetItem* item = new QListWidgetItem();
-        item->setText(name);
+//        item->setText(name);
         item->setData(1, email);
+        item->setData(2, name);
         item->setData(3, phoneNum);
+        item->setData(4, id);
 
 
 
@@ -119,8 +122,19 @@ void MainWindow::on_pushButton_clicked()
     rq.inactivateTeamMember(QString("TMsTxtV7JpLEbYoY"));
 }
 
+/*
+    Data indexes:
+    1: email address
+    2: Full Name (displayed on QListWidget)
+    3: Phone Number
+    4: ID
+ */
+
 void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
     ui->staffProfile->show();
+
+    ui->emailProfile->setText(item->data(1).toString());
+    ui->phoneNumberProfile->setText(item->data(3).toString());
 }
 
 
