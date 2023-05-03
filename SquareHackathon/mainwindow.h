@@ -20,15 +20,14 @@ public:
 private slots:
     void on_submit_clicked();
 
-    void on_pushButton_clicked();
-
     void on_staffList_itemDoubleClicked(QListWidgetItem *item);
 
-
+    void on_deactivateButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
+    QString selectedProfileID;
     void showStaffList();
 
 };

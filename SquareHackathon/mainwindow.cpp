@@ -117,10 +117,6 @@ void MainWindow::showStaffList(){
 }
 
 
-void MainWindow::on_pushButton_clicked()
-{
-    rq.inactivateTeamMember(QString("TMsTxtV7JpLEbYoY"));
-}
 
 /*
     Data indexes:
@@ -134,8 +130,17 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
     ui->staffProfile->show();
 
     ui->emailProfile->setText(item->data(1).toString());
+    ui->nameProfile->setText(item->data(2).toString());
     ui->phoneNumberProfile->setText(item->data(3).toString());
+
+    selectedProfileID = item->data(4).toString();
 }
 
 
+
+
+void MainWindow::on_deactivateButton_clicked()
+{
+    rq.inactivateTeamMember(selectedProfileID);
+}
 
