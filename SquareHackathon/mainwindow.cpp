@@ -23,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addEmployeeWidget->hide();
     showStaffList();
 
+    // 0: Employee View
+    // 1: Main Menu
+    ui->mainStackWidget->setCurrentIndex(1);
+
 }
 
 MainWindow::~MainWindow()
@@ -151,5 +155,11 @@ void MainWindow::on_addEmployeeButton_clicked()
 {
     ui->staffProfile->hide();
     ui->addEmployeeWidget->show();
+}
+
+
+void MainWindow::on_employeeManagerButton_clicked()
+{
+    ui->mainStackWidget->setCurrentIndex(0);
 }
 
