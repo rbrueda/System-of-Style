@@ -73,8 +73,6 @@ void MainWindow::showStaffList(){
     //complete http request
     QJsonObject teamMembersJson = rq.getTeamMembers();
 
-    QJsonObject customerJson;
-
     //gets the teamMember's array
     QJsonArray listOfMembers = teamMembersJson["team_members"].toArray();
 
@@ -172,7 +170,41 @@ void MainWindow::on_bookManagerButton_clicked()
 }
 
 void showClientList(){
-    QJsonArray listOfClients = teamMembersJson["customers"].toArray();
+    QJsonObject customerJson;
+
+    QJsonArray listOfClients = customerJson["customers"].toArray();
+
+    ui->ViewAllBookings->clear();
+    for (int i = 0; i < listOfClients.size(); i++){
+        //converts first item of array to object
+        QJsonObject member2 = listOfClients[i].toObject(); //gets the ith index of the array (ie gets each sector)
+
+        //converts first member to string
+        QString name = member2["given_name"].toString() + " " + member2["family_name"].toString();
+//        QString status = member1["status"].toString(); //future use
+
+        //instead:
+        //QString unsubscription = member1["email_unsubscribed"].toString();
+        QString email = member2["email_address"].toString();
+        QString phoneNum = member2["phone_number"].toString();
+        QString id = member2["id"].toString();
+
+//        if(unsubscription[0] == 'f'){
+//            continue;
+//        }
+
+        //does the ui part to print to screen
+        QListWidgetItem* item = new QListWidgetItem();
+        //        item->setText(name);
+        item->setData(1, email); //would the order of these change?
+        item->setData(2, name);
+        item->setData(3, phoneNum);
+        item->setData(4, id);
+
+
+
+        ui->ViewAllBookings->addItem(item);
+    }
 }
 
 
