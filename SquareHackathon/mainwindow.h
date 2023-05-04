@@ -28,6 +28,8 @@ private slots:
 
     void on_employeeManagerButton_clicked();
 
+    void on_bookManagerButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;

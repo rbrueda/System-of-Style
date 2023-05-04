@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 0: Employee View
     // 1: Main Menu
-    ui->mainStackWidget->setCurrentIndex(1);
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 
 }
 
@@ -72,6 +72,8 @@ void MainWindow::showStaffList(){
 
     //complete http request
     QJsonObject teamMembersJson = rq.getTeamMembers();
+
+    QJsonObject customerJson;
 
     //gets the teamMember's array
     QJsonArray listOfMembers = teamMembersJson["team_members"].toArray();
@@ -160,6 +162,18 @@ void MainWindow::on_addEmployeeButton_clicked()
 
 void MainWindow::on_employeeManagerButton_clicked()
 {
-    ui->mainStackWidget->setCurrentIndex(0);
+    ui->mainStackWidget->setCurrentWidget(ui->employeeManagerView);
 }
+
+
+void MainWindow::on_bookManagerButton_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->bookManagerView);
+}
+
+void showClientList(){
+    QJsonArray listOfClients = teamMembersJson["customers"].toArray();
+}
+
+
 
