@@ -167,14 +167,15 @@ void MainWindow::on_employeeManagerButton_clicked()
 void MainWindow::on_bookManagerButton_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->bookManagerView);
+    showClientList();
 }
 
-void showClientList(){
-    QJsonObject customerJson;
+void MainWindow::showClientList(){
+    QJsonObject customerJson = rq.getCustomers();
 
     QJsonArray listOfClients = customerJson["customers"].toArray();
 
-    ui->ViewAllBookings->clear();
+    ui->clientListWidget->clear();
     for (int i = 0; i < listOfClients.size(); i++){
         //converts first item of array to object
         QJsonObject member2 = listOfClients[i].toObject(); //gets the ith index of the array (ie gets each sector)
@@ -203,7 +204,7 @@ void showClientList(){
 
 
 
-        ui->ViewAllBookings->addItem(item);
+        ui->clientListWidget->addItem(item);
     }
 }
 

@@ -35,6 +35,7 @@ private:
     HttpRequests rq;
     QString selectedProfileID;
     void showStaffList();
+    void showClientList();
 
 };
 #endif // MAINWINDOW_H
