@@ -158,3 +158,31 @@ void HttpRequests::inactivateTeamMember(QString teamMemberID){
 
     reply->deleteLater();
 }
+
+void HttpRequests::addClientMember(QJsonObject json){
+
+    // Creates url object:
+    QUrl url("https://connect.squareupsandbox.com/v2/customers");
+    QNetworkRequest request(url);
+
+    // Set Request Header:
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", apiCode);
+    request.setRawHeader("Square-Version", "2023-04-19");
+
+    // Make POST Request:
+    QNetworkAccessManager nam;
+    QNetworkReply *reply = nam.post(request, QJsonDocument(json).toJson());
+
+    // Wait for Response from Server:
+    while (!reply->isFinished()) qApp->processEvents();
+
+    // Print out results in terminal:
+    QByteArray response_data = reply->readAll();
+    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+    QByteArray ba = json2.toJson();
+    QString q = QString(ba);
+    std::cout << q.toStdString() << std::endl;
+
+    reply->deleteLater();
+}

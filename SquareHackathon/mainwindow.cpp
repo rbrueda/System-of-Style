@@ -68,8 +68,8 @@ void MainWindow::on_submit_clicked()
 //        std::cout << q.toStdString() << std::endl;
 }
 
-void MainWindow::showStaffList(){
-
+void MainWindow::showStaffList()
+{
     //complete http request
     QJsonObject teamMembersJson = rq.getTeamMembers();
 
@@ -170,7 +170,8 @@ void MainWindow::on_bookManagerButton_clicked()
     showClientList();
 }
 
-void MainWindow::showClientList(){
+void MainWindow::showClientList()
+{
     QJsonObject customerJson = rq.getCustomers();
 
     QJsonArray listOfClients = customerJson["customers"].toArray();
@@ -209,4 +210,23 @@ void MainWindow::showClientList(){
 }
 
 
+void MainWindow::on_SignpButton_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->SignUpWidget);
+}
+
+
+void MainWindow::on_makeAccountButton_clicked()
+{
+    //make it a json object and assign each text inputted to member in QJsonObject
+    QJsonObject clientMember;
+    //note: this json file does not have parents
+
+    clientMember["family_name"] = ui->clientLastName->text();
+    clientMember["email_address"] = ui->clientEmail->text();
+    clientMember["given_name"] = ui->clientFirstName->text();
+    clientMember["phone_number"] = ui->clientPhoneNm->text();
+
+    rq.addClientMember(clientMember);
+}
 

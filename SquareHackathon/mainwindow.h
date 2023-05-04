@@ -30,6 +30,10 @@ private slots:
 
     void on_bookManagerButton_clicked();
 
+    void on_SignpButton_clicked();
+
+    void on_makeAccountButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
