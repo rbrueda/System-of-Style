@@ -188,6 +188,8 @@ void MainWindow::showClientList()
         //instead:
         //QString unsubscription = member1["email_unsubscribed"].toString();
         QString email = member2["email_address"].toString();
+        customerEmails.insert(email);
+
         QString phoneNum = member2["phone_number"].toString();
         QString id = member2["id"].toString();
 
@@ -222,11 +224,17 @@ void MainWindow::on_makeAccountButton_clicked()
     QJsonObject clientMember;
     //note: this json file does not have parents
 
-    clientMember["family_name"] = ui->clientLastName->text();
-    clientMember["email_address"] = ui->clientEmail->text();
-    clientMember["given_name"] = ui->clientFirstName->text();
-    clientMember["phone_number"] = ui->clientPhoneNm->text();
+    if(!customerEmails.contains(ui->clientEmail->text())){
+        clientMember["family_name"] = ui->clientLastName->text();
+        clientMember["email_address"] = ui->clientEmail->text();
+        clientMember["given_name"] = ui->clientFirstName->text();
+        clientMember["phone_number"] = ui->clientPhoneNm->text();
+        rq.addClientMember(clientMember);
+    }else{
+        cout << "Invalid Email Address" << endl;
+    }
 
-    rq.addClientMember(clientMember);
+
+
 }
 

@@ -38,6 +38,7 @@ private:
     Ui::MainWindow *ui;
     HttpRequests rq;
     QString selectedProfileID;
+    QSet<QString> customerEmails; // If there's time -> change QSet to something stored locally
     void showStaffList();
     void showClientList();
 
