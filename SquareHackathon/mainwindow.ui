@@ -281,7 +281,7 @@
      <widget class="QPushButton" name="AddBookingsButton">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>20</x>
         <y>470</y>
         <width>101</width>
         <height>24</height>
@@ -303,133 +303,6 @@
       <property name="text">
        <string>View All Bookings</string>
       </property>
-     </widget>
-     <widget class="QWidget" name="SignUpWidget" native="true">
-      <property name="geometry">
-       <rect>
-        <x>440</x>
-        <y>20</y>
-        <width>231</width>
-        <height>191</height>
-       </rect>
-      </property>
-      <widget class="QLabel" name="txt_clientfirstName">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>10</y>
-         <width>81</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>First Name:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="txt_clientLastName">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>81</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Last Name:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="txt_clientPhoneNum">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>70</y>
-         <width>111</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Phone Number:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="txt_clientEmail">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>110</y>
-         <width>121</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Email Address:</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="clientFirstName">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>0</y>
-         <width>113</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="clientLastName">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>30</y>
-         <width>113</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="clientPhoneNm">
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>60</y>
-         <width>113</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="clientEmail">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>100</y>
-         <width>113</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="makeAccountButton">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>140</y>
-         <width>111</width>
-         <height>29</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Make account</string>
-       </property>
-      </widget>
      </widget>
      <widget class="QLabel" name="txt_outputMessage">
       <property name="geometry">
@@ -460,17 +333,17 @@
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
+        <x>30</x>
+        <y>10</y>
         <width>54</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>Username:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="Username">
       <property name="geometry">
        <rect>
         <x>80</x>
@@ -480,7 +353,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="signInButton">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -490,8 +363,200 @@
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Sign in</string>
       </property>
+     </widget>
+     <widget class="QStackedWidget" name="NestedSideBarStackWidget">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>30</y>
+        <width>311</width>
+        <height>371</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <widget class="QWidget" name="signupWidget">
+       <widget class="QLineEdit" name="clientFirstName">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>150</y>
+          <width>113</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="txt_clientfirstName">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>150</y>
+          <width>81</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>First Name:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="clientLastName">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>180</y>
+          <width>113</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="txt_clientLastName">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>180</y>
+          <width>81</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Last Name:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="clientPhoneNm">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>210</y>
+          <width>113</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="txt_clientPhoneNum">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>210</y>
+          <width>111</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Phone Number:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="clientEmail">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>240</y>
+          <width>113</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="txt_clientEmail">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>240</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Email Address:</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="ErrorMessageWidget" native="true">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>299</y>
+          <width>261</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <widget class="QLabel" name="txt_errorMessage">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>281</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ca0000;&quot;&gt;Account already exists. Please sign in &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="makeAccountButton">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>270</y>
+          <width>111</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Make account</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="ViewAllBookingsWidget">
+       <widget class="QLabel" name="txt_viewAllBooking">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>160</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>View All Bookings</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="DefaultWidget"/>
+      <widget class="QWidget" name="addBookingWidget">
+       <widget class="QLabel" name="Title">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>50</y>
+          <width>62</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Booking</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="mainMenuView">
@@ -543,7 +608,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

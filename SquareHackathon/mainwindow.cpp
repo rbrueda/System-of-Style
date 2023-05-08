@@ -166,6 +166,9 @@ void MainWindow::on_employeeManagerButton_clicked()
 
 void MainWindow::on_bookManagerButton_clicked()
 {
+    ui->NestedSideBarStackWidget->setCurrentWidget(ui->DefaultWidget);
+    ui->ErrorMessageWidget->hide();
+//    ui->signupWidget->hide();
     ui->mainStackWidget->setCurrentWidget(ui->bookManagerView);
     showClientList();
 }
@@ -214,12 +217,15 @@ void MainWindow::showClientList()
 
 void MainWindow::on_SignpButton_clicked()
 {
-    ui->mainStackWidget->setCurrentWidget(ui->SignUpWidget);
+    ui->NestedSideBarStackWidget->setCurrentWidget(ui->signupWidget);
+//    cout << "IT RUNS!!" << endl;
+//    ui->signupWidget->show();
 }
 
 
 void MainWindow::on_makeAccountButton_clicked()
 {
+
     //make it a json object and assign each text inputted to member in QJsonObject
     QJsonObject clientMember;
     //note: this json file does not have parents
@@ -232,9 +238,21 @@ void MainWindow::on_makeAccountButton_clicked()
         rq.addClientMember(clientMember);
     }else{
         cout << "Invalid Email Address" << endl;
+        ui->ErrorMessageWidget->show();
     }
+}
+
+
+void MainWindow::on_AddBookingsButton_clicked()
+{
+    ui->NestedSideBarStackWidget->setCurrentWidget(ui->addBookingWidget);
+}
 
 
 
+
+void MainWindow::on_ViewAllBookings_clicked()
+{
+    ui->NestedSideBarStackWidget->setCurrentWidget(ui->ViewAllBookingsWidget);
 }
 

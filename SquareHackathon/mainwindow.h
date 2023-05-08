@@ -34,6 +34,10 @@ private slots:
 
     void on_makeAccountButton_clicked();
 
+    void on_AddBookingsButton_clicked();
+
+    void on_ViewAllBookings_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
