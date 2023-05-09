@@ -34,6 +34,8 @@ private slots:
 
     void on_makeAccountButton_clicked();
 
+    void on_client_countryCodeDropDown_activated(int index);
+
     void on_AddBookingsButton_clicked();
 
     void on_ViewAllBookings_clicked();
@@ -47,6 +49,7 @@ private:
     QSet<QString> customerEmails; // If there's time -> change QSet to something stored locally
     void showStaffList();
     void showClientList();
+    void dropDownForCountryCode();
 
 };
 #endif // MAINWINDOW_H

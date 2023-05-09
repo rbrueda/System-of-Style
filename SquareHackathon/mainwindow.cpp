@@ -22,10 +22,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->staffProfile->hide();
     ui->addEmployeeWidget->hide();
     showStaffList();
+    dropDownForCountryCode();
 
     // 0: Employee View
     // 1: Main Menu
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+
+    // PHONE NUMBER ONLY NUMBERS:
+    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
 
 }
 
@@ -249,11 +253,38 @@ void MainWindow::on_AddBookingsButton_clicked()
 }
 
 
+void MainWindow::dropDownForCountryCode(){
+    ui->client_countryCodeDropDown->setEditable(true);
+    QFile file("../SquareHackathon/country-codes-phone.csv");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QTextStream in(&file);
+    QString line = in.readLine();
+    line = in.readLine();
+    while (!line.isNull()) {
+        QStringList lineList = line.split(u',');
+
+        ui->client_countryCodeDropDown->addItem(lineList[0] + " (+" + lineList[1] + ")", lineList[1]);
+         line = in.readLine();
+    }
+    ui->client_countryCodeDropDown->view()->setMinimumWidth(300);
+
+}
 
 
 void MainWindow::on_ViewAllBookings_clicked()
 {
     ui->NestedSideBarStackWidget->setCurrentWidget(ui->ViewAllBookingsWidget);
+}
+
+void MainWindow::on_client_countryCodeDropDown_activated(int index)
+{
+
+ QLineEdit * LineEditStr = ui->client_countryCodeDropDown->lineEdit();
+
+ LineEditStr->setText("+" + ui->client_countryCodeDropDown->itemData(index).toString());
+
 }
 
 
