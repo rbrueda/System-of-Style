@@ -187,4 +187,46 @@ void HttpRequests::addClientMember(QJsonObject json){
     reply->deleteLater();
 }
 
+QJsonObject HttpRequests::retrieveCustomer(QString email){
+    QJsonObject json;
+    QJsonObject query;
+    QJsonObject filter;
+    QJsonObject emailAddress;
+
+    emailAddress["exact"] = email;
+    filter["email_address"] = emailAddress;
+    query["filter"] = filter;
+    json["query"]= query;
+
+
+//    teamMember["email_address"] = ui->email->text();
+//    teamMember["given_name"] = ui->firstName->text();
+//    teamMember["phone_number"] = ui->phoneNumber->text();
+
+    // Creates url object:
+    QUrl url("https://connect.squareupsandbox.com/v2/customers/search");
+    QNetworkRequest request(url);
+
+    // Set Request Header:
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", apiCode);
+    request.setRawHeader("Square-Version", "2023-04-19");
+
+    // Make POST Request:
+    QNetworkAccessManager nam;
+    QNetworkReply *reply = nam.post(request, QJsonDocument(json).toJson());
+
+    // Wait for Response from Server:
+    while (!reply->isFinished()) qApp->processEvents();
+
+    // Print out results in terminal:
+    QByteArray response_data = reply->readAll();
+    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+
+    reply->deleteLater();
+    return json2.object();
+
+}
+
+
 

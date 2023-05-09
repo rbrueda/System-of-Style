@@ -333,22 +333,22 @@
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>0</x>
         <y>10</y>
-        <width>54</width>
-        <height>17</height>
+        <width>101</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>Username:</string>
+       <string>Email Address:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="Username">
+     <widget class="QLineEdit" name="client_signIn_email">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>100</x>
         <y>10</y>
-        <width>113</width>
+        <width>171</width>
         <height>25</height>
        </rect>
       </property>
@@ -356,7 +356,7 @@
      <widget class="QPushButton" name="signInButton">
       <property name="geometry">
        <rect>
-        <x>210</x>
+        <x>280</x>
         <y>10</y>
         <width>80</width>
         <height>25</height>
@@ -371,12 +371,12 @@
        <rect>
         <x>370</x>
         <y>30</y>
-        <width>311</width>
+        <width>331</width>
         <height>371</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="signupWidget">
        <widget class="QLineEdit" name="clientFirstName">
@@ -462,7 +462,7 @@
          <rect>
           <x>140</x>
           <y>240</y>
-          <width>113</width>
+          <width>161</width>
           <height>24</height>
          </rect>
         </property>
@@ -543,7 +543,7 @@
       </widget>
       <widget class="QWidget" name="DefaultWidget"/>
       <widget class="QWidget" name="addBookingWidget">
-       <widget class="QLabel" name="Title">
+       <widget class="QLabel" name="txt_addBooking">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -554,6 +554,73 @@
         </property>
         <property name="text">
          <string>Booking</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="signInProfileWidget">
+       <widget class="QLineEdit" name="clientName">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>40</y>
+          <width>113</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="clientPhoneNumber">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>80</y>
+          <width>113</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="clientEmailAddress">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>110</y>
+          <width>171</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="txt_clientPhoneNumber">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>80</y>
+          <width>111</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Phone Number:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="txt_clientEmailAddress">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>110</y>
+          <width>101</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Email Address:</string>
         </property>
        </widget>
       </widget>
@@ -608,7 +675,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

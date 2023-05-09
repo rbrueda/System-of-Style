@@ -38,6 +38,8 @@ private slots:
 
     void on_ViewAllBookings_clicked();
 
+    void on_signInButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;

@@ -256,3 +256,26 @@ void MainWindow::on_ViewAllBookings_clicked()
     ui->NestedSideBarStackWidget->setCurrentWidget(ui->ViewAllBookingsWidget);
 }
 
+
+void MainWindow::on_signInButton_clicked()
+{
+    ui->NestedSideBarStackWidget->setCurrentWidget(ui->signInProfileWidget);
+    QJsonObject customersJson = rq.retrieveCustomer(ui->client_signIn_email->text());
+
+    //gets the teamMember's array
+    QJsonArray signInMember = customersJson["customers"].toArray();
+    QJsonObject member1 = signInMember[0].toObject();
+
+    QString name = member1["given_name"].toString() + " " + member1["family_name"].toString();
+    QString status = member1["status"].toString();//is this useful?
+    QString email = member1["email_address"].toString();
+    QString phoneNum = member1["phone_number"].toString();
+    QString id = member1["id"].toString(); //is it useful?
+
+
+    ui->clientPhoneNumber->setText(phoneNum);
+    ui->clientEmailAddress->setText(email);
+    ui->clientName->setText(name);
+
+}
+
