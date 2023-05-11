@@ -9,6 +9,8 @@
 #include <QtNetwork>
 #include <fstream>
 #include <QListWidget>
+#include <QCalendarWidget>
+
 
 using namespace std;
 
@@ -29,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 
     // PHONE NUMBER ONLY NUMBERS:
-    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
+//    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
 
 }
 
@@ -99,6 +101,7 @@ void MainWindow::showStaffList()
         }
 
         //does the ui part to print to screen
+        //item is the list in the employee manager
         QListWidgetItem* item = new QListWidgetItem();
 //        item->setText(name);
         item->setData(1, email);
@@ -109,6 +112,7 @@ void MainWindow::showStaffList()
 
 
         ui->staffList->addItem(item);
+        ui->employee_dropdrown->addItem(name, id);
     }
 
     //    cout << "Type of team_members : " << typeid(teamMembersJson["team_members"]).name() << endl;
@@ -266,7 +270,7 @@ void MainWindow::dropDownForCountryCode(){
         QStringList lineList = line.split(u',');
 
         ui->client_countryCodeDropDown->addItem(lineList[0] + " (+" + lineList[1] + ")", lineList[1]);
-         line = in.readLine();
+        line = in.readLine();
     }
     ui->client_countryCodeDropDown->view()->setMinimumWidth(300);
 
@@ -309,4 +313,15 @@ void MainWindow::on_signInButton_clicked()
     ui->clientName->setText(name);
 
 }
+
+
+
+
+
+void MainWindow::on_comboBox_customContextMenuRequested(const QPoint &pos)
+{
+    ui->NestedSideBarStackWidget->setCurrentWidget(ui->);
+}
+
+
 

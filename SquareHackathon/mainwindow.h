@@ -42,6 +42,9 @@ private slots:
 
     void on_signInButton_clicked();
 
+
+    void on_comboBox_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
