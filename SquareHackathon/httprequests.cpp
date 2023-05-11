@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <filesystem>
+#include <QStringBuilder>
 
 
 using namespace std;
@@ -159,7 +160,12 @@ void HttpRequests::inactivateTeamMember(QString teamMemberID){
     reply->deleteLater();
 }
 
-void HttpRequests::addClientMember(QJsonObject json){
+QString HttpRequests::addClientMember(QJsonObject json){
+    QString returnStr = "";
+
+//    if(json['family_name'].toString() == "" || json['email_address'].toString() == "" || json['given_name'].toString() == "" || json['phone_number'].toString() == ""){
+//        return QString("Missing 1 or more fields.");
+//    }
 
     // Creates url object:
     QUrl url("https://connect.squareupsandbox.com/v2/customers");
@@ -179,12 +185,23 @@ void HttpRequests::addClientMember(QJsonObject json){
 
     // Print out results in terminal:
     QByteArray response_data = reply->readAll();
-    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
-    QByteArray ba = json2.toJson();
-    QString q = QString(ba);
-    std::cout << q.toStdString() << std::endl;
+    QJsonObject output = (QJsonDocument::fromJson(response_data)).object();
+
+
+    if(output.contains("errors")){
+        QJsonArray listOfErrors = output["errors"].toArray();
+
+        for(int i=0; i<listOfErrors.size();i++){
+            QJsonObject temp = listOfErrors[i].toObject();
+            reply->deleteLater();
+            returnStr = returnStr % temp["detail"].toString() % "\n";
+        }
+        return returnStr;
+    }
+
 
     reply->deleteLater();
+    return NULL;
 }
 
 QJsonObject HttpRequests::retrieveCustomer(QString email){

@@ -14,7 +14,7 @@ public:
     QJsonObject getTeamMembers();
     QJsonObject getCustomers();
     void inactivateTeamMember(QString teamMemberID);
-    void addClientMember(QJsonObject json);
+    QString addClientMember(QJsonObject json);
     QJsonObject retrieveCustomer(QString email);
 
 

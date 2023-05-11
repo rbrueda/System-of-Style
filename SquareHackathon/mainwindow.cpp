@@ -9,10 +9,19 @@
 #include <QtNetwork>
 #include <fstream>
 #include <QListWidget>
+#include <QStringBuilder>
 #include <QCalendarWidget>
 
 
 using namespace std;
+
+/*
+TODO:
+1. Fix Color Changing bug on the make account error message
+2. Confirm that there are no empty fields in sign up
+3. Make the elements of QWidget Employee View in a seperate class (Not Priority)
+    */
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -31,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 
     // PHONE NUMBER ONLY NUMBERS:
+    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
 //    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
 
 }
@@ -233,7 +243,6 @@ void MainWindow::on_SignpButton_clicked()
 
 void MainWindow::on_makeAccountButton_clicked()
 {
-
     //make it a json object and assign each text inputted to member in QJsonObject
     QJsonObject clientMember;
     //note: this json file does not have parents
@@ -242,10 +251,18 @@ void MainWindow::on_makeAccountButton_clicked()
         clientMember["family_name"] = ui->clientLastName->text();
         clientMember["email_address"] = ui->clientEmail->text();
         clientMember["given_name"] = ui->clientFirstName->text();
-        clientMember["phone_number"] = ui->clientPhoneNm->text();
-        rq.addClientMember(clientMember);
+        clientMember["phone_number"] = ui->client_countryCodeDropDown->currentText() + ui->clientPhoneNm->text();
+        QString output = rq.addClientMember(clientMember);
+        if(output.isNull()){
+            ui->ErrorMessageWidget->hide();
+        }
+        else{
+            ui->txt_errorMessage->setText(output);
+            ui->ErrorMessageWidget->show();
+        }
+
     }else{
-        cout << "Invalid Email Address" << endl;
+//        ui->txt_errorMessage->setText(QString("Account already exists. Please sign in."));
         ui->ErrorMessageWidget->show();
     }
 }

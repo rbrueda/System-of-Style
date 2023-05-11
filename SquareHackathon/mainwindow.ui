@@ -492,10 +492,10 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>299</y>
-          <width>261</width>
-          <height>41</height>
+          <x>10</x>
+          <y>300</y>
+          <width>341</width>
+          <height>81</height>
          </rect>
         </property>
         <widget class="QLabel" name="txt_errorMessage">
@@ -506,8 +506,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>281</width>
-           <height>31</height>
+           <width>341</width>
+           <height>81</height>
           </rect>
          </property>
          <property name="text">
