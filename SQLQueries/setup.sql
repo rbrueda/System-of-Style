@@ -1,8 +1,8 @@
 CREATE DATABASE HairSalonBookingManager;
 
-CREATE USER testOwner_HSBM@localhost IDENTIFIED BY 'largars123';
+CREATE USER username@localhost IDENTIFIED BY 'password';
 
-GRANT ALL PRIVILEGES ON HairSalonBookingManager.* TO 'testOwner_HSBM'@localhost IDENTIFIED BY 'largars123';
+GRANT ALL PRIVILEGES ON HairSalonBookingManager.* TO username@localhost IDENTIFIED BY 'password';
 
 
 FLUSH PRIVILEGES;
