@@ -355,28 +355,28 @@ void MainWindow::on_submitDateButton_clicked()
     std::cout <<"id: " <<currentClientID.toStdString()<<endl;
 }
 
-QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
-int hour;
-double minute;
-QList<string> newString;
-for (int i = 0; i<test.size(); i++){
-    hour = floor(test[i]);
-    if (hour == 0){
-        hour = 12;
-    }
-    else if (hour > 12){
-        hour = hour - 12;
-    }
-    newString[i] = string(hour) + ":";
+//QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
+//int hour;
+//double minute;
+//QList<string> newString;
+//for (int i = 0; i<test.size(); i++){
+//    hour = floor(test[i]);
+//    if (hour == 0){
+//        hour = 12;
+//    }
+//    else if (hour > 12){
+//        hour = hour - 12;
+//    }
+//    newString[i] = string(hour) + ":";
 
-    minute = test[i] - hour;
-    if (minute == 0.5){
-        newString[i] = newString[i] + "30";
-    }
-    else if (minute == 0.0){
-        newString[i] = newString[i] + "00";
-    }
-}
+//    minute = test[i] - hour;
+//    if (minute == 0.5){
+//        newString[i] = newString[i] + "30";
+//    }
+//    else if (minute == 0.0){
+//        newString[i] = newString[i] + "00";
+//    }
+//}
 
 
 
