@@ -11,6 +11,7 @@
 #include <QListWidget>
 #include <QStringBuilder>
 #include <QCalendarWidget>
+#include <cmath>
 
 
 using namespace std;
@@ -40,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 
     // PHONE NUMBER ONLY NUMBERS:
-    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
 //    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
 
 }
@@ -214,6 +214,7 @@ void MainWindow::showClientList()
         QString phoneNum = member2["phone_number"].toString();
         QString id = member2["id"].toString();
 
+
 //        if(unsubscription[0] == 'f'){
 //            continue;
 //        }
@@ -245,6 +246,7 @@ void MainWindow::on_makeAccountButton_clicked()
 {
     //make it a json object and assign each text inputted to member in QJsonObject
     QJsonObject clientMember;
+    QString id = "something";
     //note: this json file does not have parents
 
     if(!customerEmails.contains(ui->clientEmail->text())){
@@ -259,12 +261,16 @@ void MainWindow::on_makeAccountButton_clicked()
         else{
             ui->txt_errorMessage->setText(output);
             ui->ErrorMessageWidget->show();
+            ui->txt_errorMessage->setText("<font color='red'>" + output + "</font>");
+            //split output line to 2 string variables
         }
 
     }else{
 //        ui->txt_errorMessage->setText(QString("Account already exists. Please sign in."));
         ui->ErrorMessageWidget->show();
+//        ui->label->setText("<font color='red'>text</font>");
     }
+    currentClientID = id;
 }
 
 
@@ -302,9 +308,9 @@ void MainWindow::on_ViewAllBookings_clicked()
 void MainWindow::on_client_countryCodeDropDown_activated(int index)
 {
 
- QLineEdit * LineEditStr = ui->client_countryCodeDropDown->lineEdit();
+    QLineEdit * LineEditStr = ui->client_countryCodeDropDown->lineEdit();
 
- LineEditStr->setText("+" + ui->client_countryCodeDropDown->itemData(index).toString());
+    LineEditStr->setText("+" + ui->client_countryCodeDropDown->itemData(index).toString());
 
 }
 
@@ -319,25 +325,57 @@ void MainWindow::on_signInButton_clicked()
     QJsonObject member1 = signInMember[0].toObject();
 
     QString name = member1["given_name"].toString() + " " + member1["family_name"].toString();
-    QString status = member1["status"].toString();//is this useful?
+    QString status = member1["status"].toString();
     QString email = member1["email_address"].toString();
     QString phoneNum = member1["phone_number"].toString();
-    QString id = member1["id"].toString(); //is it useful?
+    QString id = member1["id"].toString();
 
 
     ui->clientPhoneNumber->setText(phoneNum);
     ui->clientEmailAddress->setText(email);
     ui->clientName->setText(name);
 
+    currentClientID = id;
 }
 
 
-
-
-
-void MainWindow::on_comboBox_customContextMenuRequested(const QPoint &pos)
+void MainWindow::on_submitDateButton_clicked()
 {
-    ui->NestedSideBarStackWidget->setCurrentWidget(ui->);
+    QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
+    std::cout<<"Hello!\n";
+    std::cout<< "date " << date.toStdString()<<endl;
+    QString selectionvalue= ui->employee_dropdrown->currentText();
+    //id of employee
+    QString idEmployee = ui->employee_dropdrown->itemData(2).toString();
+    //    std::cout << "Choice Selected: " << selectionvalue.toStdString();
+    std::cout << selectionvalue.toStdString()<<endl;
+    std::cout <<"id: " << idEmployee.toStdString()<<endl;
+
+    //id of customer
+    std::cout <<"id: " <<currentClientID.toStdString()<<endl;
+}
+
+QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
+int hour;
+double minute;
+QList<string> newString;
+for (int i = 0; i<test.size(); i++){
+    hour = floor(test[i]);
+    if (hour == 0){
+        hour = 12;
+    }
+    else if (hour > 12){
+        hour = hour - 12;
+    }
+    newString[i] = string(hour) + ":";
+
+    minute = test[i] - hour;
+    if (minute == 0.5){
+        newString[i] = newString[i] + "30";
+    }
+    else if (minute == 0.0){
+        newString[i] = newString[i] + "00";
+    }
 }
 
 
