@@ -27,10 +27,8 @@ QSqlDatabase ManageBooking::initDB(){
 
 QList<double> ManageBooking::getAvailableBookings(QString date, QString employeeID){
     QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE timeOfDay=DATE(" % date % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
-    query.bindValue(0, date);
-    query.bindValue(1, employeeID);
 
-    cout << query.lastQuery().toStdString() << endl;
+//    cout << query.lastQuery().toStdString() << endl;
     QList<double> out;
     double currValue = 0;
     double timeOfDay = 24;
@@ -46,9 +44,9 @@ QList<double> ManageBooking::getAvailableBookings(QString date, QString employee
         out.append(currValue);
         currValue += 0.5;
     }
-    for(int i =0; i< out.size(); i++){
-        cout << to_string(out[i]) <<endl;
-    }
+//    for(int i =0; i< out.size(); i++){
+//        cout << to_string(out[i]) <<endl;
+//    }
     return out;
 }
 
@@ -63,8 +61,20 @@ bool ManageBooking::addBooking(QString date, double time, QString customerID, QS
     return query.exec();
 }
 
-//QList<double> ManageBooking::getEmployeeSchedule(QString date, QString employeeID){
+QList<double> ManageBooking::getScheduleEmployee(QString date, QString employeeID){
+    QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE timeOfDay=DATE(" % date % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
 
-//}
+    QList<double> out;
+    while (query.next()) {
+        out.append(query.value(0).toDouble());
+
+    }
+
+        for(int i =0; i< out.size(); i++){
+            cout << to_string(out[i]) <<endl;
+        }
+    return out;
+}
+
 
 

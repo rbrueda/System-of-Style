@@ -25,6 +25,7 @@ TODO:
 
 BUGS:
 1. When we click login with typing name, Bisuit Rueda is shown
+2. Error Message when sign in with invalid email
 
 */
 
@@ -363,12 +364,14 @@ void MainWindow::on_submitDateButton_clicked()
     //id of customer
     std::cout <<"id: " <<currentClientID.toStdString()<<endl;
 
-    updateAvaliableTimes_AddBooking();
+    updateAvaliableTimes_AddBooking(date, idEmployee);
+
 }
 
-void MainWindow::updateAvaliableTimes_AddBooking()
+void MainWindow::updateAvaliableTimes_AddBooking(QString date, QString idEmployee)
 {
-    QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
+//    QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
+    QList<double> test = mb.getAvailableBookings(date, idEmployee);
     int hour;
     double minute;
     QString string;
@@ -398,7 +401,7 @@ void MainWindow::updateAvaliableTimes_AddBooking()
         else{
             string = string + "PM";
         }
-        ui->timeAddBookingDropdown->addItem(string);
+        ui->timeAddBookingDropdown->addItem(string, test[i]);
     }
 }
 
