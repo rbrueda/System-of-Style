@@ -21,7 +21,11 @@ TODO:
 1. Fix Color Changing bug on the make account error message
 2. Confirm that there are no empty fields in sign up
 3. Make the elements of QWidget Employee View in a seperate class (Not Priority)
-    */
+
+BUGS:
+1. When we click login with typing name, Bisuit Rueda is shown
+
+*/
 
 
 
@@ -353,30 +357,38 @@ void MainWindow::on_submitDateButton_clicked()
 
     //id of customer
     std::cout <<"id: " <<currentClientID.toStdString()<<endl;
+
+    updateAvaliableTimes_AddBooking();
 }
 
-//QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
-//int hour;
-//double minute;
-//QList<string> newString;
-//for (int i = 0; i<test.size(); i++){
-//    hour = floor(test[i]);
-//    if (hour == 0){
-//        hour = 12;
-//    }
-//    else if (hour > 12){
-//        hour = hour - 12;
-//    }
-//    newString[i] = string(hour) + ":";
+void MainWindow::updateAvaliableTimes_AddBooking()
+{
+    QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
+    int hour;
+    double minute;
+    QList<string> newString; // Don't make a list -> add them directly to dropdown
+    for (int i = 0; i<test.size(); i++){
+        hour = floor(test[i]);
+        if (hour == 0){
+            hour = 12;
+        }
+        else if (hour > 12){
+            hour = hour - 12;
+        }
 
-//    minute = test[i] - hour;
-//    if (minute == 0.5){
-//        newString[i] = newString[i] + "30";
-//    }
-//    else if (minute == 0.0){
-//        newString[i] = newString[i] + "00";
-//    }
-//}
+        // Saying newString[i] is problematic -> use append instead
+        newString[i] = string(hour) + ":"; // Use QStrings
+
+        minute = test[i] - hour;
+        if (minute == 0.5){
+            newString[i] = newString[i] + "30";
+        }
+        else if (minute == 0.0){
+            newString[i] = newString[i] + "00";
+        }
+    }
+}
+
 
 
 

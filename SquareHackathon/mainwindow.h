@@ -44,6 +44,7 @@ private slots:
 
     void on_submitDateButton_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
@@ -53,6 +54,7 @@ private:
     void showStaffList();
     void showClientList();
     void dropDownForCountryCode();
+    void updateAvaliableTimes_AddBooking();
 
 };
 #endif // MAINWINDOW_H
