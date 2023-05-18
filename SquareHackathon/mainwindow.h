@@ -49,7 +49,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
-    ManageBooking mb;
+//    ManageBooking mb;
     QString selectedProfileID;
     QString currentClientID;
     QSet<QString> customerEmails; // If there's time -> change QSet to something stored locally

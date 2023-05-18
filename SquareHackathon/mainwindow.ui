@@ -631,7 +631,7 @@
          <string>Time:</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="timeAddBookingDropdown">
         <property name="geometry">
          <rect>
           <x>100</x>
@@ -760,7 +760,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
