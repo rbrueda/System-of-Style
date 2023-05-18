@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "httprequests.h"
+#include "managebooking.h"
 #include <QMainWindow>
 #include <QListWidgetItem>
 
@@ -48,6 +49,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
+    ManageBooking mb;
     QString selectedProfileID;
     QString currentClientID;
     QSet<QString> customerEmails; // If there's time -> change QSet to something stored locally

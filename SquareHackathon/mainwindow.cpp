@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "httprequests.h"
+#include "managebooking.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <iostream>
@@ -43,6 +44,10 @@ MainWindow::MainWindow(QWidget *parent)
     // 0: Employee View
     // 1: Main Menu
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+
+    mb.getAvailableBookings("2023-08-01", "fj34f3443");
+
+
 
     // PHONE NUMBER ONLY NUMBERS:
 //    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
@@ -366,7 +371,7 @@ void MainWindow::updateAvaliableTimes_AddBooking()
     QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
     int hour;
     double minute;
-    QList<string> newString; // Don't make a list -> add them directly to dropdown
+    QString string;
     for (int i = 0; i<test.size(); i++){
         hour = floor(test[i]);
         if (hour == 0){
@@ -386,6 +391,8 @@ void MainWindow::updateAvaliableTimes_AddBooking()
         else if (minute == 0.0){
             newString[i] = newString[i] + "00";
         }
+        string = hour + ':' + minute;
+        ui->timeAddBookingDropdown->addItem(string);
     }
 }
 
