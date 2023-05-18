@@ -74,6 +74,7 @@ CMakeLists.txt.user*
 
 # DebugFolders:
 build-SquareHackathon-Desktop_Qt_6_5_0_MinGW_64_bit-Debug/
+build-SquareHackathon-Qt6-Debug/
 build-SquareHackathon-Desktop-Debug
 
 */httpRequests.txt
