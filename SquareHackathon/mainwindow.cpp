@@ -405,6 +405,26 @@ void MainWindow::updateAvaliableTimes_AddBooking(QString date, QString idEmploye
     }
 }
 
+//employee id
+//client id
+//date
+//time
 
+void MainWindow::on_submitAddBookingButton_clicked()
+{
+//    QJsonObject Booking;
+    QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
+    //id of employee
+    QString idEmployee = ui->employee_dropdrown->itemData(2).toString();
+//    QString time = ui->timeAddBookingDropdown->itemData(4).toString();
+//    QString time = ui->timeAddBookingDropdown->currentText();
+    QString time = ui->timeAddBookingDropdown->itemData(ui->timeAddBookingDropdown->currentIndex()).toString();
+    cout<<"time: " << time.toStdString() <<endl; //time is an issue***
 
+    //close the window for add bookings
+
+    //id of customer
+//    QString idClient = currentClientID.toString();
+
+}
 

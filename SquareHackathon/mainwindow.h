@@ -46,6 +46,8 @@ private slots:
     void on_submitDateButton_clicked();
 
 
+    void on_submitAddBookingButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
