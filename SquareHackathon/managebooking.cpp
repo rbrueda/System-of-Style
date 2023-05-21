@@ -25,8 +25,22 @@ QSqlDatabase ManageBooking::initDB(){
     return db;
 }
 
-QList<double> ManageBooking::getAvailableBookings(QString date, QString employeeID){
-    QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE timeOfDay=DATE(" % date % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
+QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID){
+
+    QString dateStr = date.toString("yyyy-MM-dd");
+
+    int dayOfWeek = date.dayOfWeek();
+
+    QSqlQuery query2;
+    switch(dayOfWeek){
+    case 1:
+
+
+    }
+
+
+
+    QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE apptDate=DATE(" % dateStr % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
 
 //    cout << query.lastQuery().toStdString() << endl;
     QList<double> out;
@@ -62,7 +76,7 @@ bool ManageBooking::addBooking(QString date, double time, QString customerID, QS
 }
 
 QList<double> ManageBooking::getScheduleEmployee(QString date, QString employeeID){
-    QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE timeOfDay=DATE(" % date % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
+    QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE apptDate=DATE(" % date % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
 
     QList<double> out;
     while (query.next()) {
@@ -76,5 +90,26 @@ QList<double> ManageBooking::getScheduleEmployee(QString date, QString employeeI
     return out;
 }
 
+void ManageBooking::getAllSchedules(QString date){
+    QSqlQuery query("SELECT timeOfDay, employeeID, customerID FROM Appointments WHERE apptDate=DATE(\"" % date % "\") ORDER BY timeOfDay ASC;");
 
+//    QHash<QString, struct  ScheduleBlock> out;
+
+//    cout << "WORKS" << endl;
+    while (query.next()) {
+            cout << query.value(0).toString().toStdString() << endl;
+            cout << query.value(1).toString().toStdString() << endl;
+            cout << query.value(2).toString().toStdString() << endl;
+            cout << "---" << endl;
+
+//            struct ScheduleBlock;
+
+            // out.append(query.value(0).toDouble());
+    }
+
+//    for(int i =0; i< out.size(); i++){
+//            cout << to_string(out[i]) <<endl;
+//    }
+//    return out;
+}
 

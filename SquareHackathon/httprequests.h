@@ -14,8 +14,10 @@ public:
     QJsonObject getTeamMembers();
     QJsonObject getCustomers();
     void inactivateTeamMember(QString teamMemberID);
-    QString addClientMember(QJsonObject json);
-    QJsonObject retrieveCustomer(QString email);
+    QString addClientMember(QJsonObject json, bool * result);
+    bool retrieveCustomer(QString email, QJsonObject * customerData);
+
+
 
 
 private:

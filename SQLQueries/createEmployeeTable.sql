@@ -49,6 +49,67 @@ VALUES (
     'fj34f3443'
   );
 
+
+
+CREATE TABLE EmployeeShifts (
+  employeeID VARCHAR(26), 
+  mon_start DECIMAL(3,1),
+  mon_end DECIMAL(3,1),
+  tues_start DECIMAL(3,1),
+  tues_end DECIMAL(3,1),
+  wed_start DECIMAL(3,1),
+  wed_end DECIMAL(3,1),
+  thurs_start DECIMAL(3,1),
+  thurs_end DECIMAL(3,1),
+  fri_start DECIMAL(3,1),
+  fri_end DECIMAL(3,1),
+  sat_start DECIMAL(3,1),
+  sat_end DECIMAL(3,1),
+  sun_start DECIMAL(3,1),
+  sun_end DECIMAL(3,1),
+  PRIMARY KEY(employeeID)
+
+);
+
+
+INSERT INTO EmployeeShifts (
+    employeeID,
+    mon_start,
+    mon_end,
+    tues_start,
+    tues_end,
+    wed_start,
+    wed_end,
+    thurs_start,
+    thurs_end,
+    fri_start,
+    fri_end,
+    sat_start,
+    sat_end,
+    sun_start,
+    sun_end
+  )
+VALUES (
+    'fj34f3443',
+    '9.0',
+    '17.0',
+    '9.0',
+    '17.0',
+    '9.0',
+    '17.0',
+    '9.0',
+    '17.0',
+    '9.0',
+    '17.0',
+    '9.0',
+    '17.0',
+    NULL,
+    NULL
+  );
+
+
+SELECT mon_start, mon_end FROM EmployeeShifts
+WHERE employeeID="fj34f3443";
   
 
 -- YYYY-MM-DD

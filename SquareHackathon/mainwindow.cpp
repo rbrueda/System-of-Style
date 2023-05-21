@@ -13,6 +13,7 @@
 #include <QStringBuilder>
 #include <QCalendarWidget>
 #include <cmath>
+#include <QMessageBox>
 
 
 using namespace std;
@@ -45,6 +46,8 @@ MainWindow::MainWindow(QWidget *parent)
     // 0: Employee View
     // 1: Main Menu
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+
+    mb.getAllSchedules("2023-08-01");
 
 //    mb.getAvailableBookings("2023-08-01", "fj34f3443");
 
@@ -256,7 +259,7 @@ void MainWindow::on_makeAccountButton_clicked()
 {
     //make it a json object and assign each text inputted to member in QJsonObject
     QJsonObject clientMember;
-    QString id = "something";
+    bool result = true;
     //note: this json file does not have parents
 
     if(!customerEmails.contains(ui->clientEmail->text())){
@@ -264,29 +267,34 @@ void MainWindow::on_makeAccountButton_clicked()
         clientMember["email_address"] = ui->clientEmail->text();
         clientMember["given_name"] = ui->clientFirstName->text();
         clientMember["phone_number"] = ui->client_countryCodeDropDown->currentText() + ui->clientPhoneNm->text();
-        QString output = rq.addClientMember(clientMember);
-        if(output.isNull()){
-            ui->ErrorMessageWidget->hide();
+        QString output = rq.addClientMember(clientMember, &result);
+        if(result == true){
+//            ui->ErrorMessageWidget->hide();
+            currentClientID = output;
+            cout << output.toStdString() << endl;
         }
         else{
-            ui->txt_errorMessage->setText(output);
-            ui->ErrorMessageWidget->show();
-            ui->txt_errorMessage->setText("<font color='red'>" + output + "</font>");
-            //split output line to 2 string variables
+            printErrorMessage(output);
         }
 
     }else{
+        printErrorMessage("Account already exists. Please sign in.");
 //        ui->txt_errorMessage->setText(QString("Account already exists. Please sign in."));
-        ui->ErrorMessageWidget->show();
+//        ui->ErrorMessageWidget->show();
 //        ui->label->setText("<font color='red'>text</font>");
     }
-    currentClientID = id;
+
 }
 
 
 void MainWindow::on_AddBookingsButton_clicked()
 {
+    if(currentClientID.isNull()){
+        printErrorMessage("You must login/signup to continue");
+        return;
+    }
     ui->NestedSideBarStackWidget->setCurrentWidget(ui->addBookingWidget);
+
 }
 
 
@@ -327,8 +335,20 @@ void MainWindow::on_client_countryCodeDropDown_activated(int index)
 
 void MainWindow::on_signInButton_clicked()
 {
+    if(ui->client_signIn_email->text() == ""){
+        printErrorMessage("Please Type an email in");
+        return;
+    }
+
+    QJsonObject customersJson;
+
+    if(!rq.retrieveCustomer(ui->client_signIn_email->text(), &customersJson)){
+        printErrorMessage("Invalid Email!");
+        return;
+    }
+
     ui->NestedSideBarStackWidget->setCurrentWidget(ui->signInProfileWidget);
-    QJsonObject customersJson = rq.retrieveCustomer(ui->client_signIn_email->text());
+
 
     //gets the teamMember's array
     QJsonArray signInMember = customersJson["customers"].toArray();
@@ -351,9 +371,11 @@ void MainWindow::on_signInButton_clicked()
 
 void MainWindow::on_submitDateButton_clicked()
 {
-    QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
+//    QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
+    QDate date = ui->calendarWidget->selectedDate();
+
     std::cout<<"Hello!\n";
-    std::cout<< "date " << date.toStdString()<<endl;
+    std::cout<< "date " << date.toString().toStdString()<<endl;
     QString selectionvalue= ui->employee_dropdrown->currentText();
     //id of employee
     QString idEmployee = ui->employee_dropdrown->itemData(2).toString();
@@ -368,7 +390,7 @@ void MainWindow::on_submitDateButton_clicked()
 
 }
 
-void MainWindow::updateAvaliableTimes_AddBooking(QString date, QString idEmployee)
+void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
 {
 //    QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
     QList<double> test = mb.getAvailableBookings(date, idEmployee);
@@ -405,6 +427,12 @@ void MainWindow::updateAvaliableTimes_AddBooking(QString date, QString idEmploye
     }
 }
 
+void MainWindow::printErrorMessage(QString message){
+    QMessageBox messageBox;
+    messageBox.critical(0,"Error", message);
+    messageBox.setFixedSize(500,200);
+}
+
 //employee id
 //client id
 //date
@@ -418,8 +446,10 @@ void MainWindow::on_submitAddBookingButton_clicked()
     QString idEmployee = ui->employee_dropdrown->itemData(2).toString();
 //    QString time = ui->timeAddBookingDropdown->itemData(4).toString();
 //    QString time = ui->timeAddBookingDropdown->currentText();
-    QString time = ui->timeAddBookingDropdown->itemData(ui->timeAddBookingDropdown->currentIndex()).toString();
-    cout<<"time: " << time.toStdString() <<endl; //time is an issue***
+    double time = ui->timeAddBookingDropdown->itemData(ui->timeAddBookingDropdown->currentIndex()).toDouble();
+//    cout<<"time: " << time.toStdString() <<endl; //time is an issue***
+
+    mb.addBooking(date, time, currentClientID, idEmployee);
 
     //close the window for add bookings
 

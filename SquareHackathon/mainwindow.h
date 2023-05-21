@@ -58,8 +58,9 @@ private:
     void showStaffList();
     void showClientList();
     void dropDownForCountryCode();
-    void updateAvaliableTimes_AddBooking(QString date, QString idEmployee);
+    void updateAvaliableTimes_AddBooking(QDate date, QString idEmployee);
 
+    void printErrorMessage(QString message);
 
 };
 #endif // MAINWINDOW_H

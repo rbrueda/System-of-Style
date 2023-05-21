@@ -160,7 +160,7 @@ void HttpRequests::inactivateTeamMember(QString teamMemberID){
     reply->deleteLater();
 }
 
-QString HttpRequests::addClientMember(QJsonObject json){
+QString HttpRequests::addClientMember(QJsonObject json, bool * result){
     QString returnStr = "";
 
 //    if(json['family_name'].toString() == "" || json['email_address'].toString() == "" || json['given_name'].toString() == "" || json['phone_number'].toString() == ""){
@@ -196,15 +196,19 @@ QString HttpRequests::addClientMember(QJsonObject json){
             reply->deleteLater();
             returnStr = returnStr % temp["detail"].toString() % "\n";
         }
+        *result = false;
+        reply->deleteLater();
         return returnStr;
     }
 
 
+    *result = true;
     reply->deleteLater();
-    return NULL;
+    QJsonObject customer = output["customer"].toObject();
+    return customer["id"].toString();
 }
 
-QJsonObject HttpRequests::retrieveCustomer(QString email){
+bool HttpRequests::retrieveCustomer(QString email, QJsonObject * customerData){
     QJsonObject json;
     QJsonObject query;
     QJsonObject filter;
@@ -240,8 +244,10 @@ QJsonObject HttpRequests::retrieveCustomer(QString email){
     QByteArray response_data = reply->readAll();
     QJsonDocument json2 = QJsonDocument::fromJson(response_data);
 
+    *customerData = json2.object();
+
     reply->deleteLater();
-    return json2.object();
+    return (customerData->contains("customers"));
 
 }
 
