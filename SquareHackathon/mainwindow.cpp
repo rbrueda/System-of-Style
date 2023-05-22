@@ -49,6 +49,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     mb.getAllSchedules("2023-08-01");
 
+    timeAddEmployeeDropdown();
+
+
 //    mb.getAvailableBookings("2023-08-01", "fj34f3443");
 
 
@@ -392,7 +395,7 @@ void MainWindow::on_submitDateButton_clicked()
 
 void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
 {
-//    QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
+//QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
     QList<double> test = mb.getAvailableBookings(date, idEmployee);
     int hour;
     double minute;
@@ -457,4 +460,50 @@ void MainWindow::on_submitAddBookingButton_clicked()
 //    QString idClient = currentClientID.toString();
 
 }
+
+
+void MainWindow::timeAddEmployeeDropdown(){
+    QList<QString> times = {"12:00AM", "12:30AM", "1:00AM", "1:30AM", "2:00AM", "2:30AM", "3:00AM", "3:30AM", "4:00AM", "4:30AM", "5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM" };
+
+    for (double i = 0; i < 48; i++){
+        ui->monStartAddEmployee->addItem(times[i], i/2);
+        ui->tuesStartAddEmployee->addItem(times[i], i/2);
+        ui->wedStartAddEmployee->addItem(times[i], i/2);
+        ui->thursStartAddEmployee->addItem(times[i], i/2);
+        ui->friStartAddEmployee->addItem(times[i], i/2);
+        ui->satStartAddEmployee->addItem(times[i], i/2);
+        ui->sunStartAddEmployee->addItem(times[i], i/2);
+        ui->monEndAddEmployee->addItem(times[i], i/2);
+        ui->tuesEndAddEmployee->addItem(times[i], i/2);
+        ui->wedEndAddEmployeee->addItem(times[i], i/2);
+        ui->thursEndAddEmployee->addItem(times[i], i/2);
+        ui->friEndAddEmployee->addItem(times[i], i/2);
+        ui->satEndAddEmployee->addItem(times[i], i/2);
+        ui->sunEndAddEmployee->addItem(times[i], i/2);
+    }
+}
+
+
+
+
+void MainWindow::on_submitSchedule_button_clicked()
+{
+    //elements from dropDown go to the SQL
+    mb.addEmployeeSchedule(selectedProfileID, ui->monStartAddEmployee->itemData(ui->monStartAddEmployee->currentIndex()).toDouble(),
+                           ui->tuesStartAddEmployee->itemData(ui->tuesStartAddEmployee->currentIndex()).toDouble(),
+                           ui->wedStartAddEmployee->itemData(ui->wedStartAddEmployee->currentIndex()).toDouble(),
+                           ui->thursStartAddEmployee->itemData(ui->thursStartAddEmployee->currentIndex()).toDouble(),
+                           ui->friStartAddEmployee->itemData(ui->friStartAddEmployee->currentIndex()).toDouble(),
+                           ui->satStartAddEmployee->itemData(ui->satStartAddEmployee->currentIndex()).toDouble(),
+                           ui->sunStartAddEmployee->itemData(ui->sunStartAddEmployee->currentIndex()).toDouble(),
+                           ui->monEndAddEmployee->itemData(ui->monEndAddEmployee->currentIndex()).toDouble(),
+                           ui->tuesEndAddEmployee->itemData(ui->tuesEndAddEmployee->currentIndex()).toDouble(),
+                           ui->wedEndAddEmployee->itemData(ui->wedEndAddEmployee->currentIndex()).toDouble(),
+                           ui->thursEndAddEmployee->itemData(ui->thursEndAddEmployee->currentIndex()).toDouble(),
+                           ui->friEndAddEmployee->itemData(ui->friEndAddEmployee->currentIndex()).toDouble(),
+                           ui->satEndAddEmployee->itemData(ui->satEndAddEmployee->currentIndex()).toDouble(),
+                           ui->sunEndAddEmployee->itemData(ui->sunEndAddEmployee->currentIndex()).toDouble());
+}
+
+
 

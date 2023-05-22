@@ -48,6 +48,10 @@ private slots:
 
     void on_submitAddBookingButton_clicked();
 
+    void timeAddEmployeeDropdown();
+
+    void on_submitSchedule_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
