@@ -90,22 +90,26 @@ INSERT INTO EmployeeShifts (
     sun_end
   )
 VALUES (
-    'fj34f3443',
-    '9.0',
-    '17.0',
-    '9.0',
-    '17.0',
-    '9.0',
-    '17.0',
-    '9.0',
-    '17.0',
-    '9.0',
-    '17.0',
-    '9.0',
-    '17.0',
+    'gdrgrdgred',
+    9.0,
+    17.0,
+    9.0,
+    17.0,
+    9.0,
+    17.0,
+    9.0,
+    17.0,
+    9.0,
+    17.0,
+    9.0,
+    17.0,
     NULL,
     NULL
   );
+
+
+
+
 
 
 SELECT mon_start, mon_end FROM EmployeeShifts

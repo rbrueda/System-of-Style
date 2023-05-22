@@ -19,7 +19,7 @@ HttpRequests::HttpRequests()
     apiCode = getAPICode(); // Stores API Code
 }
 
-void HttpRequests::addTeamMember(QJsonObject json){
+QString HttpRequests::addTeamMember(QJsonObject json){
 
     // Creates url object:
     QUrl url("https://connect.squareupsandbox.com/v2/team-members");
@@ -40,11 +40,15 @@ void HttpRequests::addTeamMember(QJsonObject json){
     // Print out results in terminal:
     QByteArray response_data = reply->readAll();
     QJsonDocument json2 = QJsonDocument::fromJson(response_data);
-    QByteArray ba = json2.toJson();
-    QString q = QString(ba);
-    std::cout << q.toStdString() << std::endl;
+    QJsonObject json2_obj = json2.object();
+    QString id = json2_obj["team_member"].toObject()["id"].toString();
+
+    //    QByteArray ba = json2.toJson();
+//    QString q = QString(ba);
+    std::cout << id.toStdString() << std::endl;
 
     reply->deleteLater();
+    return id;
 }
 
 QJsonObject HttpRequests::getTeamMembers(){

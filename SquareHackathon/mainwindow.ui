@@ -363,7 +363,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QComboBox" name="wedEndAddEmployeee">
+      <widget class="QComboBox" name="wedEndAddEmployee">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -952,7 +952,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

@@ -89,7 +89,7 @@ void MainWindow::on_submit_clicked()
     teamMember["phone_number"] = ui->phoneNumber->text();
     parent["team_member"] = teamMember;
 
-    rq.addTeamMember(parent);
+    selectedProfileID = rq.addTeamMember(parent);
     showStaffList();
 //     ui->staffProfile->show();
 
@@ -475,7 +475,7 @@ void MainWindow::timeAddEmployeeDropdown(){
         ui->sunStartAddEmployee->addItem(times[i], i/2);
         ui->monEndAddEmployee->addItem(times[i], i/2);
         ui->tuesEndAddEmployee->addItem(times[i], i/2);
-        ui->wedEndAddEmployeee->addItem(times[i], i/2);
+        ui->wedEndAddEmployee->addItem(times[i], i/2);
         ui->thursEndAddEmployee->addItem(times[i], i/2);
         ui->friEndAddEmployee->addItem(times[i], i/2);
         ui->satEndAddEmployee->addItem(times[i], i/2);
@@ -489,20 +489,24 @@ void MainWindow::timeAddEmployeeDropdown(){
 void MainWindow::on_submitSchedule_button_clicked()
 {
     //elements from dropDown go to the SQL
-    mb.addEmployeeSchedule(selectedProfileID, ui->monStartAddEmployee->itemData(ui->monStartAddEmployee->currentIndex()).toDouble(),
-                           ui->tuesStartAddEmployee->itemData(ui->tuesStartAddEmployee->currentIndex()).toDouble(),
-                           ui->wedStartAddEmployee->itemData(ui->wedStartAddEmployee->currentIndex()).toDouble(),
-                           ui->thursStartAddEmployee->itemData(ui->thursStartAddEmployee->currentIndex()).toDouble(),
-                           ui->friStartAddEmployee->itemData(ui->friStartAddEmployee->currentIndex()).toDouble(),
-                           ui->satStartAddEmployee->itemData(ui->satStartAddEmployee->currentIndex()).toDouble(),
-                           ui->sunStartAddEmployee->itemData(ui->sunStartAddEmployee->currentIndex()).toDouble(),
+    bool result = mb.addEmployeeSchedule(selectedProfileID, ui->monStartAddEmployee->itemData(ui->monStartAddEmployee->currentIndex()).toDouble(),
                            ui->monEndAddEmployee->itemData(ui->monEndAddEmployee->currentIndex()).toDouble(),
+                           ui->tuesStartAddEmployee->itemData(ui->tuesStartAddEmployee->currentIndex()).toDouble(),
                            ui->tuesEndAddEmployee->itemData(ui->tuesEndAddEmployee->currentIndex()).toDouble(),
+                           ui->wedStartAddEmployee->itemData(ui->wedStartAddEmployee->currentIndex()).toDouble(),
                            ui->wedEndAddEmployee->itemData(ui->wedEndAddEmployee->currentIndex()).toDouble(),
+                           ui->thursStartAddEmployee->itemData(ui->thursStartAddEmployee->currentIndex()).toDouble(),
                            ui->thursEndAddEmployee->itemData(ui->thursEndAddEmployee->currentIndex()).toDouble(),
+                           ui->friStartAddEmployee->itemData(ui->friStartAddEmployee->currentIndex()).toDouble(),
                            ui->friEndAddEmployee->itemData(ui->friEndAddEmployee->currentIndex()).toDouble(),
+                           ui->satStartAddEmployee->itemData(ui->satStartAddEmployee->currentIndex()).toDouble(),
                            ui->satEndAddEmployee->itemData(ui->satEndAddEmployee->currentIndex()).toDouble(),
+                           ui->sunStartAddEmployee->itemData(ui->sunStartAddEmployee->currentIndex()).toDouble(),
                            ui->sunEndAddEmployee->itemData(ui->sunEndAddEmployee->currentIndex()).toDouble());
+
+    if(!result){
+        printErrorMessage("Schedule could not be set.");
+    }
 }
 
 
