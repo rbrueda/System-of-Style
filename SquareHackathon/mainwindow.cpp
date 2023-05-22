@@ -481,6 +481,20 @@ void MainWindow::timeAddEmployeeDropdown(){
         ui->satEndAddEmployee->addItem(times[i], i/2);
         ui->sunEndAddEmployee->addItem(times[i], i/2);
     }
+    ui->monStartAddEmployee->addItem("NULL");
+    ui->tuesStartAddEmployee->addItem("NULL");
+    ui->wedStartAddEmployee->addItem("NULL");
+    ui->thursStartAddEmployee->addItem("NULL");
+    ui->friStartAddEmployee->addItem("NULL");
+    ui->satStartAddEmployee->addItem("NULL");
+    ui->sunStartAddEmployee->addItem("NULL");
+    ui->monEndAddEmployee->addItem("NULL");
+    ui->tuesEndAddEmployee->addItem("NULL");
+    ui->wedEndAddEmployee->addItem("NULL");
+    ui->thursEndAddEmployee->addItem("NULL");
+    ui->friEndAddEmployee->addItem("NULL");
+    ui->satEndAddEmployee->addItem("NULL");
+    ui->sunEndAddEmployee->addItem("NULL");
 }
 
 
