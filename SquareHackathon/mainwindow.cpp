@@ -481,20 +481,20 @@ void MainWindow::timeAddEmployeeDropdown(){
         ui->satEndAddEmployee->addItem(times[i], i/2);
         ui->sunEndAddEmployee->addItem(times[i], i/2);
     }
-    ui->monStartAddEmployee->addItem("NULL");
-    ui->tuesStartAddEmployee->addItem("NULL");
-    ui->wedStartAddEmployee->addItem("NULL");
-    ui->thursStartAddEmployee->addItem("NULL");
-    ui->friStartAddEmployee->addItem("NULL");
-    ui->satStartAddEmployee->addItem("NULL");
-    ui->sunStartAddEmployee->addItem("NULL");
-    ui->monEndAddEmployee->addItem("NULL");
-    ui->tuesEndAddEmployee->addItem("NULL");
-    ui->wedEndAddEmployee->addItem("NULL");
-    ui->thursEndAddEmployee->addItem("NULL");
-    ui->friEndAddEmployee->addItem("NULL");
-    ui->satEndAddEmployee->addItem("NULL");
-    ui->sunEndAddEmployee->addItem("NULL");
+    ui->monStartAddEmployee->addItem("NULL", -1);
+    ui->tuesStartAddEmployee->addItem("NULL", -1);
+    ui->wedStartAddEmployee->addItem("NULL", -1);
+    ui->thursStartAddEmployee->addItem("NULL", -1);
+    ui->friStartAddEmployee->addItem("NULL", -1);
+    ui->satStartAddEmployee->addItem("NULL", -1);
+    ui->sunStartAddEmployee->addItem("NULL", -1);
+    ui->monEndAddEmployee->addItem("NULL", -1);
+    ui->tuesEndAddEmployee->addItem("NULL", -1);
+    ui->wedEndAddEmployee->addItem("NULL", -1);
+    ui->thursEndAddEmployee->addItem("NULL", -1);
+    ui->friEndAddEmployee->addItem("NULL", -1);
+    ui->satEndAddEmployee->addItem("NULL", -1);
+    ui->sunEndAddEmployee->addItem("NULL", -1);
 }
 
 
