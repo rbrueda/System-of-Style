@@ -26,6 +26,21 @@ QSqlDatabase ManageBooking::initDB(){
     return db;
 }
 
+// SELECT mon_start, mon_end, tues_start, ... FROM EmployeeShifts WHERE employeeID = " ... "
+QList<double> ManageBooking::getWorkSchedule(QString employeeID){
+    QSqlQuery query("SELECT mon_start, mon_end, tues_start, tues_end, wed_start, wed_end, thurs_start, thurs_end, fri_start, fri_end, sat_start, sat_end, sun_start, sun_end FROM EmployeeShifts WHERE employeeID = \'" % employeeID % "\';");
+
+    QList<double> out;
+    for (int i = 0; i < 14; i++){
+        out.append(query.value(i).toDouble());
+    }
+
+    for(int i =0; i< out.size(); i++){
+        cout << to_string(out[i]) <<endl;
+    }
+    return out;
+}
+
 QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID){
 
     QString dateStr = date.toString("yyyy-MM-dd");

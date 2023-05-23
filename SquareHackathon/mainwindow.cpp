@@ -193,6 +193,48 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
     ui->phoneNumberProfile->setText(item->data(3).toString());
 
     selectedProfileID = item->data(4).toString();
+
+//    QList<double> test = {0, 2.5, 4, 6.5, 9, 11.5, 9, 11.5, 0, 2.5, 3, 8.5, 12, 18.5};
+    QList<double> test = mb.getWorkSchedule(selectedProfileID);
+    int hour;
+    double minute;
+    QList<QString> string = {"", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    for (int i = 0; i<test.size(); i++){
+        hour = floor(test[i]);
+        if (hour == 0){
+            hour = 12;
+
+        }
+        else if (hour > 12){
+            hour = hour - 12;
+        }
+
+        // Saying newString[i] is problematic -> use append instead
+        string[i] = QString::number(hour) + ":"; // Use QStrings
+
+        minute = test[i] - hour;
+        if (fmod(test[i], 1) == 0){
+            string[i] = string[i] + "00";
+        }
+        else{
+            string[i] = string[i] + "30";
+        }
+        if (test[i] < 12){
+            string[i] = string[i] + "AM";
+        }
+        else{
+            string[i] = string[i] + "PM";
+        }
+        std::cout<<string[i].toStdString()<<endl;
+    }
+    ui->monScheduleStaff->setText(string[0] % "-" % string[1]);
+    ui->tuesScheduleStaff->setText(string[2] % "-" % string[3]);
+    ui->wedScheduleStaff->setText(string[4] % "-" % string[5]);
+    ui->thursScheduleStaff->setText(string[6] % "-" % string[7]);
+    ui->friScheduleStaff->setText(string[8] % "-" % string[9]);
+    ui->satScheduleStaff->setText(string[10] % "-" % string[11]);
+    ui->sunScheduleStaff->setText(string[12] % "-" % string[13]);
+
 }
 
 
@@ -249,7 +291,6 @@ void MainWindow::showClientList()
 
         QString phoneNum = member2["phone_number"].toString();
         QString id = member2["id"].toString();
-
 
 //        if(unsubscription[0] == 'f'){
 //            continue;
