@@ -50,7 +50,7 @@ private slots:
 
     void timeAddEmployeeDropdown();
 
-    void on_submitSchedule_button_clicked();
+//    void on_submitSchedule_button_clicked();
 
 
     void on_refreshEmployeeBookings_clicked();
