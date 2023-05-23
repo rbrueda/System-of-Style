@@ -52,6 +52,9 @@ private slots:
 
     void on_submitSchedule_button_clicked();
 
+
+    void on_refreshEmployeeBookings_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;

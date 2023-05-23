@@ -525,3 +525,12 @@ void MainWindow::on_submitSchedule_button_clicked()
 
 
 
+
+void MainWindow::on_refreshEmployeeBookings_clicked()
+{
+//    QTableWidget tableWidget = ui->bookingsViewTable;
+//    tableWidget->setRowCount(10);
+//    tableWidget->setColumnCount(5);
+
+}
+
