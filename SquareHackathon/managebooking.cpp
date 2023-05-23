@@ -37,6 +37,7 @@ QList<double> ManageBooking::getWorkSchedule(QString employeeID){
     for (int i = 0; i < 14; i++){
         if (query.value(i).isNull()){
             out.append(-1);
+            cout<<"NULL HERE"<<endl;
         }
         else{
             out.append(query.value(i).toDouble());
@@ -147,9 +148,10 @@ QList<double> ManageBooking::getScheduleEmployee(QString date, QString employeeI
     return out;
 }
 
-QHash<QPair<QString,double>, QString> ManageBooking::getAllSchedules(QString date){
+QHash<QPair<QString,double>, QString> ManageBooking::getAllSchedules(QString date, QList<QString> * employees){
     QSqlQuery query("SELECT employeeID, customerID, timeOfDay FROM Appointments WHERE apptDate=DATE(\"" % date % "\") ORDER BY timeOfDay ASC;");
 
+    QSet<QString> employeeSet;
     QHash<QPair<QString,double>, QString> out;
 
 //    cout << "WORKS" << endl;
@@ -159,7 +161,10 @@ QHash<QPair<QString,double>, QString> ManageBooking::getAllSchedules(QString dat
             data.second = query.value(2).toDouble();
 
             out[data] = query.value(1).toString();
+            employeeSet.insert(data.first);
     }
+
+    *employees = employeeSet.values();
     return out;
 }
 

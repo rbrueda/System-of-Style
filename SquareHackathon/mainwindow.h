@@ -70,6 +70,7 @@ private:
     void updateAvaliableTimes_AddBooking(QDate date, QString idEmployee);
 
     void printErrorMessage(QString message);
+    void initRowIndexesEmployeeBookingTable();
 
 };
 #endif // MAINWINDOW_H

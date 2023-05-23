@@ -18,7 +18,7 @@ public:
     QList<double> getAvailableBookings(QDate date, QString employeeID);
     bool addBooking(QString date, double time, QString customerID, QString employeeID);
     QList<double> getScheduleEmployee(QString date, QString employeeID);
-    QHash<QPair<QString,double>, QString> getAllSchedules(QString date);
+    QHash<QPair<QString,double>, QString> getAllSchedules(QString date, QList<QString> * employees);
 
     bool addEmployeeSchedule(QString empID, double mon_start, double mon_end,
                                             double tues_start, double tues_end,

@@ -47,9 +47,10 @@ MainWindow::MainWindow(QWidget *parent)
     // 1: Main Menu
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 
-    mb.getAllSchedules("2023-08-01");
+//    mb.getAllSchedules("2023-08-01");
 
     timeAddEmployeeDropdown();
+    initRowIndexesEmployeeBookingTable();
 
 
 //    mb.getAvailableBookings("2023-08-01", "fj34f3443");
@@ -194,8 +195,8 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
 
     selectedProfileID = item->data(4).toString();
 
-    QList<double> test = {-1, -1, 4, 6.5, 9, 11.5, 9, 11.5, 0, 2.5, 3, 8.5, 12, 18.5};
-//    QList<double> test = mb.getWorkSchedule(selectedProfileID);
+//    QList<double> test = {0, 2.5, 4, 6.5, 9, 11.5, 9, 11.5, 0, 2.5, 3, 8.5, 12, 18.5};
+    QList<double> test = mb.getWorkSchedule(selectedProfileID);
     int hour;
     double minute;
     QList<QString> string = {"", "", "", "", "", "", "", "", "", "", "", "", "", ""};
@@ -234,24 +235,38 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
     //checks if any of the pairs are -1 (ie wont display any text in that QListEdit box)
     if (string[0] != "-1"){
         ui->monScheduleStaff->setText(string[0] % "-" % string[1]);
+    }else{
+        ui->monScheduleStaff->setText("");
     }
     if (string[2] != "-1"){
         ui->tuesScheduleStaff->setText(string[2] % "-" % string[3]);
+    }else{
+        ui->tuesScheduleStaff->setText("");
     }
     if (string[4] != "-1"){
         ui->wedScheduleStaff->setText(string[4] % "-" % string[5]);
+    }else{
+        ui->wedScheduleStaff->setText("");
     }
     if (string[6] != "-1"){
             ui->thursScheduleStaff->setText(string[6] % "-" % string[7]);
+    }else{
+            ui->thursScheduleStaff->setText("");
     }
     if (string[8] != "-1"){
         ui->friScheduleStaff->setText(string[8] % "-" % string[9]);
+    }else{
+        ui->friScheduleStaff->setText("");
     }
     if (string[10] != "-1"){
          ui->satScheduleStaff->setText(string[10] % "-" % string[11]);
+    }else{
+         ui->satScheduleStaff->setText("");
     }
     if (string[12] != "-1"){
         ui->sunScheduleStaff->setText(string[12] % "-" % string[13]);
+    }else{
+        ui->sunScheduleStaff->setText("");
     }
 
 }
@@ -581,33 +596,47 @@ void MainWindow::timeAddEmployeeDropdown(){
 
 void MainWindow::on_refreshEmployeeBookings_clicked()
 {
-    ui->bookingsViewTable->setRowCount(24);
-    ui->bookingsViewTable->setColumnCount(5);
 
-    int employeeCount;
-    QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules("2023-08-01");
 
-    QPair<QString, double> key;
-    key.first = "fj34f3443";
-    key.second = 9.0;
+    QList<QString> employeeList;
+    QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules("2023-08-01", &employeeList);
+    ui->bookingsViewTable->setColumnCount(employeeList.size());
 
-    QTableWidgetItem *item1 = new QTableWidgetItem(allAppointments[key]);
+    for(int col=0; col<employeeList.size(); col++){
+        QTableWidgetItem * headerItem = new QTableWidgetItem(employeeList[col]);
+        ui->bookingsViewTable->setHorizontalHeaderItem(col, headerItem);
+        for(double row=0; row<24;row+=0.5){
+            QPair<QString,double> key;
+            key.first = employeeList[col];
+            key.second = row;
+            if(allAppointments.contains(key)){
+                QTableWidgetItem *item = new QTableWidgetItem(allAppointments[key]);
+                ui->bookingsViewTable->setItem(row*2,col, item);
+            }
 
-    ui->bookingsViewTable->setItem((key.second * 2),0, item1);
+        }
+    }
 
 }
 
 
-void MainWindow::on_backButtonEmployeeManager_clicked()
-{
-    //set current widget to the main menu
-    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+void MainWindow::initRowIndexesEmployeeBookingTable(){
+    QList<QString> times = {"12:00AM", "12:30AM", "1:00AM", "1:30AM", "2:00AM", "2:30AM", "3:00AM", "3:30AM", "4:00AM", "4:30AM", "5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM" };
+
+    ui->bookingsViewTable->setRowCount(times.size());
+    for(int i=0; i<times.size();i++){
+        QTableWidgetItem * rowIndex = new QTableWidgetItem(times[i]);
+        ui->bookingsViewTable->setVerticalHeaderItem(i, rowIndex);
+    }
 }
-
-
 
 void MainWindow::on_pushButton_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 
+void MainWindow::on_backButtonEmployeeManager_clicked()
+{
+    //set current widget to the main menu
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+}

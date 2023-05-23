@@ -257,3 +257,4 @@ bool HttpRequests::retrieveCustomer(QString email, QJsonObject * customerData){
 
 
 
+
