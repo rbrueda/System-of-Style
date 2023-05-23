@@ -560,38 +560,21 @@ void MainWindow::timeAddEmployeeDropdown(){
 
 
 
-
-//void MainWindow::on_submitSchedule_button_clicked()
-//{
-//    //elements from dropDown go to the SQL
-//    bool result = mb.addEmployeeSchedule(selectedProfileID, ui->monStartAddEmployee->itemData(ui->monStartAddEmployee->currentIndex()).toDouble(),
-//                           ui->monEndAddEmployee->itemData(ui->monEndAddEmployee->currentIndex()).toDouble(),
-//                           ui->tuesStartAddEmployee->itemData(ui->tuesStartAddEmployee->currentIndex()).toDouble(),
-//                           ui->tuesEndAddEmployee->itemData(ui->tuesEndAddEmployee->currentIndex()).toDouble(),
-//                           ui->wedStartAddEmployee->itemData(ui->wedStartAddEmployee->currentIndex()).toDouble(),
-//                           ui->wedEndAddEmployee->itemData(ui->wedEndAddEmployee->currentIndex()).toDouble(),
-//                           ui->thursStartAddEmployee->itemData(ui->thursStartAddEmployee->currentIndex()).toDouble(),
-//                           ui->thursEndAddEmployee->itemData(ui->thursEndAddEmployee->currentIndex()).toDouble(),
-//                           ui->friStartAddEmployee->itemData(ui->friStartAddEmployee->currentIndex()).toDouble(),
-//                           ui->friEndAddEmployee->itemData(ui->friEndAddEmployee->currentIndex()).toDouble(),
-//                           ui->satStartAddEmployee->itemData(ui->satStartAddEmployee->currentIndex()).toDouble(),
-//                           ui->satEndAddEmployee->itemData(ui->satEndAddEmployee->currentIndex()).toDouble(),
-//                           ui->sunStartAddEmployee->itemData(ui->sunStartAddEmployee->currentIndex()).toDouble(),
-//                           ui->sunEndAddEmployee->itemData(ui->sunEndAddEmployee->currentIndex()).toDouble());
-
-//    if(!result){
-//        printErrorMessage("Schedule could not be set.");
-//    }
-//}
-
-
-
-
 void MainWindow::on_refreshEmployeeBookings_clicked()
 {
-//    QTableWidget tableWidget = ui->bookingsViewTable;
-//    tableWidget->setRowCount(10);
-//    tableWidget->setColumnCount(5);
+    ui->bookingsViewTable->setRowCount(24);
+    ui->bookingsViewTable->setColumnCount(5);
+
+    int employeeCount;
+    QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules("2023-08-01");
+
+    QPair<QString, double> key;
+    key.first = "fj34f3443";
+    key.second = 9.0;
+
+    QTableWidgetItem *item1 = new QTableWidgetItem(allAppointments[key]);
+
+    ui->bookingsViewTable->setItem((key.second * 2),0, item1);
 
 }
 

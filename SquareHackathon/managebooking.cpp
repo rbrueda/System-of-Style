@@ -31,6 +31,7 @@ QList<double> ManageBooking::getWorkSchedule(QString employeeID){
     QSqlQuery query("SELECT mon_start, mon_end, tues_start, tues_end, wed_start, wed_end, thurs_start, thurs_end, fri_start, fri_end, sat_start, sat_end, sun_start, sun_end FROM EmployeeShifts WHERE employeeID = \'" % employeeID % "\';");
 
     QList<double> out;
+    query.next();
     for (int i = 0; i < 14; i++){
         out.append(query.value(i).toDouble());
     }
@@ -133,24 +134,24 @@ QList<double> ManageBooking::getScheduleEmployee(QString date, QString employeeI
 
     }
 
-        for(int i =0; i< out.size(); i++){
-            cout << to_string(out[i]) <<endl;
-        }
+    for(int i =0; i< out.size(); i++){
+        cout << to_string(out[i]) <<endl;
+    }
     return out;
 }
 
-QHash<QString, QPair<QString, double>> ManageBooking::getAllSchedules(QString date){
+QHash<QPair<QString,double>, QString> ManageBooking::getAllSchedules(QString date){
     QSqlQuery query("SELECT employeeID, customerID, timeOfDay FROM Appointments WHERE apptDate=DATE(\"" % date % "\") ORDER BY timeOfDay ASC;");
 
-    QHash<QString, QPair<QString, double>> out;
+    QHash<QPair<QString,double>, QString> out;
 
 //    cout << "WORKS" << endl;
     while (query.next()) {
             QPair<QString, double> data;
-            data.first = query.value(1).toString();
+            data.first = query.value(0).toString();
             data.second = query.value(2).toDouble();
 
-            out[query.value(0).toString()] = data;
+            out[data] = query.value(1).toString();
     }
     return out;
 }
@@ -168,28 +169,61 @@ bool ManageBooking::addEmployeeSchedule(QString empID, double mon_start, double 
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
     query.bindValue(0, empID);
 
-    query.bindValue(1, mon_start);
-    query.bindValue(2, mon_end);
+    if(mon_start == -1 || mon_end == -1){
+        query.bindValue(1, QVariant(QVariant::String));
+        query.bindValue(2, QVariant(QVariant::String));
+    }else{
+        query.bindValue(1, mon_start);
+        query.bindValue(2, mon_end);
+    }
 
-    query.bindValue(3, tues_start);
-    query.bindValue(4, tues_end);
+    if(tues_start == -1 || tues_end == -1){
+        query.bindValue(3, QVariant(QVariant::String));
+        query.bindValue(4, QVariant(QVariant::String));
+    }else{
+        query.bindValue(3, tues_start);
+        query.bindValue(4, tues_end);
+    }
 
-    query.bindValue(5, wed_start);
-    query.bindValue(6, wed_end);
+    if(wed_start == -1 || wed_end == -1){
+        query.bindValue(5, QVariant(QVariant::String));
+        query.bindValue(6, QVariant(QVariant::String));
+    }else{
+        query.bindValue(5, wed_start);
+        query.bindValue(6, wed_end);
+    }
 
-    query.bindValue(7, thurs_start);
-    query.bindValue(8, thurs_end);
+    if(thurs_start == -1 || thurs_end == -1){
+        query.bindValue(7, QVariant(QVariant::String));
+        query.bindValue(8, QVariant(QVariant::String));
+    }else{
+        query.bindValue(7, thurs_start);
+        query.bindValue(8, thurs_end);
+    }
 
-    query.bindValue(9, fri_start);
-    query.bindValue(10, fri_end);
+    if(fri_start == -1 || fri_end == -1){
+        query.bindValue(9, QVariant(QVariant::String));
+        query.bindValue(10, QVariant(QVariant::String));
+    }else{
+        query.bindValue(9, fri_start);
+        query.bindValue(10, fri_end);
+    }
 
-    query.bindValue(11, sat_start);
-    query.bindValue(12, sat_end);
+    if(sat_start == -1 || sat_end == -1){
+        query.bindValue(11, QVariant(QVariant::String));
+        query.bindValue(12, QVariant(QVariant::String));
+    }else{
+        query.bindValue(11, sat_start);
+        query.bindValue(12, sat_end);
+    }
 
-    query.bindValue(13, sun_start);
-    query.bindValue(14, sun_end);
-
-
+    if(sun_start == -1 || sun_end == -1){
+        query.bindValue(13, QVariant(QVariant::String));
+        query.bindValue(14, QVariant(QVariant::String));
+    }else{
+        query.bindValue(13, sun_start);
+        query.bindValue(14, sun_end);
+    }
 
     return query.exec();
 }
