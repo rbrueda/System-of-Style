@@ -194,12 +194,16 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
 
     selectedProfileID = item->data(4).toString();
 
-//    QList<double> test = {0, 2.5, 4, 6.5, 9, 11.5, 9, 11.5, 0, 2.5, 3, 8.5, 12, 18.5};
-    QList<double> test = mb.getWorkSchedule(selectedProfileID);
+    QList<double> test = {-1, -1, 4, 6.5, 9, 11.5, 9, 11.5, 0, 2.5, 3, 8.5, 12, 18.5};
+//    QList<double> test = mb.getWorkSchedule(selectedProfileID);
     int hour;
     double minute;
     QList<QString> string = {"", "", "", "", "", "", "", "", "", "", "", "", "", ""};
     for (int i = 0; i<test.size(); i++){
+        if (test[i] == -1){
+            string[i] = QString::number(test[i]);
+            continue;
+        }
         hour = floor(test[i]);
         if (hour == 0){
             hour = 12;
@@ -212,7 +216,7 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
         // Saying newString[i] is problematic -> use append instead
         string[i] = QString::number(hour) + ":"; // Use QStrings
 
-        minute = test[i] - hour;
+         minute = test[i] - hour;
         if (fmod(test[i], 1) == 0){
             string[i] = string[i] + "00";
         }
@@ -227,13 +231,28 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
         }
         std::cout<<string[i].toStdString()<<endl;
     }
-    ui->monScheduleStaff->setText(string[0] % "-" % string[1]);
-    ui->tuesScheduleStaff->setText(string[2] % "-" % string[3]);
-    ui->wedScheduleStaff->setText(string[4] % "-" % string[5]);
-    ui->thursScheduleStaff->setText(string[6] % "-" % string[7]);
-    ui->friScheduleStaff->setText(string[8] % "-" % string[9]);
-    ui->satScheduleStaff->setText(string[10] % "-" % string[11]);
-    ui->sunScheduleStaff->setText(string[12] % "-" % string[13]);
+    //checks if any of the pairs are -1 (ie wont display any text in that QListEdit box)
+    if (string[0] != "-1"){
+        ui->monScheduleStaff->setText(string[0] % "-" % string[1]);
+    }
+    if (string[2] != "-1"){
+        ui->tuesScheduleStaff->setText(string[2] % "-" % string[3]);
+    }
+    if (string[4] != "-1"){
+        ui->wedScheduleStaff->setText(string[4] % "-" % string[5]);
+    }
+    if (string[6] != "-1"){
+            ui->thursScheduleStaff->setText(string[6] % "-" % string[7]);
+    }
+    if (string[8] != "-1"){
+        ui->friScheduleStaff->setText(string[8] % "-" % string[9]);
+    }
+    if (string[10] != "-1"){
+         ui->satScheduleStaff->setText(string[10] % "-" % string[11]);
+    }
+    if (string[12] != "-1"){
+        ui->sunScheduleStaff->setText(string[12] % "-" % string[13]);
+    }
 
 }
 
@@ -576,5 +595,19 @@ void MainWindow::on_refreshEmployeeBookings_clicked()
 
     ui->bookingsViewTable->setItem((key.second * 2),0, item1);
 
+}
+
+
+void MainWindow::on_backButtonEmployeeManager_clicked()
+{
+    //set current widget to the main menu
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+}
+
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 

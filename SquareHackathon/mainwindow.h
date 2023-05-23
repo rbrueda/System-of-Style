@@ -53,6 +53,10 @@ private slots:
 
     void on_refreshEmployeeBookings_clicked();
 
+    void on_backButtonEmployeeManager_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
