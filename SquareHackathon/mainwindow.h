@@ -57,6 +57,14 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_settingsButton_clicked();
+
+    void on_submitSquareApiCodeButton_clicked();
+
+    void on_submitDataBaseLoginButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;

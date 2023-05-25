@@ -14,6 +14,7 @@
 #include <QCalendarWidget>
 #include <cmath>
 #include <QMessageBox>
+#include <QLineEdit>
 
 
 using namespace std;
@@ -51,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     timeAddEmployeeDropdown();
     initRowIndexesEmployeeBookingTable();
+
+//    ui->passwordDataBase->setEchoMode(QLineEdit.Password);
 
 
 //    mb.getAvailableBookings("2023-08-01", "fj34f3443");
@@ -640,3 +643,35 @@ void MainWindow::on_backButtonEmployeeManager_clicked()
     //set current widget to the main menu
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
+
+
+void MainWindow::on_settingsButton_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->settingsView);
+}
+
+
+void MainWindow::on_submitSquareApiCodeButton_clicked()
+{
+    ofstream MyFile("apiCode.txt");
+    MyFile<<ui->squareApiCode->text().toStdString()<<endl;
+    MyFile.close();
+//    Myfile<<ui->currentText(ui->squareApiCode);
+    //call the function later?
+}
+
+
+void MainWindow::on_submitDataBaseLoginButton_clicked()
+{
+//    ofstream MyFile("bookingDBLogin.txt");
+//    MyFile<<ui->currentText(ui->urlDataBase);
+//    MyFile<<ui->currentText(ui->usernameDataBase);
+//    MyFile<<ui->currentText(ui->passwordDataBase);
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+}
+
