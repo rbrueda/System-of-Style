@@ -255,6 +255,67 @@ bool HttpRequests::retrieveCustomer(QString email, QJsonObject * customerData){
 
 }
 
+QList<QString> HttpRequests::getCustomerInfo(QString customerID){
+    QUrl url("https://connect.squareupsandbox.com/v2/customers/" % customerID);
+    QNetworkRequest request(url);
+
+    // Set Request Header:
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", apiCode);
+    request.setRawHeader("Square-Version", "2023-04-19");
+
+    // Make POST Request:
+    QNetworkAccessManager nam;
+    QNetworkReply *reply = nam.get(request);
+
+    // Wait for Response from Server:
+    while (!reply->isFinished()) qApp->processEvents();
+
+    // Print out results in terminal:
+    QByteArray response_data = reply->readAll();
+    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+    QJsonObject customerInfo = json2.object();
+    cout << response_data.toStdString() << endl;
+    customerInfo = customerInfo["customer"].toObject();
+
+
+    reply->deleteLater();
+
+    QList<QString> out = {customerInfo["given_name"].toString() % " " % customerInfo["family_name"].toString(), customerInfo["email_address"].toString() % "\n" % customerInfo["phone_number"].toString()};
+
+    return out;
+
+}
+
+QString HttpRequests::getTeamMemberInfo(QString teamMemberID){
+    QUrl url("https://connect.squareupsandbox.com/v2/team-members/" % teamMemberID);
+    QNetworkRequest request(url);
+
+    // Set Request Header:
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", apiCode);
+    request.setRawHeader("Square-Version", "2023-04-19");
+
+    // Make POST Request:
+    QNetworkAccessManager nam;
+    QNetworkReply *reply = nam.get(request);
+
+    // Wait for Response from Server:
+    while (!reply->isFinished()) qApp->processEvents();
+
+    // Print out results in terminal:
+    QByteArray response_data = reply->readAll();
+    QJsonDocument json2 = QJsonDocument::fromJson(response_data);
+    QJsonObject customerInfo = json2.object();
+    cout << response_data.toStdString() << endl;
+    customerInfo = customerInfo["team_member"].toObject();
+
+
+    reply->deleteLater();
+
+
+    return customerInfo["given_name"].toString() % " " % customerInfo["family_name"].toString();
+}
 
 
 

@@ -70,6 +70,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+
 void MainWindow::on_submit_clicked()
 {
     /*
@@ -525,6 +527,7 @@ void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
             string = string + "PM";
         }
         ui->timeAddBookingDropdown->addItem(string, test[i]);
+
     }
 }
 
@@ -602,18 +605,20 @@ void MainWindow::on_refreshEmployeeBookings_clicked()
 
 
     QList<QString> employeeList;
-    QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules("2023-08-01", &employeeList);
+    QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules("2023-05-15", &employeeList);
     ui->bookingsViewTable->setColumnCount(employeeList.size());
 
     for(int col=0; col<employeeList.size(); col++){
-        QTableWidgetItem * headerItem = new QTableWidgetItem(employeeList[col]);
+        QTableWidgetItem * headerItem = new QTableWidgetItem(rq.getTeamMemberInfo(employeeList[col]));
         ui->bookingsViewTable->setHorizontalHeaderItem(col, headerItem);
         for(double row=0; row<24;row+=0.5){
             QPair<QString,double> key;
             key.first = employeeList[col];
             key.second = row;
             if(allAppointments.contains(key)){
-                QTableWidgetItem *item = new QTableWidgetItem(allAppointments[key]);
+                QList<QString> itemValues = rq.getCustomerInfo(allAppointments[key]);
+                QTableWidgetItem *item = new QTableWidgetItem(itemValues[0]);
+                item->setData(3, itemValues[1]);
                 ui->bookingsViewTable->setItem(row*2,col, item);
             }
 
@@ -643,6 +648,20 @@ void MainWindow::on_backButtonEmployeeManager_clicked()
     //set current widget to the main menu
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
+
+void MainWindow::on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item)
+{
+    QString emailPhone = item->data(3).toString();
+//    item->setText(item->text() % "\n" % emailPhone);
+
+    QMessageBox customerInfoPopup;
+
+    customerInfoPopup.setText("Contact Information");
+    customerInfoPopup.setInformativeText(item->text() % "\n" % emailPhone);
+
+    customerInfoPopup.exec();
+}
+
 
 
 void MainWindow::on_settingsButton_clicked()

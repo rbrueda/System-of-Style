@@ -17,6 +17,9 @@ public:
     QString addClientMember(QJsonObject json, bool * result);
     bool retrieveCustomer(QString email, QJsonObject * customerData);
 
+    QList<QString> getCustomerInfo(QString customerID);
+
+    QString getTeamMemberInfo(QString teamMemberID);
 
 
 

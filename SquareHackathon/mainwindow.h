@@ -5,6 +5,7 @@
 #include "managebooking.h"
 #include <QMainWindow>
 #include <QListWidgetItem>
+#include <QTableWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -57,14 +58,14 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_settingsButton_clicked();
+    void on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item);
+   void on_settingsButton_clicked();
 
     void on_submitSquareApiCodeButton_clicked();
 
     void on_submitDataBaseLoginButton_clicked();
 
     void on_pushButton_2_clicked();
-
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
