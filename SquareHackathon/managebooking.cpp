@@ -7,24 +7,26 @@ using namespace std;
 
 ManageBooking::ManageBooking()
 {
-    mainDB = initDB();
+    initDB();
 }
 
-QSqlDatabase ManageBooking::initDB(){
+// private QSqlDatabase mainDB;
+
+void ManageBooking::initDB(){
     QFile file("../SquareHackathon/bookingDBLogin.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         cout << "ERROR!" << endl;
 
-
     QTextStream in(&file);
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(in.readLine());
-    db.setDatabaseName("HairSalonBookingManager");
-    db.setUserName(in.readLine());
-    db.setPassword(in.readLine());
-    bool ok = db.open();
-    return db;
+    mainDB = QSqlDatabase::addDatabase("QMYSQL");
+    mainDB.setHostName(in.readLine());
+    mainDB.setDatabaseName("HairSalonBookingManager");
+    mainDB.setUserName(in.readLine());
+    mainDB.setPassword(in.readLine());
+    bool ok = mainDB.open();
 }
+
+
 
 // SELECT mon_start, mon_end, tues_start, ... FROM EmployeeShifts WHERE employeeID = " ... "
 QList<double> ManageBooking::getWorkSchedule(QString employeeID){

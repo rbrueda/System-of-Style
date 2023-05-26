@@ -19,6 +19,7 @@ public:
     bool addBooking(QString date, double time, QString customerID, QString employeeID);
     QList<double> getScheduleEmployee(QString date, QString employeeID);
     QHash<QPair<QString,double>, QString> getAllSchedules(QString date, QList<QString> * employees);
+    void initDB();
 
     bool addEmployeeSchedule(QString empID, double mon_start, double mon_end,
                                             double tues_start, double tues_end,
@@ -30,7 +31,6 @@ public:
 
 
 private:
-    QSqlDatabase initDB();
     QSqlDatabase mainDB;
 };
 

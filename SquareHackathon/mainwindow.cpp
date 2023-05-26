@@ -652,7 +652,6 @@ void MainWindow::on_backButtonEmployeeManager_clicked()
 void MainWindow::on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item)
 {
     QString emailPhone = item->data(3).toString();
-//    item->setText(item->text() % "\n" % emailPhone);
 
     QMessageBox customerInfoPopup;
 
@@ -667,25 +666,37 @@ void MainWindow::on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item)
 void MainWindow::on_settingsButton_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->settingsView);
+    ifstream MyFile("../SquareHackathon/apiCode.txt");
+    string lineRead;
+    getline(MyFile,lineRead);
+    ui->squareApiCode->setText(QString::fromStdString (lineRead));
+    MyFile.close();
+    ifstream MyFile2("../SquareHackathon/bookingDBLogin.txt");
+    getline(MyFile2, lineRead);
+    ui->urlDataBase->setText(QString::fromStdString (lineRead));
+    getline(MyFile2, lineRead);
+    ui->usernameDataBase->setText(QString::fromStdString (lineRead));
+    getline(MyFile2, lineRead);
+    ui->passwordDataBase->setText(QString::fromStdString (lineRead));
+    MyFile2.close();
+
 }
 
 
 void MainWindow::on_submitSquareApiCodeButton_clicked()
 {
-    ofstream MyFile("apiCode.txt");
+    ofstream MyFile("../SquareHackathon/apiCode.txt");
     MyFile<<ui->squareApiCode->text().toStdString()<<endl;
     MyFile.close();
-//    Myfile<<ui->currentText(ui->squareApiCode);
-    //call the function later?
 }
 
 
 void MainWindow::on_submitDataBaseLoginButton_clicked()
 {
-//    ofstream MyFile("bookingDBLogin.txt");
-//    MyFile<<ui->currentText(ui->urlDataBase);
-//    MyFile<<ui->currentText(ui->usernameDataBase);
-//    MyFile<<ui->currentText(ui->passwordDataBase);
+    ofstream MyFile("../SquareHackathon/bookingDBLogin.txt");
+    MyFile<<ui->urlDataBase->text().toStdString()<<endl;
+    MyFile<<ui->usernameDataBase->text().toStdString()<<endl;
+    MyFile<<ui->passwordDataBase->text().toStdString()<<endl;
 }
 
 
