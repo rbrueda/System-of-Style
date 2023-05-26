@@ -10,7 +10,8 @@ class HttpRequests
 public:
     HttpRequests();
     QByteArray apiCode;
-    QString addTeamMember(QJsonObject json);
+    QString addTeamMember(QJsonObject json, bool * result);
+
     QJsonObject getTeamMembers();
     QJsonObject getCustomers();
     void inactivateTeamMember(QString teamMemberID);
@@ -20,11 +21,12 @@ public:
     QList<QString> getCustomerInfo(QString customerID);
 
     QString getTeamMemberInfo(QString teamMemberID);
+    void setAPICode();
 
 
 
 private:
-    QByteArray getAPICode();
+
 };
 
 #endif // HTTPREQUESTS_H

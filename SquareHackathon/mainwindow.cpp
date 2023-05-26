@@ -87,16 +87,32 @@ void MainWindow::on_submit_clicked()
 
     QJsonObject teamMember;
     QJsonObject parent;
+    bool result = true;
 
-    // jsonVarName[key] = value;
+
+
+
+    //note: this json file does not have parents
+
     teamMember["family_name"] = ui->lastName->text();
     teamMember["email_address"] = ui->email->text();
     teamMember["given_name"] = ui->firstName->text();
-    teamMember["phone_number"] = ui->phoneNumber->text();
+
+    teamMember["phone_number"] = ui->employee_countryCodeDropDown->currentText() + ui->phoneNumber->text();
     parent["team_member"] = teamMember;
 
-    selectedProfileID = rq.addTeamMember(parent);
-    showStaffList();
+
+    QString output = rq.addTeamMember(parent, &result);
+    if(result == true){
+        selectedProfileID = output;
+        cout << output.toStdString() << endl;
+    }
+    else{
+        printErrorMessage(output);
+        return;
+    }
+
+
 //     ui->staffProfile->show();
 
 //     Print JSON Contents (also converts to string)
@@ -106,7 +122,7 @@ void MainWindow::on_submit_clicked()
 //        std::cout << q.toStdString() << std::endl;
 
     //elements from dropDown go to the SQL
-    bool result = mb.addEmployeeSchedule(selectedProfileID, ui->monStartAddEmployee->itemData(ui->monStartAddEmployee->currentIndex()).toDouble(),
+    bool result_db = mb.addEmployeeSchedule(selectedProfileID, ui->monStartAddEmployee->itemData(ui->monStartAddEmployee->currentIndex()).toDouble(),
                            ui->monEndAddEmployee->itemData(ui->monEndAddEmployee->currentIndex()).toDouble(),
                            ui->tuesStartAddEmployee->itemData(ui->tuesStartAddEmployee->currentIndex()).toDouble(),
                            ui->tuesEndAddEmployee->itemData(ui->tuesEndAddEmployee->currentIndex()).toDouble(),
@@ -121,7 +137,7 @@ void MainWindow::on_submit_clicked()
                            ui->sunStartAddEmployee->itemData(ui->sunStartAddEmployee->currentIndex()).toDouble(),
                            ui->sunEndAddEmployee->itemData(ui->sunEndAddEmployee->currentIndex()).toDouble());
 
-    if(!result){
+    if(!result_db){
         printErrorMessage("Schedule could not be set.");
     }
 }
@@ -403,6 +419,8 @@ void MainWindow::on_AddBookingsButton_clicked()
 
 void MainWindow::dropDownForCountryCode(){
     ui->client_countryCodeDropDown->setEditable(true);
+    ui->employee_countryCodeDropDown->setEditable(true);
+
     QFile file("../SquareHackathon/country-codes-phone.csv");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
@@ -414,9 +432,11 @@ void MainWindow::dropDownForCountryCode(){
         QStringList lineList = line.split(u',');
 
         ui->client_countryCodeDropDown->addItem(lineList[0] + " (+" + lineList[1] + ")", lineList[1]);
+        ui->employee_countryCodeDropDown->addItem(lineList[0] + " (+" + lineList[1] + ")", lineList[1]);
         line = in.readLine();
     }
     ui->client_countryCodeDropDown->view()->setMinimumWidth(300);
+    ui->employee_countryCodeDropDown->view()->setMinimumWidth(300);
 
 }
 
@@ -424,6 +444,7 @@ void MainWindow::dropDownForCountryCode(){
 void MainWindow::on_ViewAllBookings_clicked()
 {
     ui->NestedSideBarStackWidget->setCurrentWidget(ui->ViewAllBookingsWidget);
+    ui->viewBookings_selectDate->setDate(QDate::currentDate());
 }
 
 void MainWindow::on_client_countryCodeDropDown_activated(int index)
@@ -602,10 +623,10 @@ void MainWindow::timeAddEmployeeDropdown(){
 
 void MainWindow::on_refreshEmployeeBookings_clicked()
 {
-
-
+    ui->bookingsViewTable->clearContents();
+    QString date = ui->viewBookings_selectDate->date().toString("yyyy-MM-dd");
     QList<QString> employeeList;
-    QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules("2023-05-15", &employeeList);
+    QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules(date, &employeeList);
     ui->bookingsViewTable->setColumnCount(employeeList.size());
 
     for(int col=0; col<employeeList.size(); col++){
@@ -704,4 +725,14 @@ void MainWindow::on_pushButton_2_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
+
+
+void MainWindow::on_employee_countryCodeDropDown_activated(int index)
+{
+    QLineEdit * LineEditStr = ui->employee_countryCodeDropDown->lineEdit();
+
+    LineEditStr->setText("+" + ui->employee_countryCodeDropDown->itemData(index).toString());
+}
+
+
 

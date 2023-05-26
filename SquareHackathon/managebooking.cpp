@@ -118,9 +118,9 @@ QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID
         out.append(currValue);
         currValue += 0.5;
     }
-//    for(int i =0; i< out.size(); i++){
-//        cout << to_string(out[i]) <<endl;
-//    }
+    for(int i =0; i< out.size(); i++){
+        cout << to_string(out[i]) <<endl;
+    }
     return out;
 }
 

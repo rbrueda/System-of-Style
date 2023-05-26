@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="employeeManagerView">
      <widget class="QPushButton" name="addEmployeeButton">
@@ -61,8 +61,8 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>400</x>
-        <y>60</y>
+        <x>360</x>
+        <y>50</y>
         <width>341</width>
         <height>371</height>
        </rect>
@@ -314,7 +314,7 @@
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>50</y>
+        <y>60</y>
         <width>371</width>
         <height>371</height>
        </rect>
@@ -368,11 +368,14 @@
       <widget class="QLineEdit" name="phoneNumber">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>160</x>
          <y>100</y>
          <width>113</width>
          <height>24</height>
         </rect>
+       </property>
+       <property name="maxLength">
+        <number>14</number>
        </property>
       </widget>
       <widget class="QLineEdit" name="firstName">
@@ -588,6 +591,19 @@
        </property>
        <property name="text">
         <string>End Time</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="employee_countryCodeDropDown">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>100</y>
+         <width>51</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="placeholderText">
+        <string>+1</string>
        </property>
       </widget>
      </widget>
@@ -1068,6 +1084,25 @@
          </rect>
         </property>
        </widget>
+       <widget class="QDateEdit" name="viewBookings_selectDate">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>40</y>
+          <width>110</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::UpDownArrows</enum>
+        </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="DefaultWidget"/>
       <widget class="QWidget" name="addBookingWidget">
@@ -1311,7 +1346,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

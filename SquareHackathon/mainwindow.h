@@ -66,6 +66,8 @@ private slots:
     void on_submitDataBaseLoginButton_clicked();
 
     void on_pushButton_2_clicked();
+    void on_employee_countryCodeDropDown_activated(int index);
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;

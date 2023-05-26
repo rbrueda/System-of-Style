@@ -16,10 +16,10 @@ using namespace std;
 
 HttpRequests::HttpRequests()
 {
-    apiCode = getAPICode(); // Stores API Code
+    setAPICode(); // Stores API Code
 }
 
-QString HttpRequests::addTeamMember(QJsonObject json){
+QString HttpRequests::addTeamMember(QJsonObject json, bool * result){
 
     // Creates url object:
     QUrl url("https://connect.squareupsandbox.com/v2/team-members");
@@ -36,20 +36,40 @@ QString HttpRequests::addTeamMember(QJsonObject json){
 
     // Wait for Response from Server:
     while (!reply->isFinished()) qApp->processEvents();
-
     // Print out results in terminal:
     QByteArray response_data = reply->readAll();
     QJsonDocument json2 = QJsonDocument::fromJson(response_data);
-    QJsonObject json2_obj = json2.object();
-    QString id = json2_obj["team_member"].toObject()["id"].toString();
+    QJsonObject output = json2.object();
+    QString returnStr;
+
+    if(output.contains("errors")){
+        QJsonArray listOfErrors = output["errors"].toArray();
+
+        for(int i=0; i<listOfErrors.size();i++){
+            QJsonObject temp = listOfErrors[i].toObject();
+            reply->deleteLater();
+            returnStr = returnStr % temp["detail"].toString() % "\n";
+        }
+        *result = false;
+        reply->deleteLater();
+        return returnStr;
+    }
+
+
+    QString id = output["team_member"].toObject()["id"].toString();
 
     //    QByteArray ba = json2.toJson();
 //    QString q = QString(ba);
     std::cout << id.toStdString() << std::endl;
 
+    *result = true;
+
     reply->deleteLater();
     return id;
 }
+
+
+
 
 QJsonObject HttpRequests::getTeamMembers(){
 
@@ -105,7 +125,7 @@ QJsonObject HttpRequests::getCustomers(){
 }
 
 
-QByteArray HttpRequests::getAPICode(){
+void HttpRequests::setAPICode(){
     string api;
     ifstream fin;
 
@@ -126,7 +146,7 @@ QByteArray HttpRequests::getAPICode(){
 
     // Convert String -> QString -> QByteArray
     QString qstr = QString::fromStdString("Bearer " + api);
-    return qstr.toUtf8();
+    apiCode = qstr.toUtf8();
 }
 
 void HttpRequests::inactivateTeamMember(QString teamMemberID){
