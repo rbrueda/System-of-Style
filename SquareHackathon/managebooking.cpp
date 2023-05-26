@@ -7,23 +7,26 @@ using namespace std;
 
 ManageBooking::ManageBooking()
 {
-    initDB();
+
 }
 
-// private QSqlDatabase mainDB;
 
-void ManageBooking::initDB(){
-    QFile file("../SquareHackathon/bookingDBLogin.txt");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        cout << "ERROR!" << endl;
+bool ManageBooking::initDB(){
+    try{
+        QFile file("../SquareHackathon/bookingDBLogin.txt");
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            cout << "ERROR!" << endl;
 
-    QTextStream in(&file);
-    mainDB = QSqlDatabase::addDatabase("QMYSQL");
-    mainDB.setHostName(in.readLine());
-    mainDB.setDatabaseName("HairSalonBookingManager");
-    mainDB.setUserName(in.readLine());
-    mainDB.setPassword(in.readLine());
-    bool ok = mainDB.open();
+        QTextStream in(&file);
+        mainDB = QSqlDatabase::addDatabase("QMYSQL");
+        mainDB.setHostName(in.readLine());
+        mainDB.setDatabaseName("HairSalonBookingManager");
+        mainDB.setUserName(in.readLine());
+        mainDB.setPassword(in.readLine());
+        return mainDB.open();
+    }catch(...){
+        return false;
+    }
 }
 
 

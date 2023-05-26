@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1536</width>
+    <height>864</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -154,6 +154,9 @@
          <height>22</height>
         </rect>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QLineEdit" name="tuesScheduleStaff">
        <property name="geometry">
@@ -163,6 +166,9 @@
          <width>113</width>
          <height>22</height>
         </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QLineEdit" name="wedScheduleStaff">
@@ -174,6 +180,9 @@
          <height>22</height>
         </rect>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QLineEdit" name="thursScheduleStaff">
        <property name="geometry">
@@ -183,6 +192,9 @@
          <width>113</width>
          <height>22</height>
         </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QLineEdit" name="friScheduleStaff">
@@ -194,6 +206,9 @@
          <height>22</height>
         </rect>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QLineEdit" name="satScheduleStaff">
        <property name="geometry">
@@ -204,6 +219,9 @@
          <height>22</height>
         </rect>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QLineEdit" name="sunScheduleStaff">
        <property name="geometry">
@@ -213,6 +231,9 @@
          <width>113</width>
          <height>22</height>
         </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QLabel" name="txt_monScheduleStaff">
@@ -881,7 +902,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="signupWidget">
        <widget class="QLineEdit" name="clientFirstName">
@@ -1345,7 +1366,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1536</width>
      <height>22</height>
     </rect>
    </property>

@@ -46,12 +46,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 0: Employee View
     // 1: Main Menu
-    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+
 
 //    mb.getAllSchedules("2023-08-01");
 
     timeAddEmployeeDropdown();
     initRowIndexesEmployeeBookingTable();
+
+    if(!mb.initDB()){
+        printErrorMessage("ERROR: INVALID DATABASE CREDENTIALS");
+        on_settingsButton_clicked();
+    }else{
+        ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+    }
 
 //    ui->passwordDataBase->setEchoMode(QLineEdit.Password);
 
@@ -709,6 +716,8 @@ void MainWindow::on_submitSquareApiCodeButton_clicked()
     ofstream MyFile("../SquareHackathon/apiCode.txt");
     MyFile<<ui->squareApiCode->text().toStdString()<<endl;
     MyFile.close();
+
+    rq.setAPICode();
 }
 
 
@@ -718,6 +727,10 @@ void MainWindow::on_submitDataBaseLoginButton_clicked()
     MyFile<<ui->urlDataBase->text().toStdString()<<endl;
     MyFile<<ui->usernameDataBase->text().toStdString()<<endl;
     MyFile<<ui->passwordDataBase->text().toStdString()<<endl;
+
+    if(!mb.initDB()){
+        printErrorMessage("ERROR: INVALID DATABASE CREDENTIALS");
+    }
 }
 
 
