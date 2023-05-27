@@ -40,8 +40,6 @@ private slots:
 
     void on_AddBookingsButton_clicked();
 
-    void on_ViewAllBookings_clicked();
-
     void on_signInButton_clicked();
 
     void on_submitDateButton_clicked();
@@ -67,6 +65,10 @@ private slots:
 
     void on_pushButton_2_clicked();
     void on_employee_countryCodeDropDown_activated(int index);
+
+    void on_backButton_viewBookings_clicked();
+
+    void on_viewAllBookingsButton_clicked();
 
 private:
     Ui::MainWindow *ui;

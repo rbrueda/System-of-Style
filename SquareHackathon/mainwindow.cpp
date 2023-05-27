@@ -450,11 +450,6 @@ void MainWindow::dropDownForCountryCode(){
 }
 
 
-void MainWindow::on_ViewAllBookings_clicked()
-{
-    ui->NestedSideBarStackWidget->setCurrentWidget(ui->ViewAllBookingsWidget);
-    ui->viewBookings_selectDate->setDate(QDate::currentDate());
-}
 
 void MainWindow::on_client_countryCodeDropDown_activated(int index)
 {
@@ -750,4 +745,17 @@ void MainWindow::on_employee_countryCodeDropDown_activated(int index)
 }
 
 
+
+
+void MainWindow::on_backButton_viewBookings_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+}
+
+
+void MainWindow::on_viewAllBookingsButton_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->viewAllBookingsView);
+    ui->viewBookings_selectDate->setDate(QDate::currentDate());
+}
 

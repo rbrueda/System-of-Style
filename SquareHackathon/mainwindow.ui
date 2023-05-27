@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="employeeManagerView">
      <widget class="QPushButton" name="addEmployeeButton">
@@ -817,19 +817,6 @@
        <string>Add Booking</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="ViewAllBookings">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>470</y>
-        <width>101</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>View All Bookings</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="txt_outputMessage">
       <property name="geometry">
        <rect>
@@ -902,7 +889,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="signupWidget">
        <widget class="QLineEdit" name="clientFirstName">
@@ -1068,63 +1055,7 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="ViewAllBookingsWidget">
-       <widget class="QLabel" name="txt_viewAllBooking">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>10</y>
-          <width>121</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Booking Schedule</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="refreshEmployeeBookings">
-        <property name="geometry">
-         <rect>
-          <x>140</x>
-          <y>390</y>
-          <width>80</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Refresh</string>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="bookingsViewTable">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>80</y>
-          <width>256</width>
-          <height>192</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QDateEdit" name="viewBookings_selectDate">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>40</y>
-          <width>110</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="buttonSymbols">
-         <enum>QAbstractSpinBox::UpDownArrows</enum>
-        </property>
-        <property name="displayFormat">
-         <string>dd/MM/yyyy</string>
-        </property>
-        <property name="calendarPopup">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </widget>
+      <widget class="QWidget" name="ViewAllBookingsWidget"/>
       <widget class="QWidget" name="DefaultWidget"/>
       <widget class="QWidget" name="addBookingWidget">
        <widget class="QLabel" name="txt_addBooking">
@@ -1298,6 +1229,76 @@
         <y>10</y>
         <width>51</width>
         <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="viewAllBookingsView">
+     <widget class="QLabel" name="txt_viewAllBooking">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>300</y>
+        <width>121</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Booking Schedule</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="refreshEmployeeBookings">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>680</y>
+        <width>80</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Refresh</string>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="viewBookings_selectDate">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>330</y>
+        <width>110</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::UpDownArrows</enum>
+      </property>
+      <property name="displayFormat">
+       <string>dd/MM/yyyy</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="bookingsViewTable">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>370</y>
+        <width>256</width>
+        <height>192</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="backButton_viewBookings">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>60</y>
+        <width>80</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
