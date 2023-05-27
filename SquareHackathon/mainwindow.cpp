@@ -15,6 +15,7 @@
 #include <cmath>
 #include <QMessageBox>
 #include <QLineEdit>
+#include <QFontDatabase>
 
 
 using namespace std;
@@ -37,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    QFontDatabase::addApplicationFont(":/fonts/Rubeckia.ttf");
     ui->setupUi(this);
     // Start Contact List Hidden
     ui->staffProfile->hide();

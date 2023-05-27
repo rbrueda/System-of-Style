@@ -32,3 +32,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     apiCode.txt \
     bookingDBLogin.txt
+
+RESOURCES += \
+    Fonts.qrc
