@@ -326,10 +326,9 @@ void MainWindow::on_employeeManagerButton_clicked()
 
 void MainWindow::on_bookManagerButton_clicked()
 {
-    ui->NestedSideBarStackWidget->setCurrentWidget(ui->DefaultWidget);
-    ui->ErrorMessageWidget->hide();
-//    ui->signupWidget->hide();
-    ui->mainStackWidget->setCurrentWidget(ui->bookManagerView);
+//    ui->NestedSideBarStackWidget->setCurrentWidget(ui->DefaultWidget);
+
+    ui->mainStackWidget->setCurrentWidget(ui->signinView);
     showClientList();
 }
 
@@ -377,7 +376,7 @@ void MainWindow::showClientList()
 
 void MainWindow::on_SignpButton_clicked()
 {
-    ui->NestedSideBarStackWidget->setCurrentWidget(ui->signupWidget);
+    ui->mainStackWidget->setCurrentWidget(ui->signupView);
 //    cout << "IT RUNS!!" << endl;
 //    ui->signupWidget->show();
 }
@@ -400,6 +399,7 @@ void MainWindow::on_makeAccountButton_clicked()
 //            ui->ErrorMessageWidget->hide();
             currentClientID = output;
             cout << output.toStdString() << endl;
+            ui->mainStackWidget->setCurrentWidget(ui->manageClientView);
         }
         else{
             printErrorMessage(output);
@@ -475,7 +475,7 @@ void MainWindow::on_signInButton_clicked()
         return;
     }
 
-    ui->NestedSideBarStackWidget->setCurrentWidget(ui->signInProfileWidget);
+    ui->mainStackWidget->setCurrentWidget(ui->manageClientView);
 
 
     //gets the teamMember's array
