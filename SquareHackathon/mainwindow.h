@@ -70,6 +70,17 @@ private slots:
 
     void on_viewAllBookingsButton_clicked();
 
+    void on_cancel_button_viewAppt_clicked();
+
+    void on_backButton_signInView_clicked();
+
+
+    void on_backButton_signupView_clicked();
+
+    void on_backButton_clientView_clicked();
+
+    void on_mainMenuButton_clientView_clicked();
+
 private:
     Ui::MainWindow *ui;
     HttpRequests rq;
@@ -84,6 +95,10 @@ private:
 
     void printErrorMessage(QString message);
     void initRowIndexesEmployeeBookingTable();
+
+    QString convertTime(double time);
+    void displayForManageBookingView();
+
 
 };
 #endif // MAINWINDOW_H

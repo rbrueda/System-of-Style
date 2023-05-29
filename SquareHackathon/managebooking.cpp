@@ -254,11 +254,14 @@ bool ManageBooking::cancelAppointment(QString customerID){
 
 }
 
-void ManageBooking::getBookingClient(QString customerID, QString * employeeID, QDate * apptDate, double * timeOfDay){
+bool ManageBooking::getBookingClient(QString customerID, QString * employeeID, QDate * apptDate, double * timeOfDay){
     QSqlQuery query("SELECT timeOfDay, apptDate, employeeID FROM Appointments WHERE customerID= \"" % customerID % "\";");
 
-    query.next();
+    if(!query.next()){
+        return false;
+    }
     *timeOfDay = query.value(0).toDouble();
     *apptDate = QDate::fromString(query.value(1).toString(), "yyyy-MM-dd");
     *employeeID = query.value(2).toString();
+    return true;
 }

@@ -23,7 +23,7 @@ public:
 
     bool cancelAppointment(QString customerID);
 
-    void getBookingClient(QString customerID, QString * employeeID, QDate * apptDate, double * timeOfDay);
+    bool getBookingClient(QString customerID, QString * employeeID, QDate * apptDate, double * timeOfDay);
 
 
     bool addEmployeeSchedule(QString empID, double mon_start, double mon_end,

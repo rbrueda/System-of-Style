@@ -2,4 +2,7 @@
     <qresource prefix="/fonts">
         <file>Rubeckia.ttf</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>profile.png</file>
+    </qresource>
 </RCC>

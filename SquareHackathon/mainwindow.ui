@@ -29,7 +29,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="employeeManagerView">
      <widget class="QPushButton" name="addEmployeeButton">
@@ -930,6 +930,19 @@
        <string>Dont have an account?</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="backButton_signInView">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="signupView">
      <widget class="QLabel" name="txt_clientLastName">
@@ -1120,6 +1133,19 @@
       </property>
       <property name="readOnly">
        <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="backButton_signupView">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
       </property>
      </widget>
     </widget>
@@ -1467,7 +1493,36 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>../../../../Downloads/profile.png</pixmap>
+       <pixmap resource="Fonts.qrc">:/images/profile.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="backButton_clientView">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>51</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="mainMenuButton_clientView">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>10</y>
+        <width>101</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Main Menu</string>
       </property>
      </widget>
     </widget>
@@ -1647,12 +1702,14 @@
      <x>0</x>
      <y>0</y>
      <width>1536</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="Fonts.qrc"/>
+ </resources>
  <connections/>
 </ui>

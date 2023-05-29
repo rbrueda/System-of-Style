@@ -513,8 +513,59 @@ void MainWindow::on_signInButton_clicked()
     ui->clientName->setText(name);
 
     currentClientID = id;
+
+    displayForManageBookingView();
+
+
 }
 
+// Check whether there is a booking and view cancel booking view:
+void MainWindow::displayForManageBookingView(){
+    QString employeeID;
+    double time;
+    QDate date;
+
+    if(mb.getBookingClient(currentClientID,&employeeID, &date, &time)){
+        ui->clientViewSideStack->setCurrentWidget(ui->cancelBookingView);
+
+        ui->client_apptEmployee->setText(rq.getTeamMemberInfo(employeeID));
+        ui->client_apptDate->setText(date.toString("MMMM d, yyyy"));
+        ui->client_apptTime->setText(convertTime(time));
+
+        return;
+    }
+    ui->clientViewSideStack->setCurrentWidget(ui->addBookingView);
+}
+
+
+QString MainWindow::convertTime(double time){
+    QString result;
+    int hour = floor(time);
+    if (hour == 0){
+        hour = 12;
+
+    }
+    else if (hour > 12){
+        hour = hour - 12;
+    }
+
+    // Saying newString[i] is problematic -> use append instead
+    result = QString::number(hour) + ":"; // Use QStrings
+
+    if (fmod(time, 1) == 0){
+        result = result + "00";
+    }
+    else{
+        result = result + "30";
+    }
+    if (time < 12){
+        result = result + "AM";
+    }
+    else{
+        result = result + "PM";
+    }
+    return result;
+}
 
 void MainWindow::on_submitDateButton_clicked()
 {
@@ -525,7 +576,7 @@ void MainWindow::on_submitDateButton_clicked()
     std::cout<< "date " << date.toString().toStdString()<<endl;
     QString selectionvalue= ui->employee_dropdrown->currentText();
     //id of employee
-    QString idEmployee = ui->employee_dropdrown->itemData(2).toString();
+    QString idEmployee = ui->employee_dropdrown->itemData(ui->employee_dropdrown->currentIndex()).toString();
     //    std::cout << "Choice Selected: " << selectionvalue.toStdString();
     std::cout << selectionvalue.toStdString()<<endl;
     std::cout <<"id: " << idEmployee.toStdString()<<endl;
@@ -542,7 +593,6 @@ void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
 //QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
     QList<double> test = mb.getAvailableBookings(date, idEmployee);
     int hour;
-    double minute;
     QString string;
     for (int i = 0; i<test.size(); i++){
         hour = floor(test[i]);
@@ -557,7 +607,6 @@ void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
         // Saying newString[i] is problematic -> use append instead
         string = QString::number(hour) + ":"; // Use QStrings
 
-        minute = test[i] - hour;
         if (fmod(test[i], 1) == 0){
             string = string + "00";
         }
@@ -591,7 +640,7 @@ void MainWindow::on_submitAddBookingButton_clicked()
 //    QJsonObject Booking;
     QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
     //id of employee
-    QString idEmployee = ui->employee_dropdrown->itemData(2).toString();
+        QString idEmployee = ui->employee_dropdrown->itemData(ui->employee_dropdrown->currentIndex()).toString();
 //    QString time = ui->timeAddBookingDropdown->itemData(4).toString();
 //    QString time = ui->timeAddBookingDropdown->currentText();
     double time = ui->timeAddBookingDropdown->itemData(ui->timeAddBookingDropdown->currentIndex()).toDouble();
@@ -603,6 +652,8 @@ void MainWindow::on_submitAddBookingButton_clicked()
 
     //id of customer
 //    QString idClient = currentClientID.toString();
+
+    displayForManageBookingView();
 
 }
 
@@ -776,5 +827,34 @@ void MainWindow::on_viewAllBookingsButton_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->viewAllBookingsView);
     ui->viewBookings_selectDate->setDate(QDate::currentDate());
+}
+
+
+void MainWindow::on_cancel_button_viewAppt_clicked()
+{
+    mb.cancelAppointment(currentClientID);
+    ui->clientViewSideStack->setCurrentWidget(ui->addBookingView);
+}
+
+
+void MainWindow::on_backButton_signInView_clicked(){
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
+}
+
+void MainWindow::on_backButton_signupView_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->signinView);
+}
+
+
+void MainWindow::on_backButton_clientView_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->signinView);
+}
+
+
+void MainWindow::on_mainMenuButton_clientView_clicked()
+{
+    ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 
