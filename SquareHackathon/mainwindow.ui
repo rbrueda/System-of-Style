@@ -17,14 +17,14 @@
    <widget class="QStackedWidget" name="mainStackWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>10</y>
+      <x>0</x>
+      <y>0</y>
       <width>1536</width>
       <height>864</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="employeeManagerView">
      <widget class="QPushButton" name="addEmployeeButton">
@@ -917,11 +917,16 @@
      <widget class="QLabel" name="txt_clientLastName">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>240</y>
-        <width>81</width>
+        <x>545</x>
+        <y>260</y>
+        <width>91</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Last Name:</string>
@@ -930,11 +935,16 @@
      <widget class="QLabel" name="txt_clientEmail">
       <property name="geometry">
        <rect>
-        <x>550</x>
-        <y>300</y>
-        <width>121</width>
-        <height>16</height>
+        <x>545</x>
+        <y>360</y>
+        <width>141</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Email Address:</string>
@@ -943,11 +953,16 @@
      <widget class="QPushButton" name="makeAccountButton">
       <property name="geometry">
        <rect>
-        <x>640</x>
-        <y>330</y>
-        <width>111</width>
-        <height>29</height>
+        <x>710</x>
+        <y>430</y>
+        <width>131</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Make account</string>
@@ -956,11 +971,19 @@
      <widget class="QLineEdit" name="clientPhoneNm">
       <property name="geometry">
        <rect>
-        <x>710</x>
-        <y>270</y>
-        <width>113</width>
-        <height>24</height>
+        <x>740</x>
+        <y>310</y>
+        <width>251</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
       </property>
       <property name="maxLength">
        <number>14</number>
@@ -972,11 +995,16 @@
      <widget class="QLabel" name="txt_clientfirstName">
       <property name="geometry">
        <rect>
-        <x>570</x>
+        <x>545</x>
         <y>210</y>
-        <width>81</width>
-        <height>16</height>
+        <width>91</width>
+        <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>First Name:</string>
@@ -985,11 +1013,16 @@
      <widget class="QLabel" name="txt_clientPhoneNum">
       <property name="geometry">
        <rect>
-        <x>540</x>
-        <y>270</y>
-        <width>111</width>
-        <height>16</height>
+        <x>545</x>
+        <y>310</y>
+        <width>131</width>
+        <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Phone Number:</string>
@@ -998,10 +1031,10 @@
      <widget class="QComboBox" name="client_countryCodeDropDown">
       <property name="geometry">
        <rect>
-        <x>650</x>
-        <y>270</y>
-        <width>51</width>
-        <height>25</height>
+        <x>670</x>
+        <y>310</y>
+        <width>61</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="placeholderText">
@@ -1011,11 +1044,19 @@
      <widget class="QLineEdit" name="clientFirstName">
       <property name="geometry">
        <rect>
-        <x>650</x>
+        <x>641</x>
         <y>210</y>
-        <width>171</width>
-        <height>24</height>
+        <width>351</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
       </property>
       <property name="readOnly">
        <bool>false</bool>
@@ -1024,11 +1065,19 @@
      <widget class="QLineEdit" name="clientEmail">
       <property name="geometry">
        <rect>
-        <x>650</x>
-        <y>300</y>
-        <width>171</width>
-        <height>24</height>
+        <x>670</x>
+        <y>360</y>
+        <width>321</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
       </property>
       <property name="readOnly">
        <bool>false</bool>
@@ -1037,11 +1086,19 @@
      <widget class="QLineEdit" name="clientLastName">
       <property name="geometry">
        <rect>
-        <x>650</x>
-        <y>240</y>
-        <width>171</width>
-        <height>24</height>
+        <x>641</x>
+        <y>260</y>
+        <width>351</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
       </property>
       <property name="readOnly">
        <bool>false</bool>
@@ -1062,11 +1119,16 @@
        <widget class="QPushButton" name="submitDateButton">
         <property name="geometry">
          <rect>
-          <x>470</x>
-          <y>440</y>
-          <width>91</width>
-          <height>24</height>
+          <x>490</x>
+          <y>430</y>
+          <width>101</width>
+          <height>31</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Submit Date</string>
@@ -1076,9 +1138,9 @@
         <property name="geometry">
          <rect>
           <x>280</x>
-          <y>100</y>
+          <y>93</y>
           <width>181</width>
-          <height>24</height>
+          <height>31</height>
          </rect>
         </property>
        </widget>
@@ -1101,8 +1163,13 @@
           <x>310</x>
           <y>530</y>
           <width>80</width>
-          <height>23</height>
+          <height>31</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Submit</string>
@@ -1131,11 +1198,16 @@
        <widget class="QLabel" name="txt_addBooking">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>120</x>
           <y>100</y>
           <width>141</width>
           <height>20</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Name of Employee:</string>
@@ -1150,6 +1222,11 @@
           <height>16</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Time:</string>
         </property>
@@ -1160,10 +1237,10 @@
      <widget class="QLineEdit" name="clientPhoneNumber">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>230</y>
-        <width>113</width>
-        <height>24</height>
+        <x>240</x>
+        <y>410</y>
+        <width>231</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="readOnly">
@@ -1173,11 +1250,19 @@
      <widget class="QLineEdit" name="clientName">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>190</y>
-        <width>113</width>
-        <height>24</height>
+        <x>210</x>
+        <y>350</y>
+        <width>141</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
       </property>
       <property name="readOnly">
        <bool>true</bool>
@@ -1186,11 +1271,16 @@
      <widget class="QLabel" name="txt_clientPhoneNumber">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>230</y>
+        <x>120</x>
+        <y>420</y>
         <width>111</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Phone Number:</string>
@@ -1199,11 +1289,16 @@
      <widget class="QLabel" name="txt_clientEmailAddress">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>260</y>
-        <width>101</width>
+        <x>120</x>
+        <y>460</y>
+        <width>111</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Email Address:</string>
@@ -1212,14 +1307,30 @@
      <widget class="QLineEdit" name="clientEmailAddress">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>260</y>
-        <width>171</width>
-        <height>24</height>
+        <x>240</x>
+        <y>460</y>
+        <width>231</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>30</y>
+        <width>421</width>
+        <height>301</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../../../Downloads/profile.png</pixmap>
       </property>
      </widget>
     </widget>
