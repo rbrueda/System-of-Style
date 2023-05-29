@@ -114,7 +114,12 @@ SELECT mon_start, mon_end, tues_start, tues_end, wed_start, wed_end, thurs_start
 
 SELECT mon_start, mon_end FROM EmployeeShifts
 WHERE employeeID="fj34f3443";
-  
+
+
+-- Cancel Appointment -- 
+DELETE FROM Appointments WHERE customerID="43f43rf";
+
+SELECT 
 
 -- YYYY-MM-DD
 
@@ -125,6 +130,7 @@ SELECT timeOfDay FROM Appointments
 WHERE timeOfDay=DATE(2023-08-01) and employeeID='fj34f3443'
 ORDER BY timeOfDay ASC;
 
+DROP 
 
 
 SELECT timeOfDay FROM Appointments WHERE timeOfDay=DATE(2023-08-01) and employeeID='fj34f3443' ORDER BY timeOfDay ASC;

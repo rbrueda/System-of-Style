@@ -244,3 +244,21 @@ bool ManageBooking::addEmployeeSchedule(QString empID, double mon_start, double 
 
     return query.exec();
 }
+
+
+bool ManageBooking::cancelAppointment(QString customerID){
+    QSqlQuery query;
+    query.prepare("DELETE FROM Appointments WHERE customerID=?;");
+    query.bindValue(0, customerID);
+    return query.exec();
+
+}
+
+void ManageBooking::getBookingClient(QString customerID, QString * employeeID, QDate * apptDate, double * timeOfDay){
+    QSqlQuery query("SELECT timeOfDay, apptDate, employeeID FROM Appointments WHERE customerID= \"" % customerID % "\";");
+
+    query.next();
+    *timeOfDay = query.value(0).toDouble();
+    *apptDate = QDate::fromString(query.value(1).toString(), "yyyy-MM-dd");
+    *employeeID = query.value(2).toString();
+}

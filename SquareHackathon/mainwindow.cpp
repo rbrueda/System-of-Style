@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 //    mb.getAllSchedules("2023-08-01");
 
+
+
     timeAddEmployeeDropdown();
     initRowIndexesEmployeeBookingTable();
 
@@ -61,6 +63,23 @@ MainWindow::MainWindow(QWidget *parent)
     }else{
         ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
     }
+
+
+    // TEST CANCEL APPT:
+    mb.cancelAppointment("ivu88944jf");
+
+    // TEST CLIENT VIEW APPOINTMENT
+    QString empID_client;
+    double time_client;
+    QDate date_client;
+
+    mb.getBookingClient("65489jg54",&empID_client, &date_client, &time_client);
+
+    cout << "TEST CLIENT VIEW:" << endl;
+    cout << empID_client.toStdString() << endl;
+    cout << time_client << endl;
+    cout << date_client.toString("MMMM d, yyyy").toStdString() << endl;
+
 
 //    ui->passwordDataBase->setEchoMode(QLineEdit.Password);
 
