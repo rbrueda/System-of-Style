@@ -244,10 +244,7 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
 
     selectedProfileID = item->data(4).toString();
 
-//    QList<double> test = {0, 2.5, 4, 6.5, 9, 11.5, 9, 11.5, 0, 2.5, 3, 8.5, 12, 18.5};
     QList<double> test = mb.getWorkSchedule(selectedProfileID);
-//    int hour;
-//    double minute;
     QList<QString> string = {"", "", "", "", "", "", "", "", "", "", "", "", "", ""};
     for (int i = 0; i<test.size(); i++){
         if (test[i] == -1){
@@ -255,31 +252,7 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
             continue;
         }
         string[i] = convertTime(test[i]);
-//        hour = floor(test[i]);
-//        if (hour == 0){
-//            hour = 12;
 
-//        }
-//        else if (hour > 12){
-//            hour = hour - 12;
-//        }
-
-//        // Saying newString[i] is problematic -> use append instead
-//        string[i] = QString::number(hour) + ":"; // Use QStrings
-
-//         minute = test[i] - hour;
-//        if (fmod(test[i], 1) == 0){
-//            string[i] = string[i] + "00";
-//        }
-//        else{
-//            string[i] = string[i] + "30";
-//        }
-//        if (test[i] < 12){
-//            string[i] = string[i] + "AM";
-//        }
-//        else{
-//            string[i] = string[i] + "PM";
-//        }
         std::cout<<string[i].toStdString()<<endl;
     }
     //checks if any of the pairs are -1 (ie wont display any text in that QListEdit box)
@@ -591,36 +564,9 @@ void MainWindow::on_submitDateButton_clicked()
 
 void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
 {
-//QList<double> test = {0.0, 0.5, 2.0, 12.0, 17.5, 20.0};
     QList<double> test = mb.getAvailableBookings(date, idEmployee);
-//    int hour;
     for (int i = 0; i<test.size(); i++){
-           QString string = convertTime(test[i]);
-//        hour = floor(test[i]);
-//        if (hour == 0){
-//            hour = 12;
-
-//        }
-//        else if (hour > 12){
-//            hour = hour - 12;
-//        }
-
-//        // Saying newString[i] is problematic -> use append instead
-//        string = QString::number(hour) + ":"; // Use QStrings
-
-//        if (fmod(test[i], 1) == 0){
-//            string = string + "00";
-//        }
-//        else{
-//            string = string + "30";
-//        }
-//        if (test[i] < 12){
-//            string = string + "AM";
-//        }
-//        else{
-//            string = string + "PM";
-//        }
-
+        QString string = convertTime(test[i]);
 
         ui->timeAddBookingDropdown->addItem(string, test[i]);
 
@@ -644,8 +590,6 @@ void MainWindow::on_submitAddBookingButton_clicked()
     QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
     //id of employee
         QString idEmployee = ui->employee_dropdrown->itemData(ui->employee_dropdrown->currentIndex()).toString();
-//    QString time = ui->timeAddBookingDropdown->itemData(4).toString();
-//    QString time = ui->timeAddBookingDropdown->currentText();
     double time = ui->timeAddBookingDropdown->itemData(ui->timeAddBookingDropdown->currentIndex()).toDouble();
 //    cout<<"time: " << time.toStdString() <<endl; //time is an issue***
 
