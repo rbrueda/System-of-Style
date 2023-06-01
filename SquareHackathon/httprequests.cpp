@@ -19,6 +19,7 @@ HttpRequests::HttpRequests()
     setAPICode(); // Stores API Code
 }
 
+
 QString HttpRequests::addTeamMember(QJsonObject json, bool * result){
 
     // Creates url object:

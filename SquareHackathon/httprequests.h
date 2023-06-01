@@ -10,6 +10,7 @@ class HttpRequests
 public:
     HttpRequests();
     QByteArray apiCode;
+
     QString addTeamMember(QJsonObject json, bool * result);
 
     QJsonObject getTeamMembers();
@@ -22,6 +23,7 @@ public:
 
     QString getTeamMemberInfo(QString teamMemberID);
     void setAPICode();
+
 
 
 

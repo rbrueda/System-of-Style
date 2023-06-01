@@ -101,8 +101,9 @@ QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID
         cout << query2.value(1).toString().toStdString() << endl;
     }
 
-    QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE apptDate=DATE(" % dateStr % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
+    QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE apptDate=DATE(\"" % dateStr % "\") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
 
+    cout << query.lastQuery().toStdString() << endl;
 
     QList<double> out;
     double currValue = query2.value(0).toDouble();

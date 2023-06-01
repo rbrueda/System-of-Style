@@ -98,6 +98,7 @@ private:
 
     QString convertTime(double time);
     void displayForManageBookingView();
+    void updateTableCustomer(QString customerID, double row, int col);
 
 
 };

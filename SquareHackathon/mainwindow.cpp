@@ -16,6 +16,8 @@
 #include <QMessageBox>
 #include <QLineEdit>
 #include <QFontDatabase>
+#include <thread>
+#include <QtConcurrent/QtConcurrent>
 
 
 using namespace std;
@@ -45,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addEmployeeWidget->hide();
     showStaffList();
     dropDownForCountryCode();
+
+    ui->clientName->setAlignment(Qt::AlignHCenter);
+    ui->nameProfile->setAlignment(Qt::AlignHCenter);
+
 
     // 0: Employee View
     // 1: Main Menu
@@ -79,6 +85,8 @@ MainWindow::MainWindow(QWidget *parent)
     cout << empID_client.toStdString() << endl;
     cout << time_client << endl;
     cout << date_client.toString("MMMM d, yyyy").toStdString() << endl;
+
+    ui->bookingsViewTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 
 //    ui->passwordDataBase->setEchoMode(QLineEdit.Password);
@@ -168,6 +176,8 @@ void MainWindow::on_submit_clicked()
     if(!result_db){
         printErrorMessage("Schedule could not be set.");
     }
+
+    showStaffList();
 }
 
 void MainWindow::showStaffList()
@@ -179,14 +189,20 @@ void MainWindow::showStaffList()
     QJsonArray listOfMembers = teamMembersJson["team_members"].toArray();
 
     ui->staffList->clear();
+    ui->employee_dropdrown->clear();
 
     //make loop
     for (int i = 0; i < listOfMembers.size(); i++){
         //converts first item of array to object
         QJsonObject member1 = listOfMembers[i].toObject(); //gets the ith index of the array (ie gets each sector)
 
+
         //converts first member to string
         QString name = member1["given_name"].toString() + " " + member1["family_name"].toString();
+        if(!QString::compare(name, QString("Sandbox Seller"))){
+            continue;
+        }
+
         QString status = member1["status"].toString();
         QString email = member1["email_address"].toString();
         QString phoneNum = member1["phone_number"].toString();
@@ -313,6 +329,7 @@ void MainWindow::on_addEmployeeButton_clicked()
 
 void MainWindow::on_employeeManagerButton_clicked()
 {
+    showStaffList();
     ui->mainStackWidget->setCurrentWidget(ui->employeeManagerView);
 }
 
@@ -392,7 +409,14 @@ void MainWindow::on_makeAccountButton_clicked()
 //            ui->ErrorMessageWidget->hide();
             currentClientID = output;
             cout << output.toStdString() << endl;
+
+            ui->clientPhoneNumber->setText(clientMember["phone_number"].toString());
+            ui->clientEmailAddress->setText(clientMember["email_address"].toString());
+            ui->clientName->setText(clientMember["family_name"].toString() % " " % clientMember["given_name"].toString());
             ui->mainStackWidget->setCurrentWidget(ui->manageClientView);
+            displayForManageBookingView();
+
+
         }
         else{
             printErrorMessage(output);
@@ -564,6 +588,7 @@ void MainWindow::on_submitDateButton_clicked()
 
 void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
 {
+    ui->timeAddBookingDropdown->clear();
     QList<double> test = mb.getAvailableBookings(date, idEmployee);
     for (int i = 0; i<test.size(); i++){
         QString string = convertTime(test[i]);
@@ -650,6 +675,8 @@ void MainWindow::on_refreshEmployeeBookings_clicked()
     QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules(date, &employeeList);
     ui->bookingsViewTable->setColumnCount(employeeList.size());
 
+    QList<QFuture<void>> tasks;
+
     for(int col=0; col<employeeList.size(); col++){
         QTableWidgetItem * headerItem = new QTableWidgetItem(rq.getTeamMemberInfo(employeeList[col]));
         ui->bookingsViewTable->setHorizontalHeaderItem(col, headerItem);
@@ -658,15 +685,24 @@ void MainWindow::on_refreshEmployeeBookings_clicked()
             key.first = employeeList[col];
             key.second = row;
             if(allAppointments.contains(key)){
-                QList<QString> itemValues = rq.getCustomerInfo(allAppointments[key]);
-                QTableWidgetItem *item = new QTableWidgetItem(itemValues[0]);
-                item->setData(3, itemValues[1]);
-                ui->bookingsViewTable->setItem(row*2,col, item);
+//                std::thread t1(&MainWindow::updateTableCustomer, this, allAppointments[key], row, col);
+//                t1.join();
+                tasks.append(QtConcurrent::run(std::mem_fn(&MainWindow::updateTableCustomer), this, QString(allAppointments[key]), row, col));
             }
 
         }
     }
+    for(int i=0;i< tasks.size(); i++){
+        tasks[i].waitForFinished();
+    }
 
+}
+
+void MainWindow::updateTableCustomer(QString customerID, double row, int col){
+    QList<QString> itemValues = rq.getCustomerInfo(customerID);
+    QTableWidgetItem *item = new QTableWidgetItem(itemValues[0]);
+    item->setData(3, itemValues[1]);
+    ui->bookingsViewTable->setItem(row*2,col, item);
 }
 
 
