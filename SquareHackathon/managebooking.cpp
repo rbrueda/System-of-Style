@@ -1,4 +1,4 @@
-#include "managebooking.h"
+﻿#include "managebooking.h"
 #include <QtSql>
 #include <iostream>
 #include <QPair>
@@ -24,8 +24,9 @@ bool ManageBooking::initDB(){
         mainDB.setUserName(in.readLine());
         mainDB.setPassword(in.readLine());
         return mainDB.open();
-    }catch(...){
-        return false;
+    }catch(...){ //used so an error widget can pop up instead of the program not being able to run
+        //(...) means not parameters needed
+        return false; //will be executed since try block contains an error (try block will not be executed?)
     }
 }
 
