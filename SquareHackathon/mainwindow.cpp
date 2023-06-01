@@ -97,7 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // PHONE NUMBER ONLY NUMBERS:
-//    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
+    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
+    ui->phoneNumber->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->phoneNumber));
 
 }
 
