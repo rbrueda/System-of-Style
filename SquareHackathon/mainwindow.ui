@@ -29,7 +29,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="employeeManagerView">
      <widget class="QPushButton" name="addEmployeeButton">
@@ -1993,7 +1993,7 @@
      <x>0</x>
      <y>0</y>
      <width>1536</width>
-     <height>27</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

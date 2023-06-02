@@ -97,8 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // PHONE NUMBER ONLY NUMBERS:
-    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
-    ui->phoneNumber->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->phoneNumber));
+//    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
+//    ui->phoneNumber->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->phoneNumber));
 
 }
 
@@ -318,6 +318,7 @@ void MainWindow::on_deactivateButton_clicked()
 {
     rq.inactivateTeamMember(selectedProfileID);
     showStaffList();
+    ui->staffProfile->hide();
 }
 
 
@@ -332,6 +333,7 @@ void MainWindow::on_employeeManagerButton_clicked()
 {
     showStaffList();
     ui->mainStackWidget->setCurrentWidget(ui->employeeManagerView);
+    ui->staffProfile->hide();
 }
 
 
