@@ -19,22 +19,7 @@
 #include <thread>
 #include <QtConcurrent/QtConcurrent>
 
-
 using namespace std;
-
-/*
-TODO:
-1. Fix Color Changing bug on the make account error message
-2. Confirm that there are no empty fields in sign up
-3. Make the elements of QWidget Employee View in a seperate class (Not Priority)
-
-BUGS:
-1. When we click login with typing name, Bisuit Rueda is shown
-2. Error Message when sign in with invalid email
-
-*/
-
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -51,18 +36,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->clientName->setAlignment(Qt::AlignHCenter);
     ui->nameProfile->setAlignment(Qt::AlignHCenter);
 
-
-    // 0: Employee View
-    // 1: Main Menu
-
-
-//    mb.getAllSchedules("2023-08-01");
-
-
-
     timeAddEmployeeDropdown();
     initRowIndexesEmployeeBookingTable();
 
+    //error messages displayed if there is an incorrect database code
     if(!mb.initDB()){
         printErrorMessage("ERROR: INVALID DATABASE CREDENTIALS");
         on_settingsButton_clicked();
@@ -79,26 +56,14 @@ MainWindow::MainWindow(QWidget *parent)
     double time_client;
     QDate date_client;
 
+    //**
     mb.getBookingClient("65489jg54",&empID_client, &date_client, &time_client);
-
-    cout << "TEST CLIENT VIEW:" << endl;
-    cout << empID_client.toStdString() << endl;
-    cout << time_client << endl;
-    cout << date_client.toString("MMMM d, yyyy").toStdString() << endl;
 
     ui->bookingsViewTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-
-//    ui->passwordDataBase->setEchoMode(QLineEdit.Password);
-
-
-//    mb.getAvailableBookings("2023-08-01", "fj34f3443");
-
-
-
     // PHONE NUMBER ONLY NUMBERS:
-//    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
-//    ui->phoneNumber->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->phoneNumber));
+    ui->clientPhoneNm->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->clientPhoneNm));
+    ui->phoneNumber->setValidator(new QRegExpValidator(QRegExp("[0-9]*"), ui->phoneNumber));
 
 }
 
@@ -131,6 +96,7 @@ void MainWindow::on_submit_clicked()
 
     //note: this json file does not have parents
 
+    //assign teamMember objects to text displayed in QLineEdit
     teamMember["family_name"] = ui->lastName->text();
     teamMember["email_address"] = ui->email->text();
     teamMember["given_name"] = ui->firstName->text();
@@ -140,7 +106,7 @@ void MainWindow::on_submit_clicked()
 
 
 
-
+    //call the request for adding a team member
     QString output = rq.addTeamMember(parent, &result);
     if(result == true){
         selectedProfileID = output;
@@ -150,14 +116,6 @@ void MainWindow::on_submit_clicked()
         printErrorMessage(output);
         return;
     }
-
-//     ui->staffProfile->show();
-
-//     Print JSON Contents (also converts to string)
-//        QJsonDocument Doc(parent);
-//        QByteArray ba = Doc.toJson();
-//        QString q = QString(ba);
-//        std::cout << q.toStdString() << std::endl;
 
     //elements from dropDown go to the SQL
     bool result_db = mb.addEmployeeSchedule(selectedProfileID, ui->monStartAddEmployee->itemData(ui->monStartAddEmployee->currentIndex()).toDouble(),
@@ -175,13 +133,14 @@ void MainWindow::on_submit_clicked()
                            ui->sunStartAddEmployee->itemData(ui->sunStartAddEmployee->currentIndex()).toDouble(),
                            ui->sunEndAddEmployee->itemData(ui->sunEndAddEmployee->currentIndex()).toDouble());
 
+    // Checks if schedule can be created --SQL returns an error
     if(!result_db){
         printErrorMessage("Schedule could not be set.");
         rq.inactivateTeamMember(selectedProfileID);
-//        selectedProfileID = NULL;
         return;
     }
 
+    //clear the old contents
     ui->firstName->clear();
     ui->lastName->clear();
     ui->phoneNumber->clear();
@@ -219,6 +178,7 @@ void MainWindow::showStaffList()
         QString phoneNum = member1["phone_number"].toString();
         QString id = member1["id"].toString();
 
+        //check if teamMember is inactive
         if(status[0] == 'I'){
             continue;
         }
@@ -237,21 +197,7 @@ void MainWindow::showStaffList()
         ui->staffList->addItem(item);
         ui->employee_dropdrown->addItem(name, id);
     }
-
-    //    cout << "Type of team_members : " << typeid(teamMembersJson["team_members"]).name() << endl;
-
-//    item->setText(QString(teamMembersJson["team_members"]));
-
-
-
-//    QListWidgetItem* item = new QListWidgetItem();
-//    item->setText(QString("Python"));
-
-//    ui->staffList->addItem(item);
-
-//    std::cout << "Item Added" << std::endl;
 }
-
 
 /*
     Data indexes:
@@ -262,25 +208,28 @@ void MainWindow::showStaffList()
  */
 
 void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
+    //show correspond statck widget
     ui->staffProfile->show();
     ui->addEmployeeWidget->hide();
 
+    //sets corresponding text for qLineEdit
     ui->emailProfile->setText(item->data(1).toString());
     ui->nameProfile->setText(item->data(2).toString());
     ui->phoneNumberProfile->setText(item->data(3).toString());
 
+    //rerieves the id of teamMember
     selectedProfileID = item->data(4).toString();
 
+    //calls the request to get the employee schedule
     QList<double> test = mb.getWorkSchedule(selectedProfileID);
     QList<QString> string = {"", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    //loops the through each element in the array and converts to standard time (__:__AM/PM)
     for (int i = 0; i<test.size(); i++){
         if (test[i] == -1){
             string[i] = QString::number(test[i]);
             continue;
         }
         string[i] = convertTime(test[i]);
-
-        std::cout<<string[i].toStdString()<<endl;
     }
     //checks if any of the pairs are -1 (ie wont display any text in that QListEdit box)
     if (string[0] != "-1"){
@@ -318,23 +267,25 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
     }else{
         ui->sunScheduleStaff->setText("");
     }
-
 }
-
-
 
 
 void MainWindow::on_deactivateButton_clicked()
 {
+    //calls the request to deactivate the team member to the API
     rq.inactivateTeamMember(selectedProfileID);
+    //calls the managebooking class remove the schedule ionformation to the database
     mb.removeSchedule(selectedProfileID);
+    //update staff schedule
     showStaffList();
+    //hide the specific team member's profile (since it has already been deactivated)
     ui->staffProfile->hide();
 }
 
 
 void MainWindow::on_addEmployeeButton_clicked()
 {
+    //hide the current staff profile
     ui->staffProfile->hide();
     ui->addEmployeeWidget->show();
 }
@@ -342,6 +293,7 @@ void MainWindow::on_addEmployeeButton_clicked()
 
 void MainWindow::on_employeeManagerButton_clicked()
 {
+    //hide and show wanted widgets
     showStaffList();
     ui->mainStackWidget->setCurrentWidget(ui->employeeManagerView);
     ui->staffProfile->hide();
@@ -358,8 +310,10 @@ void MainWindow::on_bookManagerButton_clicked()
 
 void MainWindow::showClientList()
 {
+    //call the request to get all the customers in the API
     QJsonObject customerJson = rq.getCustomers();
 
+    //convert the JSON content to a QArray
     QJsonArray listOfClients = customerJson["customers"].toArray();
 
     ui->clientListWidget->clear();
@@ -369,29 +323,18 @@ void MainWindow::showClientList()
 
         //converts first member to string
         QString name = member2["given_name"].toString() + " " + member2["family_name"].toString();
-//        QString status = member1["status"].toString(); //future use
-
-        //instead:
-        //QString unsubscription = member1["email_unsubscribed"].toString();
         QString email = member2["email_address"].toString();
         customerEmails.insert(email);
-
         QString phoneNum = member2["phone_number"].toString();
         QString id = member2["id"].toString();
-
-//        if(unsubscription[0] == 'f'){
-//            continue;
-//        }
 
         //does the ui part to print to screen
         QListWidgetItem* item = new QListWidgetItem();
         //        item->setText(name);
-        item->setData(1, email); //would the order of these change?
+        item->setData(1, email);
         item->setData(2, name);
         item->setData(3, phoneNum);
         item->setData(4, id);
-
-
 
         ui->clientListWidget->addItem(item);
     }
@@ -400,9 +343,8 @@ void MainWindow::showClientList()
 
 void MainWindow::on_SignpButton_clicked()
 {
+    //show the signUpView widget
     ui->mainStackWidget->setCurrentWidget(ui->signupView);
-//    cout << "IT RUNS!!" << endl;
-//    ui->signupWidget->show();
 }
 
 
@@ -413,22 +355,25 @@ void MainWindow::on_makeAccountButton_clicked()
     bool result = true;
     //note: this json file does not have parents
 
+    //check if account is already made (ie. check if the email is in the database)
     if(!customerEmails.contains(ui->clientEmail->text())){
+        //assign the object member contents from text in QLineEdit
         clientMember["family_name"] = ui->clientLastName->text();
         clientMember["email_address"] = ui->clientEmail->text();
         clientMember["given_name"] = ui->clientFirstName->text();
         clientMember["phone_number"] = ui->client_countryCodeDropDown->currentText() + ui->clientPhoneNm->text();
         QString output = rq.addClientMember(clientMember, &result);
+
+        //if there are errors
         if(result == true){
-//            ui->ErrorMessageWidget->hide();
             currentClientID = output;
-            cout << output.toStdString() << endl;
 
             ui->clientEmail->clear();
             ui->clientLastName->clear();
             ui->clientFirstName->clear();
             ui->clientPhoneNm->clear();
 
+            //shows the clinet profile info on the screen
             ui->clientPhoneNumber->setText(clientMember["phone_number"].toString());
             ui->clientEmailAddress->setText(clientMember["email_address"].toString());
             ui->clientName->setText(clientMember["family_name"].toString() % " " % clientMember["given_name"].toString());
@@ -443,25 +388,23 @@ void MainWindow::on_makeAccountButton_clicked()
 
     }else{
         printErrorMessage("Account already exists. Please sign in.");
-//        ui->txt_errorMessage->setText(QString("Account already exists. Please sign in."));
-//        ui->ErrorMessageWidget->show();
-//        ui->label->setText("<font color='red'>text</font>");
     }
-
 }
 
 
 void MainWindow::on_AddBookingsButton_clicked()
 {
+    //check if the client has not sign up yet
     if(currentClientID.isNull()){
         printErrorMessage("You must login/signup to continue");
         return;
     }
+    //if htey have signed up: set the current widget to addBooking widget
     ui->NestedSideBarStackWidget->setCurrentWidget(ui->addBookingWidget);
 
 }
 
-
+//**
 void MainWindow::dropDownForCountryCode(){
     ui->client_countryCodeDropDown->setEditable(true);
     ui->employee_countryCodeDropDown->setEditable(true);
@@ -486,7 +429,7 @@ void MainWindow::dropDownForCountryCode(){
 }
 
 
-
+//**
 void MainWindow::on_client_countryCodeDropDown_activated(int index)
 {
 
@@ -499,6 +442,7 @@ void MainWindow::on_client_countryCodeDropDown_activated(int index)
 
 void MainWindow::on_signInButton_clicked()
 {
+    //check if user did not sign in
     if(ui->client_signIn_email->text() == ""){
         printErrorMessage("Please Type an email in");
         return;
@@ -506,6 +450,7 @@ void MainWindow::on_signInButton_clicked()
 
     QJsonObject customersJson;
 
+    //if the email does not follow proper formatting
     if(!rq.retrieveCustomer(ui->client_signIn_email->text(), &customersJson)){
         printErrorMessage("Invalid Email!");
         return;
@@ -526,6 +471,7 @@ void MainWindow::on_signInButton_clicked()
     QString id = member1["id"].toString();
 
 
+    //display the contents from json object to the QLineEdit
     ui->clientPhoneNumber->setText(phoneNum);
     ui->clientEmailAddress->setText(email);
     ui->clientName->setText(name);
@@ -543,6 +489,7 @@ void MainWindow::displayForManageBookingView(){
     double time;
     QDate date;
 
+    //**
     if(mb.getBookingClient(currentClientID,&employeeID, &date, &time)){
         ui->clientViewSideStack->setCurrentWidget(ui->cancelBookingView);
 
@@ -558,6 +505,7 @@ void MainWindow::displayForManageBookingView(){
 
 QString MainWindow::convertTime(double time){
     QString result;
+    //converts decimal value to __:__AM/PM time format
     int hour = floor(time);
     if (hour == 0){
         hour = 12;
@@ -587,21 +535,15 @@ QString MainWindow::convertTime(double time){
 
 void MainWindow::on_submitDateButton_clicked()
 {
-//    QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
+    //set the date to the selected date on the calendar
     QDate date = ui->calendarWidget->selectedDate();
 
-    std::cout<<"Hello!\n";
-    std::cout<< "date " << date.toString().toStdString()<<endl;
+    //retrieve the same of the employee
     QString selectionvalue= ui->employee_dropdrown->currentText();
     //id of employee
     QString idEmployee = ui->employee_dropdrown->itemData(ui->employee_dropdrown->currentIndex()).toString();
-    //    std::cout << "Choice Selected: " << selectionvalue.toStdString();
-    std::cout << selectionvalue.toStdString()<<endl;
-    std::cout <<"id: " << idEmployee.toStdString()<<endl;
 
-    //id of customer
-    std::cout <<"id: " <<currentClientID.toStdString()<<endl;
-
+    //calls function to update the times in the time dropdown
     updateAvaliableTimes_AddBooking(date, idEmployee);
 
 }
