@@ -550,51 +550,48 @@ void MainWindow::on_submitDateButton_clicked()
 
 void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
 {
+    // Remove previous times
     ui->timeAddBookingDropdown->clear();
+    // Get List of Avaliable times
     QList<double> test = mb.getAvailableBookings(date, idEmployee);
+
+    // Add times to the dropdown
     for (int i = 0; i<test.size(); i++){
         QString string = convertTime(test[i]);
-
         ui->timeAddBookingDropdown->addItem(string, test[i]);
 
     }
 }
 
+// Call this function when you want a popup error message
 void MainWindow::printErrorMessage(QString message){
     QMessageBox messageBox;
-
     messageBox.critical(0,"Error", message);
     messageBox.setFixedSize(500,200);
-
-
 }
 
-//employee id
-//client id
-//date
-//time
+
 
 void MainWindow::on_submitAddBookingButton_clicked()
 {
-//    QJsonObject Booking;
+    // Get the Date:
     QString date = ui->calendarWidget->selectedDate().toString("yyyy-MM-dd");
-    //id of employee
-        QString idEmployee = ui->employee_dropdrown->itemData(ui->employee_dropdrown->currentIndex()).toString();
-    double time = ui->timeAddBookingDropdown->itemData(ui->timeAddBookingDropdown->currentIndex()).toDouble();
-//    cout<<"time: " << time.toStdString() <<endl; //time is an issue***
+    //Get the ID:
+    QString idEmployee = ui->employee_dropdrown->itemData(ui->employee_dropdrown->currentIndex()).toString();
 
+    // Get the time:
+    double time = ui->timeAddBookingDropdown->itemData(ui->timeAddBookingDropdown->currentIndex()).toDouble();
+
+    // Add Booking with information
     mb.addBooking(date, time, currentClientID, idEmployee);
 
-    //close the window for add bookings
-
-    //id of customer
-//    QString idClient = currentClientID.toString();
-
+    // Change view to view booking
     displayForManageBookingView();
 
 }
 
 
+// Make Dropdown to select employee schedule -> occurs when employee is made
 void MainWindow::timeAddEmployeeDropdown(){
     QList<QString> times = {"12:00AM", "12:30AM", "1:00AM", "1:30AM", "2:00AM", "2:30AM", "3:00AM", "3:30AM", "4:00AM", "4:30AM", "5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM" };
 
@@ -634,24 +631,32 @@ void MainWindow::timeAddEmployeeDropdown(){
 
 void MainWindow::on_refreshEmployeeBookings_clicked()
 {
+    // Clear the table:
     ui->bookingsViewTable->clearContents();
+
+    // Get Date from date select
     QString date = ui->viewBookings_selectDate->date().toString("yyyy-MM-dd");
     QList<QString> employeeList;
+
+    // Get QHash of the employees booked for the given day
     QHash<QPair<QString,double>, QString> allAppointments = mb.getAllSchedules(date, &employeeList);
     ui->bookingsViewTable->setColumnCount(employeeList.size());
 
-    QList<QFuture<void>> tasks;
+    QList<QFuture<void>> tasks; // List of tasks to run in parallel
 
+    // For each employee...
     for(int col=0; col<employeeList.size(); col++){
+        // Employee Header Item:
         QTableWidgetItem * headerItem = new QTableWidgetItem(rq.getTeamMemberInfo(employeeList[col]));
         ui->bookingsViewTable->setHorizontalHeaderItem(col, headerItem);
+
+        // For Each avaliable time -> check if there is a customer in that time
         for(double row=0; row<24;row+=0.5){
             QPair<QString,double> key;
             key.first = employeeList[col];
             key.second = row;
+            // Make TableWidgetItem for that customer...
             if(allAppointments.contains(key)){
-//                std::thread t1(&MainWindow::updateTableCustomer, this, allAppointments[key], row, col);
-//                t1.join();
                 tasks.append(QtConcurrent::run(std::mem_fn(&MainWindow::updateTableCustomer), this, QString(allAppointments[key]), row, col));
             }
 
@@ -663,6 +668,7 @@ void MainWindow::on_refreshEmployeeBookings_clicked()
 
 }
 
+// Makes Table Item for a customer -> function is ran in parallel
 void MainWindow::updateTableCustomer(QString customerID, double row, int col){
     QList<QString> itemValues = rq.getCustomerInfo(customerID);
     QTableWidgetItem *item = new QTableWidgetItem(itemValues[0]);
@@ -671,6 +677,9 @@ void MainWindow::updateTableCustomer(QString customerID, double row, int col){
 }
 
 
+
+// In the view BOoking Table, set the times on the left most column
+// Also sets 24 rows
 void MainWindow::initRowIndexesEmployeeBookingTable(){
     QList<QString> times = {"12:00AM", "12:30AM", "1:00AM", "1:30AM", "2:00AM", "2:30AM", "3:00AM", "3:30AM", "4:00AM", "4:30AM", "5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM" };
 
@@ -681,21 +690,29 @@ void MainWindow::initRowIndexesEmployeeBookingTable(){
     }
 }
 
+
+// Goes to main menu
 void MainWindow::on_pushButton_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 
+
+// Employee Manager -> press back button
 void MainWindow::on_backButtonEmployeeManager_clicked()
 {
     //set current widget to the main menu
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 
+
+// Displays customer information from view booking when name is double clicked
 void MainWindow::on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item)
 {
     QString emailPhone = item->data(3).toString();
 
+
+    // Make Popup:
     QMessageBox customerInfoPopup;
 
     customerInfoPopup.setText("Contact Information");
@@ -704,8 +721,6 @@ void MainWindow::on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item)
     QFont font;
     font.setPointSize(12);
     customerInfoPopup.setFont(font);
-
-
     customerInfoPopup.exec();
 }
 
@@ -714,11 +729,15 @@ void MainWindow::on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item)
 void MainWindow::on_settingsButton_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->settingsView);
+
+    // Puts credentials from square API on the settings page
     ifstream MyFile("../SquareHackathon/apiCode.txt");
     string lineRead;
     getline(MyFile,lineRead);
     ui->squareApiCode->setText(QString::fromStdString (lineRead));
     MyFile.close();
+
+    // Puts credentials from database on the settings page
     ifstream MyFile2("../SquareHackathon/bookingDBLogin.txt");
     getline(MyFile2, lineRead);
     ui->urlDataBase->setText(QString::fromStdString (lineRead));
@@ -731,6 +750,7 @@ void MainWindow::on_settingsButton_clicked()
 }
 
 
+// Updates Square API credentials from settings
 void MainWindow::on_submitSquareApiCodeButton_clicked()
 {
     ofstream MyFile("../SquareHackathon/apiCode.txt");
@@ -741,6 +761,7 @@ void MainWindow::on_submitSquareApiCodeButton_clicked()
 }
 
 
+// Updates SQL Credentials from settings
 void MainWindow::on_submitDataBaseLoginButton_clicked()
 {
     ofstream MyFile("../SquareHackathon/bookingDBLogin.txt");
@@ -754,12 +775,14 @@ void MainWindow::on_submitDataBaseLoginButton_clicked()
 }
 
 
+// Goes to main menu from employee view
 void MainWindow::on_pushButton_2_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 
 
+// Edits the field when country code is selected
 void MainWindow::on_employee_countryCodeDropDown_activated(int index)
 {
     QLineEdit * LineEditStr = ui->employee_countryCodeDropDown->lineEdit();
@@ -769,13 +792,13 @@ void MainWindow::on_employee_countryCodeDropDown_activated(int index)
 
 
 
-
+// View Bookings -> goes to main menu
 void MainWindow::on_backButton_viewBookings_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 
-
+// Main Menu go to view bookings view
 void MainWindow::on_viewAllBookingsButton_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->viewAllBookingsView);
@@ -783,29 +806,32 @@ void MainWindow::on_viewAllBookingsButton_clicked()
 }
 
 
+//View Appointment cancel -> goes to add booking + deletes appt
 void MainWindow::on_cancel_button_viewAppt_clicked()
 {
     mb.cancelAppointment(currentClientID);
     ui->clientViewSideStack->setCurrentWidget(ui->addBookingView);
 }
 
-
+// Back Button on sign in view -> main menu
 void MainWindow::on_backButton_signInView_clicked(){
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);
 }
 
+// BackButton on SignUp View -> Sign in
 void MainWindow::on_backButton_signupView_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->signinView);
 }
 
-
+// ClientView Back Button -> sign in
 void MainWindow::on_backButton_clientView_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->signinView);
 }
 
 
+// ClientView MainMenu Button -> main menu
 void MainWindow::on_mainMenuButton_clientView_clicked()
 {
     ui->mainStackWidget->setCurrentWidget(ui->mainMenuView);

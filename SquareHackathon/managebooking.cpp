@@ -32,7 +32,9 @@ bool ManageBooking::initDB(){
 
 
 
-// SELECT mon_start, mon_end, tues_start, ... FROM EmployeeShifts WHERE employeeID = " ... "
+// QUERY: SELECT mon_start, mon_end, tues_start, ... FROM EmployeeShifts WHERE employeeID = " ... "
+// Returns the schedule in list as format: {mon_start, mon_end, tues_start, ..., sun_end}
+
 QList<double> ManageBooking::getWorkSchedule(QString employeeID){
     QSqlQuery query("SELECT mon_start, mon_end, tues_start, tues_end, wed_start, wed_end, thurs_start, thurs_end, fri_start, fri_end, sat_start, sat_end, sun_start, sun_end FROM EmployeeShifts WHERE employeeID = \'" % employeeID % "\';");
 
@@ -40,24 +42,24 @@ QList<double> ManageBooking::getWorkSchedule(QString employeeID){
     QList<double> out;
     //will allow array to be linked
     query.next();
+
+    // Loops through output of query (7 days = 14 values)
     for (int i = 0; i < 14; i++){
         if (query.value(i).isNull()){
             out.append(-1);
-            cout<<"NULL HERE"<<endl;
         }
         else{
             out.append(query.value(i).toDouble());
         }
     }
 
-    for(int i =0; i< out.size(); i++){
-        cout << to_string(out[i]) <<endl;
-    }
+
     return out;
 }
 
 QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID){
 
+    // Step 1: Get Schedule based on day of the week:
     QString dateStr = date.toString("yyyy-MM-dd");
 
     int dayOfWeek = date.dayOfWeek();
@@ -65,47 +67,35 @@ QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID
     QSqlQuery query2;
     switch(dayOfWeek){
         case 1:
-            cout << "monday" << endl;
             query2.exec("SELECT mon_start, mon_end FROM EmployeeShifts WHERE employeeID=\"" % employeeID % "\";");
             break;
         case 2:
-            cout << "tuesday" << endl;
             query2.exec("SELECT tues_start, tues_end FROM EmployeeShifts WHERE employeeID=\"" % employeeID % "\";");
             break;
         case 3:
-            cout << "wednessday" << endl;
             query2.exec("SELECT wed_start, wed_end FROM EmployeeShifts WHERE employeeID=\"" % employeeID % "\";");
             break;
         case 4:
-            cout << "thurs" << endl;
             query2.exec("SELECT thurs_start, thurs_end FROM EmployeeShifts WHERE employeeID=\"" % employeeID % "\";");
             break;
         case 5:
-            cout << "fri" << endl;
             query2.exec("SELECT fri_start, fri_end FROM EmployeeShifts WHERE employeeID=\"" % employeeID % "\";");
             break;
         case 6:
-            cout << "sat" << endl;
             query2.exec("SELECT sat_start, sat_end FROM EmployeeShifts WHERE employeeID=\"" % employeeID % "\";");
             break;
         case 7:
-            cout << "sun" << endl;
             query2.exec("SELECT sun_start, sun_end FROM EmployeeShifts WHERE employeeID=\"" % employeeID % "\";");
             break;
         default:
-            cout << "ERROR" << endl;
+            cout << "ERROR!" << endl;
     }
 
     query2.next();
-    if(!query2.value(0).isNull()){
-        cout << query2.value(0).toString().toStdString() << endl;
-        cout << query2.value(1).toString().toStdString() << endl;
-    }
 
     QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE apptDate=DATE(\"" % dateStr % "\") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
 
-    cout << query.lastQuery().toStdString() << endl;
-
+    // Step 2: fill out QList with values that are in schedule bounds AND are not taken by another client
     QList<double> out;
     double currValue = query2.value(0).toDouble();
     double endTime = query2.value(1).toDouble();
@@ -115,7 +105,7 @@ QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID
         timeOfDay = query.value(0).toDouble();
         while(currValue < timeOfDay){
             out.append(currValue);
-            currValue += 0.5;
+            currValue += 0.5; // Go to next 30 min increment
         }
         currValue += 0.5;
     }
@@ -123,12 +113,12 @@ QList<double> ManageBooking::getAvailableBookings(QDate date, QString employeeID
         out.append(currValue);
         currValue += 0.5;
     }
-    for(int i =0; i< out.size(); i++){
-        cout << to_string(out[i]) <<endl;
-    }
+
     return out;
 }
 
+
+// Add a booking using the information in parameters
 bool ManageBooking::addBooking(QString date, double time, QString customerID, QString employeeID){
     QSqlQuery query;
     query.prepare("INSERT INTO Appointments (apptDate, timeOfDay, customerID, employeeID)"
@@ -140,6 +130,9 @@ bool ManageBooking::addBooking(QString date, double time, QString customerID, QS
     return query.exec();
 }
 
+// Returns the hair cut appointments that the employee has on a given date
+// As a Qlist of times
+
 QList<double> ManageBooking::getScheduleEmployee(QString date, QString employeeID){
     QSqlQuery query("SELECT timeOfDay FROM Appointments WHERE apptDate=DATE(" % date % ") and employeeID=\'" % employeeID % "\' ORDER BY timeOfDay ASC;");
 
@@ -149,33 +142,37 @@ QList<double> ManageBooking::getScheduleEmployee(QString date, QString employeeI
 
     }
 
-    for(int i =0; i< out.size(); i++){
-        cout << to_string(out[i]) <<endl;
-    }
     return out;
 }
 
+
+// Return format:
+// MAPPING: {employeeID, time} -> {customerID}
+
+//employees is a QList with all the employeeIDs found in the appointments
 QHash<QPair<QString,double>, QString> ManageBooking::getAllSchedules(QString date, QList<QString> * employees){
     QSqlQuery query("SELECT employeeID, customerID, timeOfDay FROM Appointments WHERE apptDate=DATE(\"" % date % "\") ORDER BY timeOfDay ASC;");
 
     QSet<QString> employeeSet;
     QHash<QPair<QString,double>, QString> out;
 
-//    cout << "WORKS" << endl;
     while (query.next()) {
-            QPair<QString, double> data;
-            data.first = query.value(0).toString();
-            data.second = query.value(2).toDouble();
+        QPair<QString, double> data;
+        data.first = query.value(0).toString(); // employeeID
+        data.second = query.value(2).toDouble(); // timeOfDay
 
-            out[data] = query.value(1).toString();
-            employeeSet.insert(data.first);
+        out[data] = query.value(1).toString(); // customerID
+        employeeSet.insert(data.first);
     }
 
-    *employees = employeeSet.values();
+    *employees = employeeSet.values(); // Updates list of employeeIDs
     return out;
 }
 
 
+// Makes INSERT query to database with employee schedule information:
+// QVariant(QVariant::String) is equal to NULL in the database
+// When the double value is -1 => this means put NULL in the DB
 bool ManageBooking::addEmployeeSchedule(QString empID, double mon_start, double mon_end,
                                         double tues_start, double tues_end,
                                         double wed_start, double wed_end,
@@ -247,6 +244,7 @@ bool ManageBooking::addEmployeeSchedule(QString empID, double mon_start, double 
     return query.exec();
 }
 
+// Remove schedule from employeeID -> when we deactivate the employee
 bool ManageBooking::removeSchedule(QString employeeID){
     QSqlQuery query;
     query.prepare("DELETE FROM EmployeeShifts WHERE employeeID=?;");
@@ -255,7 +253,7 @@ bool ManageBooking::removeSchedule(QString employeeID){
 
 }
 
-
+// Remove an appointment from a customer
 bool ManageBooking::cancelAppointment(QString customerID){
     QSqlQuery query;
     query.prepare("DELETE FROM Appointments WHERE customerID=?;");
@@ -264,6 +262,7 @@ bool ManageBooking::cancelAppointment(QString customerID){
 
 }
 
+// Given a customerID, the values pointed to employeeID, apptDate, and timeOfDay will be updated with the customer's information from DB
 bool ManageBooking::getBookingClient(QString customerID, QString * employeeID, QDate * apptDate, double * timeOfDay){
     QSqlQuery query("SELECT timeOfDay, apptDate, employeeID FROM Appointments WHERE customerID= \"" % customerID % "\";");
 
@@ -271,7 +270,7 @@ bool ManageBooking::getBookingClient(QString customerID, QString * employeeID, Q
         return false;
     }
     *timeOfDay = query.value(0).toDouble();
-    *apptDate = QDate::fromString(query.value(1).toString(), "yyyy-MM-dd");
+    *apptDate = QDate::fromString(query.value(1).toString(), "yyyy-MM-dd"); // yyyy-MM-dd format is needed for the database
     *employeeID = query.value(2).toString();
     return true;
 }

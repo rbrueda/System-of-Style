@@ -59,10 +59,6 @@ QString HttpRequests::addTeamMember(QJsonObject json, bool * result){
 
     QString id = output["team_member"].toObject()["id"].toString();
 
-    //    QByteArray ba = json2.toJson();
-//    QString q = QString(ba);
-    std::cout << id.toStdString() << std::endl;
-
     *result = true;
 
     reply->deleteLater();
@@ -130,20 +126,11 @@ void HttpRequests::setAPICode(){
     string api;
     ifstream fin;
 
-    // Check Current Directory:
-    // std::cout << filesystem::current_path().string() << std::endl;
-
-    // File Path Might not work on final export:
-
     // Open file:
     fin.open("../SquareHackathon/apiCode.txt");
 
     // Reads line contents from fin to String api
     getline (fin, api);
-
-    // Print api code:
-//     std::cout << "API: " << std::endl;
-//     std::cout << "|"  + api +  "|" << std::endl;
 
     // Convert String -> QString -> QByteArray
     QString qstr = QString::fromStdString("Bearer " + api);
@@ -185,12 +172,11 @@ void HttpRequests::inactivateTeamMember(QString teamMemberID){
     reply->deleteLater();
 }
 
+
+// If result=false, returns the error message
+// if result=true, returns the id of the client
 QString HttpRequests::addClientMember(QJsonObject json, bool * result){
     QString returnStr = "";
-
-//    if(json['family_name'].toString() == "" || json['email_address'].toString() == "" || json['given_name'].toString() == "" || json['phone_number'].toString() == ""){
-//        return QString("Missing 1 or more fields.");
-//    }
 
     // Creates url object:
     QUrl url("https://connect.squareupsandbox.com/v2/customers");
@@ -213,6 +199,7 @@ QString HttpRequests::addClientMember(QJsonObject json, bool * result){
     QJsonObject output = (QJsonDocument::fromJson(response_data)).object();
 
 
+    // Checks if there are errors -> e.g. email, phone number
     if(output.contains("errors")){
         QJsonArray listOfErrors = output["errors"].toArray();
 
@@ -230,9 +217,11 @@ QString HttpRequests::addClientMember(QJsonObject json, bool * result){
     *result = true;
     reply->deleteLater();
     QJsonObject customer = output["customer"].toObject();
+
     return customer["id"].toString();
 }
 
+// Retrieves customer in json format -> use email as input
 bool HttpRequests::retrieveCustomer(QString email, QJsonObject * customerData){
     QJsonObject json;
     QJsonObject query;
@@ -244,10 +233,6 @@ bool HttpRequests::retrieveCustomer(QString email, QJsonObject * customerData){
     query["filter"] = filter;
     json["query"]= query;
 
-
-//    teamMember["email_address"] = ui->email->text();
-//    teamMember["given_name"] = ui->firstName->text();
-//    teamMember["phone_number"] = ui->phoneNumber->text();
 
     // Creates url object:
     QUrl url("https://connect.squareupsandbox.com/v2/customers/search");
@@ -276,6 +261,8 @@ bool HttpRequests::retrieveCustomer(QString email, QJsonObject * customerData){
 
 }
 
+
+// Returns three elements in a list: {full name, email, phone number}
 QList<QString> HttpRequests::getCustomerInfo(QString customerID){
     QUrl url("https://connect.squareupsandbox.com/v2/customers/" % customerID);
     QNetworkRequest request(url);
@@ -296,7 +283,6 @@ QList<QString> HttpRequests::getCustomerInfo(QString customerID){
     QByteArray response_data = reply->readAll();
     QJsonDocument json2 = QJsonDocument::fromJson(response_data);
     QJsonObject customerInfo = json2.object();
-    cout << response_data.toStdString() << endl;
     customerInfo = customerInfo["customer"].toObject();
 
 
@@ -308,6 +294,7 @@ QList<QString> HttpRequests::getCustomerInfo(QString customerID){
 
 }
 
+// Returns full name of the team member
 QString HttpRequests::getTeamMemberInfo(QString teamMemberID){
     QUrl url("https://connect.squareupsandbox.com/v2/team-members/" % teamMemberID);
     QNetworkRequest request(url);
@@ -328,7 +315,6 @@ QString HttpRequests::getTeamMemberInfo(QString teamMemberID){
     QByteArray response_data = reply->readAll();
     QJsonDocument json2 = QJsonDocument::fromJson(response_data);
     QJsonObject customerInfo = json2.object();
-    cout << response_data.toStdString() << endl;
     customerInfo = customerInfo["team_member"].toObject();
 
 
