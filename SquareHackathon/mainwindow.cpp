@@ -178,7 +178,7 @@ void MainWindow::on_submit_clicked()
     if(!result_db){
         printErrorMessage("Schedule could not be set.");
         rq.inactivateTeamMember(selectedProfileID);
-        selectedProfileID = NULL;
+//        selectedProfileID = NULL;
         return;
     }
 
@@ -327,6 +327,7 @@ void MainWindow::on_staffList_itemDoubleClicked(QListWidgetItem *item){
 void MainWindow::on_deactivateButton_clicked()
 {
     rq.inactivateTeamMember(selectedProfileID);
+    mb.removeSchedule(selectedProfileID);
     showStaffList();
     ui->staffProfile->hide();
 }
@@ -423,6 +424,11 @@ void MainWindow::on_makeAccountButton_clicked()
             currentClientID = output;
             cout << output.toStdString() << endl;
 
+            ui->clientEmail->clear();
+            ui->clientLastName->clear();
+            ui->clientFirstName->clear();
+            ui->clientPhoneNm->clear();
+
             ui->clientPhoneNumber->setText(clientMember["phone_number"].toString());
             ui->clientEmailAddress->setText(clientMember["email_address"].toString());
             ui->clientName->setText(clientMember["family_name"].toString() % " " % clientMember["given_name"].toString());
@@ -505,6 +511,7 @@ void MainWindow::on_signInButton_clicked()
         return;
     }
 
+    ui->client_signIn_email->clear();
     ui->mainStackWidget->setCurrentWidget(ui->manageClientView);
 
 
@@ -613,8 +620,11 @@ void MainWindow::updateAvaliableTimes_AddBooking(QDate date, QString idEmployee)
 
 void MainWindow::printErrorMessage(QString message){
     QMessageBox messageBox;
+
     messageBox.critical(0,"Error", message);
     messageBox.setFixedSize(500,200);
+
+
 }
 
 //employee id
@@ -748,6 +758,11 @@ void MainWindow::on_bookingsViewTable_itemDoubleClicked(QTableWidgetItem *item)
 
     customerInfoPopup.setText("Contact Information");
     customerInfoPopup.setInformativeText(item->text() % "\n" % emailPhone);
+
+    QFont font;
+    font.setPointSize(12);
+    customerInfoPopup.setFont(font);
+
 
     customerInfoPopup.exec();
 }

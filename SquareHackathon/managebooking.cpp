@@ -247,6 +247,14 @@ bool ManageBooking::addEmployeeSchedule(QString empID, double mon_start, double 
     return query.exec();
 }
 
+bool ManageBooking::removeSchedule(QString employeeID){
+    QSqlQuery query;
+    query.prepare("DELETE FROM EmployeeShifts WHERE employeeID=?;");
+    query.bindValue(0, employeeID);
+    return query.exec();
+
+}
+
 
 bool ManageBooking::cancelAppointment(QString customerID){
     QSqlQuery query;

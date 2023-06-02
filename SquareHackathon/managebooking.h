@@ -25,6 +25,7 @@ public:
 
     bool getBookingClient(QString customerID, QString * employeeID, QDate * apptDate, double * timeOfDay);
 
+    bool removeSchedule(QString employeeID);
 
     bool addEmployeeSchedule(QString empID, double mon_start, double mon_end,
                                             double tues_start, double tues_end,

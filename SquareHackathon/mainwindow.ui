@@ -29,7 +29,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="employeeManagerView">
      <widget class="QPushButton" name="addEmployeeButton">
@@ -1114,7 +1114,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="signupWidget"/>
       <widget class="QWidget" name="ViewAllBookingsWidget"/>
@@ -1168,7 +1168,7 @@
        <string>Sign in</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="txt_emailClientSignIn">
       <property name="geometry">
        <rect>
         <x>513</x>
@@ -1993,7 +1993,7 @@
      <x>0</x>
      <y>0</y>
      <width>1536</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>

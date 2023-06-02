@@ -156,7 +156,7 @@ DELETE FROM Appointments;
 
 SELECT timeOfDay FROM Appointments WHERE apptDate=DATE("2023-05-24") and employeeID='TM3JlK0wjfYm3YX6' ORDER BY timeOfDay ASC;
 
-SELECT 
+DELETE FROM EmployeeShifts WHERE employeeID="fj34f3443";
 
 -- YYYY-MM-DD
 
