@@ -48,17 +48,6 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
 
-    // TEST CANCEL APPT:
-    mb.cancelAppointment("ivu88944jf");
-
-    // TEST CLIENT VIEW APPOINTMENT
-    QString empID_client;
-    double time_client;
-    QDate date_client;
-
-    //**
-    mb.getBookingClient("65489jg54",&empID_client, &date_client, &time_client);
-
     ui->bookingsViewTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // PHONE NUMBER ONLY NUMBERS:
@@ -91,11 +80,6 @@ void MainWindow::on_submit_clicked()
     QJsonObject parent;
     bool result = true;
 
-
-
-
-    //note: this json file does not have parents
-
     //assign teamMember objects to text displayed in QLineEdit
     teamMember["family_name"] = ui->lastName->text();
     teamMember["email_address"] = ui->email->text();
@@ -110,7 +94,6 @@ void MainWindow::on_submit_clicked()
     QString output = rq.addTeamMember(parent, &result);
     if(result == true){
         selectedProfileID = output;
-        cout << output.toStdString() << endl;
     }
     else{
         printErrorMessage(output);
@@ -186,7 +169,6 @@ void MainWindow::showStaffList()
         //does the ui part to print to screen
         //item is the list in the employee manager
         QListWidgetItem* item = new QListWidgetItem();
-//        item->setText(name);
         item->setData(1, email);
         item->setData(2, name);
         item->setData(3, phoneNum);
@@ -302,7 +284,6 @@ void MainWindow::on_employeeManagerButton_clicked()
 
 void MainWindow::on_bookManagerButton_clicked()
 {
-//    ui->NestedSideBarStackWidget->setCurrentWidget(ui->DefaultWidget);
 
     ui->mainStackWidget->setCurrentWidget(ui->signinView);
     showClientList();
@@ -330,7 +311,6 @@ void MainWindow::showClientList()
 
         //does the ui part to print to screen
         QListWidgetItem* item = new QListWidgetItem();
-        //        item->setText(name);
         item->setData(1, email);
         item->setData(2, name);
         item->setData(3, phoneNum);
@@ -399,7 +379,7 @@ void MainWindow::on_AddBookingsButton_clicked()
         printErrorMessage("You must login/signup to continue");
         return;
     }
-    //if htey have signed up: set the current widget to addBooking widget
+    //if they have signed up: set the current widget to addBooking widget
     ui->NestedSideBarStackWidget->setCurrentWidget(ui->addBookingWidget);
 
 }
@@ -409,6 +389,7 @@ void MainWindow::dropDownForCountryCode(){
     ui->client_countryCodeDropDown->setEditable(true);
     ui->employee_countryCodeDropDown->setEditable(true);
 
+    // Reads all avaliable country codes
     QFile file("../SquareHackathon/country-codes-phone.csv");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
@@ -416,6 +397,8 @@ void MainWindow::dropDownForCountryCode(){
     QTextStream in(&file);
     QString line = in.readLine();
     line = in.readLine();
+
+    // For each country code avaliable -> add the code and the country name to the drop down
     while (!line.isNull()) {
         QStringList lineList = line.split(u',');
 
@@ -429,7 +412,9 @@ void MainWindow::dropDownForCountryCode(){
 }
 
 
-//**
+
+
+// Updates Text on Country Code Dropdown based on what is selected
 void MainWindow::on_client_countryCodeDropDown_activated(int index)
 {
 
@@ -483,13 +468,13 @@ void MainWindow::on_signInButton_clicked()
 
 }
 
-// Check whether there is a booking and view cancel booking view:
+// Check whether there is a booking and show the cancel booking view:
 void MainWindow::displayForManageBookingView(){
     QString employeeID;
     double time;
     QDate date;
 
-    //**
+    // Get the appointment information and puts the information on the UI
     if(mb.getBookingClient(currentClientID,&employeeID, &date, &time)){
         ui->clientViewSideStack->setCurrentWidget(ui->cancelBookingView);
 
