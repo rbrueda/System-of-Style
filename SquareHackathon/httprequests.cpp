@@ -127,7 +127,7 @@ void HttpRequests::setAPICode(){
     ifstream fin;
 
     // Open file:
-    fin.open("../SquareHackathon/apiCode.txt");
+    fin.open("apiCode.txt");
 
     // Reads line contents from fin to String api
     getline (fin, api);

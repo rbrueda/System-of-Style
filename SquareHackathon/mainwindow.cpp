@@ -390,7 +390,7 @@ void MainWindow::dropDownForCountryCode(){
     ui->employee_countryCodeDropDown->setEditable(true);
 
     // Reads all avaliable country codes
-    QFile file("../SquareHackathon/country-codes-phone.csv");
+    QFile file("country-codes-phone.csv");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
@@ -716,14 +716,14 @@ void MainWindow::on_settingsButton_clicked()
     ui->mainStackWidget->setCurrentWidget(ui->settingsView);
 
     // Puts credentials from square API on the settings page
-    ifstream MyFile("../SquareHackathon/apiCode.txt");
+    ifstream MyFile("apiCode.txt");
     string lineRead;
     getline(MyFile,lineRead);
     ui->squareApiCode->setText(QString::fromStdString (lineRead));
     MyFile.close();
 
     // Puts credentials from database on the settings page
-    ifstream MyFile2("../SquareHackathon/bookingDBLogin.txt");
+    ifstream MyFile2("bookingDBLogin.txt");
     getline(MyFile2, lineRead);
     ui->urlDataBase->setText(QString::fromStdString (lineRead));
     getline(MyFile2, lineRead);
@@ -738,7 +738,7 @@ void MainWindow::on_settingsButton_clicked()
 // Updates Square API credentials from settings
 void MainWindow::on_submitSquareApiCodeButton_clicked()
 {
-    ofstream MyFile("../SquareHackathon/apiCode.txt");
+    ofstream MyFile("apiCode.txt");
     MyFile<<ui->squareApiCode->text().toStdString()<<endl;
     MyFile.close();
 
@@ -749,7 +749,7 @@ void MainWindow::on_submitSquareApiCodeButton_clicked()
 // Updates SQL Credentials from settings
 void MainWindow::on_submitDataBaseLoginButton_clicked()
 {
-    ofstream MyFile("../SquareHackathon/bookingDBLogin.txt");
+    ofstream MyFile("bookingDBLogin.txt");
     MyFile<<ui->urlDataBase->text().toStdString()<<endl;
     MyFile<<ui->usernameDataBase->text().toStdString()<<endl;
     MyFile<<ui->passwordDataBase->text().toStdString()<<endl;

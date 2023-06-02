@@ -13,7 +13,7 @@ ManageBooking::ManageBooking()
 
 bool ManageBooking::initDB(){
     try{
-        QFile file("../SquareHackathon/bookingDBLogin.txt");
+        QFile file("bookingDBLogin.txt");
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
             cout << "ERROR!" << endl;
 
