@@ -26,7 +26,7 @@ bool ManageBooking::initDB(){
         return mainDB.open();
     }catch(...){ //used so an error widget can pop up instead of the program not being able to run
         //(...) means not parameters needed
-        return false; //will be executed since try block contains an error (try block will not be executed?)
+        return false; //will be executed since try block contains an error (try block will not be executed)
     }
 }
 
