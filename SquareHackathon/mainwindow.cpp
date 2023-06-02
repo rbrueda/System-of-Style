@@ -139,6 +139,8 @@ void MainWindow::on_submit_clicked()
     parent["team_member"] = teamMember;
 
 
+
+
     QString output = rq.addTeamMember(parent, &result);
     if(result == true){
         selectedProfileID = output;
@@ -148,7 +150,6 @@ void MainWindow::on_submit_clicked()
         printErrorMessage(output);
         return;
     }
-
 
 //     ui->staffProfile->show();
 
@@ -176,7 +177,16 @@ void MainWindow::on_submit_clicked()
 
     if(!result_db){
         printErrorMessage("Schedule could not be set.");
+        rq.inactivateTeamMember(selectedProfileID);
+        selectedProfileID = NULL;
+        return;
     }
+
+    ui->firstName->clear();
+    ui->lastName->clear();
+    ui->phoneNumber->clear();
+    ui->email->clear();
+
 
     showStaffList();
 }
