@@ -31,9 +31,9 @@ Instructions are on how to run project using QT Creator
 
 
 ## Screenshots
-![screen![screenshot1](https://github.com/rbrueda/System-of-Style/assets/35504507/129ede7d-c3ef-42f7-abd4-ca67676539e5)
-shot2](https://github.com/rbrueda/System-of-Style/assets/35504507/76d408a5-085e-49c4-b263-b0b1b281d9e1)
-![Uploading screenshot1.jpg…]()
+
+![screenshot2](https://github.com/rbrueda/System-of-Style/assets/35504507/821cea63-6c6c-446e-bdff-47067095774c)
+![screenshot1](https://github.com/rbrueda/System-of-Style/assets/35504507/546bd853-72cb-4e46-96f1-87ad29b6a4a4)
 ![screenshot3](https://github.com/rbrueda/System-of-Style/assets/35504507/1e6bda6f-6252-4beb-a1a4-4f23ab34d85b)
 ![screenshot4](https://github.com/rbrueda/System-of-Style/assets/35504507/f83e9911-6725-4f90-a6e5-5383c295d128)
 
