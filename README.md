@@ -10,7 +10,7 @@ Our project is built on using the programming language C++ to develop the logic,
 6. Ability to view all the bookings of a chosen date
 7. Settings to configure API Code and SQL Login Information
 
-## Run Locally
+## Edit Project on Machine
 Instructions are on how to run project using QT Creator
 
 1. Clone the project
