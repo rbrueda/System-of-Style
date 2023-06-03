@@ -37,7 +37,7 @@ Instructions are on how to run project using QT Creator
 
 ## Authors
 
-- [@rbrueda](https://github.com/rbrueda)message
+- [@rbrueda](https://github.com/rbrueda)
 - [@gabrielrueda](https://github.com/gabrielrueda)
 
 ## Demo
