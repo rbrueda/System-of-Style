@@ -31,8 +31,11 @@ Instructions are on how to run project using QT Creator
 
 
 ## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![screen![screenshot1](https://github.com/rbrueda/System-of-Style/assets/35504507/129ede7d-c3ef-42f7-abd4-ca67676539e5)
+shot2](https://github.com/rbrueda/System-of-Style/assets/35504507/76d408a5-085e-49c4-b263-b0b1b281d9e1)
+![Uploading screenshot1.jpg…]()
+![screenshot3](https://github.com/rbrueda/System-of-Style/assets/35504507/1e6bda6f-6252-4beb-a1a4-4f23ab34d85b)
+![screenshot4](https://github.com/rbrueda/System-of-Style/assets/35504507/f83e9911-6725-4f90-a6e5-5383c295d128)
 
 
 ## Authors
@@ -41,8 +44,8 @@ Instructions are on how to run project using QT Creator
 - [@gabrielrueda](https://github.com/gabrielrueda)
 
 ## Demo
+https://www.youtube.com/watch?v=FPqByF7G8IQ
 
-VIDEO GO HERE
 ## License
 
 [MIT](https://github.com/rbrueda/Square-Developer-Hackathon2023/blob/main/LICENSE)
