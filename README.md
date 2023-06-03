@@ -1,13 +1,13 @@
 
 # System of Style (Square Hackathon Project Submission 2023)
 
-Our project is built on using the programming language C++ to develop the logic, access the Square API and modify GUI widgets. In addition, we used the QT framework that was used to create our desktop application. We used MariaDB (SQL) to retrieve, create, and update appointments and employee schedules.  Our app is cross-platform being able to run on Windows, Linux machines. Our app can perform the following tasks:
+Our project is built on using the programming language C++ to develop the logic, access the Square API and modify GUI widgets. In addition, we used the QT framework that was used to create our desktop application. We used MariaDB (SQL) to retrieve, create, and update appointments and employee schedules.  Our app is cross-platform being able to run on Windows and Linux machines. Our app can perform the following tasks:
 1. Add/Remove Employees
 2. Add/View Employee Shift Schedules
-3. Ability for customers to sign-in/sign-up using their email.
+3. Ability for customers to sign-in/sign-up using their email
 4. Ability for manager to see client's booking and information
 5. Ability for manager to cancel a client's booking
-6. Ability to view all the bookings of a chosen date. 
+6. Ability to view all the bookings of a chosen date
 7. Settings to configure API Code and SQL Login Information
 
 ## Run Locally
