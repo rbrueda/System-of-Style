@@ -16,7 +16,7 @@ Instructions are on how to run project using QT Creator
 1. Clone the project
 
 ```bash
-  git clone https://github.com/rbrueda/Square-Developer-Hackathon2023
+  git clone https://github.com/rbrueda/System-of-Style
 ```
 
 2. Open QT Creator and create a new project (Qmake)
